@@ -23,9 +23,11 @@ public class Category {
     public Category() {
     }
 
-    public Category(long id, String name) {
+    public Category(long id, String name, List<Blog> blogs, List<Post> posts) {
         this.id = id;
         this.name = name;
+        this.blogs = blogs;
+        this.posts = posts;
     }
 
     public long getId() {
@@ -42,5 +44,21 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Blog> getBlogs() {
+        return blogs;
+    }
+
+    public void setBlogs(List<Blog> blogs) {
+        this.blogs = blogs;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
