@@ -21,13 +21,13 @@ public class BlogController {
         this.blogDao = blogDao;
     }
 
-    @GetMapping("/dashboard/create")
+    @GetMapping("/dashboard/blogs/create")
     public String showCreateForm(Model model) {
         model.addAttribute("post", new Blog());
         return "blogs/create";
     }
 
-    @PostMapping("/dashboard/create")
+    @PostMapping("/dashboard/blogs/create")
     public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle, @RequestParam Date dateCreated, @RequestParam List<Category> categories) {
         Blog blog = new Blog(blogTitle, handle, dateCreated, categories);
         blogDao.save(blog);

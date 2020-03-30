@@ -16,15 +16,15 @@ public class PostController {
         this.postDao = postDao;
     }
 
-    @GetMapping("/dashboard/create")
+    @GetMapping("/dashboard/posts/create")
     public String showCreateForm(Model model) {
             model.addAttribute("post", new Post());
             return "posts/create";
     }
 
-    @PostMapping("/dashboard/create")
-    public String postNewPost(@RequestParam String title, @RequestParam String body) {
-        Post post = new Post(title, body, loggedInUser);
+    @PostMapping("/dashboard/posts/create")
+    public String postNewPost(@RequestParam String textTitle, @RequestParam String texBody) {
+        Post post = new Post(textTitle, texBody);
         postDao.save(post);
         return "redirect:/posts";
     }
