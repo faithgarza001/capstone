@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PostController {
     private PostRepo postDao;
 
-    public PostController(PostRepo postDao){
+    public PostController(PostRepo postDao) {
         this.postDao = postDao;
     }
 
@@ -23,10 +23,10 @@ public class PostController {
     @GetMapping("/dashboard/posts/create")
     public String showCreateForm(Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(loggedInUser != null) {
+        if (loggedInUser != null) {
             model.addAttribute("post", new Post());
             return "posts/create";
-        } else{
+        } else {
             return "redirect:/login";
         }
     }
@@ -42,20 +42,20 @@ public class PostController {
 
     //Editing a post form
     @GetMapping("/dashboard/posts/{id}/edit")
-    public String editPostForm(@PathVariable long id, Model model){
+    public String editPostForm(@PathVariable long id, Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             Post post = postDao.getOne(id);
             model.addAttribute("post", post);
             return "posts/edit";
-        }else{
+        } else {
             return "redirect:/dashboard";
         }
     }
 
     //Saving the edit to the database
     @PostMapping("/dashboard/posts/{id}/edit")
-    public String savePostEdit(@PathVariable long id, @RequestParam String title, @RequestParam String body){
+    public String savePostEdit(@PathVariable long id, @RequestParam String title, @RequestParam String body) {
         Post post = postDao.getOne(id);
         post.setTextTitle(title);
         post.setTextBody(body);
@@ -65,9 +65,9 @@ public class PostController {
 
     //Deleting a post
     @PostMapping("/dashboard/posts/{id}/delete")
-    public String deletePost(@PathVariable long id){
+    public String deletePost(@PathVariable long id) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
+        if (loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
             postDao.deleteById(id);
         }
         return "redirect:/dashboard";
