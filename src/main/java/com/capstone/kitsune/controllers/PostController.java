@@ -62,4 +62,14 @@ public class PostController {
         postDao.save(post);
         return "redirect:/dashboard";
     }
+
+    //Deleting a post
+    @PostMapping("/dashboard/posts/{id}/delete")
+    public String deletePost(@PathVariable long id){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
+            postDao.deleteById(id);
+        }
+        return "redirect:/dashboard";
+    }
 }
