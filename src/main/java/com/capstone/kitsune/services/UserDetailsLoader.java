@@ -1,6 +1,7 @@
 package com.capstone.kitsune.services;
 
 import com.capstone.kitsune.models.User;
+import com.capstone.kitsune.models.UserWithRoles;
 import com.capstone.kitsune.repositories.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
