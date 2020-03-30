@@ -19,12 +19,14 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    //sign-up form
     @GetMapping("/sign-up")
     public String showSignupForm(Model model){
         model.addAttribute("user", new User());
         return "users/sign-up";
     }
 
+    //Saving user
     @PostMapping("/sign-up")
     public String saveUser(@ModelAttribute User user){
         String hash = passwordEncoder.encode(user.getPassword());
