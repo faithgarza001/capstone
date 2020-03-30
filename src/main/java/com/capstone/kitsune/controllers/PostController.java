@@ -22,10 +22,10 @@ public class PostController {
             return "posts/create";
     }
 
-    @PostMapping("/dashboard/create")
-    public String postNewPost(@RequestParam String title, @RequestParam String body) {
-        Post post = new Post(title, body, loggedInUser);
-        postDao.save(post);
-        return "redirect:/posts";
-    }
+//    @PostMapping("/dashboard/create")
+//    public String postNewPost(@RequestParam String title, @RequestParam String body) {
+//        Post post = new Post(title, body, loggedInUser);
+//        postDao.save(post);
+//        return "redirect:/posts";
+//    }
 }
