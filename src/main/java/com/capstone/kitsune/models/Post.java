@@ -37,7 +37,7 @@ public class Post {
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_created",nullable = false)
+    @Column(name = "date_created", nullable = false)
     private Date dateCreated;
 
     @ManyToOne
@@ -46,24 +46,26 @@ public class Post {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name="posts_categories",
-            joinColumns={@JoinColumn(name="post_id")},
-            inverseJoinColumns={@JoinColumn(name="category_id")}
+            name = "posts_categories",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
     )
     private List<Category> categories;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name="posts_images",
-            joinColumns={@JoinColumn(name="post_id")},
-            inverseJoinColumns={@JoinColumn(name="image_id")}
+            name = "posts_images",
+            joinColumns = {@JoinColumn(name = "post_id")},
+            inverseJoinColumns = {@JoinColumn(name = "image_id")}
     )
     private List<Image> images;
 
-    public Post() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Post(long id, String textTitle, String textBody, String linkUrl, String linkTitle, String linkCaption, String videoEmbedCode, String postStatus, Date dateCreated, Blog blog, List<Category> categories, List<Image> images) {
+    // Full constructor
+    public Post(long id, String textTitle, String textBody, String linkUrl, String linkTitle, String linkCaption, String videoEmbedCode, String postStatus, Date dateCreated, Blog blog, List<Category> categories, List<Image> images, User user) {
         this.id = id;
         this.textTitle = textTitle;
         this.textBody = textBody;
@@ -76,6 +78,70 @@ public class Post {
         this.blog = blog;
         this.categories = categories;
         this.images = images;
+        this.user = user;
+    }
+
+    // Basic Constructor
+    public Post(String textTitle, String textBody){
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+    }
+
+    // Images constructor
+    public Post(long id, String textTitle, String textBody, List<Image> images, String postStatus, Date dateCreated, Blog blog, User user, List<Category> categories) {
+        this.id = id;
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+        this.images = images;
+        this.postStatus = postStatus;
+        this.dateCreated = dateCreated;
+        this.blog = blog;
+        this.user = user;
+        this.categories = categories;
+    }
+
+    //Video constructor
+    public Post(long id, String textTitle, String textBody, String videoEmbedCode, String postStatus, Date dateCreated, Blog blog, User user, List<Category> categories) {
+        this.id = id;
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+        this.videoEmbedCode = videoEmbedCode;
+        this.postStatus = postStatus;
+        this.dateCreated = dateCreated;
+        this.blog = blog;
+        this.user = user;
+        this.categories = categories;
+    }
+
+    //Text-only constructor
+    public Post(long id, String textTitle, String textBody, String postStatus, Date dateCreated, Blog blog, User user, List<Category> categories) {
+        this.id = id;
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+        this.postStatus = postStatus;
+        this.dateCreated = dateCreated;
+        this.blog = blog;
+        this.user = user;
+        this.categories = categories;
+    }
+
+    //URL constructor
+    public Post(long id, String textTitle, String textBody, String postStatus, String linkUrl, String linkTitle, String linkCaption, Date dateCreated, Blog blog, User user, List<Category> categories) {
+        this.id = id;
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+        this.linkUrl = linkUrl;
+        this.linkTitle = linkTitle;
+        this.linkCaption = linkCaption;
+        this.postStatus = postStatus;
+        this.dateCreated = dateCreated;
+        this.blog = blog;
+        this.user = user;
+        this.categories = categories;
+    }
+
+
+    public Post() {
     }
 
     public long getId() {
@@ -172,6 +238,14 @@ public class Post {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

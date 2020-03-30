@@ -12,7 +12,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true, length = 45)
+    @Column(nullable = false, unique = true, length = 15)
     private String username;
 
     @Column(nullable = false)
@@ -35,6 +35,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Blog> blogs;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Post> posts;
 
     // Copy constructor for authentication
     public User(User copy) {
@@ -117,5 +120,13 @@ public class User {
 
     public void setBlogs(List<Blog> blogs) {
         this.blogs = blogs;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
