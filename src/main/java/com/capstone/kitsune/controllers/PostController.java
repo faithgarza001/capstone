@@ -24,8 +24,8 @@ public class PostController {
 
     @PostMapping("/dashboard/create")
     public String postNewPost(@RequestParam String title, @RequestParam String body) {
-        Post post = new Post(title, body, loggedInUser);
+        Post post = new Post(title, body);
         postDao.save(post);
-        return "redirect:/posts";
+        return "redirect:/dashboard";
     }
 }
