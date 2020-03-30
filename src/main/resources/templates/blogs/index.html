@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header :: head('All Posts')">
+    <meta charset="UTF-8">
+    <title>All Posts</title>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<div th:each="post : ${posts}">
+    <h1 th:text = "${post.title}"></h1>
+    <p th:text = "${post.body}"></p>
+    <div>
+        <form th:action="@{|posts/${post.id}/edit|}" th:method="GET">
+            <button>Edit</button>
+        </form>
+        <form th:action="@{|posts/${post.id}/delete|}" th:method="POST">
+            <button>Delete</button>
+        </form>
+        <form th:action="@{|posts/${post.id}|}" th:method="GET">
+            <button>See More</button>
+        </form>
+    </div>
+    <!--    <a th:href="@{|posts/${post.id}|}">See More</a>-->
+    <!--    <a th:href="@{|posts/${post.id}/edit|}">Edit</a>-->
+    <!--    th: attribute required for Spring security in later lessons-->
+    <script th:replace="partials/scripts :: scripts"></script>
+</div>
+</body>
+</html>

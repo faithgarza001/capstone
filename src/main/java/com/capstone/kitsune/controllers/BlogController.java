@@ -21,6 +21,12 @@ public class BlogController {
         this.blogDao = blogDao;
     }
 
+    @GetMapping("/dashboard/blogs")
+    public String getPosts(Model model){
+        model.addAttribute("blogs", blogDao.findAll());
+        return "blogs/index";
+    }
+
     @GetMapping("/dashboard/blogs/create")
     public String showCreateForm(Model model) {
         model.addAttribute("post", new Blog());
