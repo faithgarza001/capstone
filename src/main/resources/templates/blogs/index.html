@@ -5,22 +5,17 @@
     <title>My Blogs</title>
 </head>
 <body>
+<h1>My Blogs</h1>
+<br>
 <table>
     <thead>
     <tr>
         <th> Info</th>
         <th> Date Created</th>
         <th> Categories</th>
-        blog.setBlogTitle(blogTitle);
-        blog.setHandle(handle);
-        blog.setDateCreated(dateCreated);
-        blog.setCategories(categories);
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${blogs.empty}">
-        <td colspan="2"> Go make some blogs!</td>
-    </tr>
     <tr th:each="blog : ${blogs}">
         <td>
             <div>
@@ -33,7 +28,6 @@
         <td th:text="${blog.categories}"></td>
     </tr>
     </tbody>
-</table>
 </table>
 </body>
 </html>
