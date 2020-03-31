@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header :: head('See a Post')">
+    <meta charset="UTF-8">
+    <title>Viewing Post</title>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<h1 th:text="${posts.title}"></h1>
+<h4 th:text="${posts.body}"></h4>
+<p>By: <a th:href="'mailto:' + ${posts.user.email}" th:text="${posts.user.email}"></a></p>
+<script th:replace="partials/scripts :: scripts"></script>
+</body>
+</html>
