@@ -57,11 +57,18 @@ public class Blog {
         this.categories = categories;
     }
 
-    //Views Constructor
+    //My Blog Constructor
     public Blog(String blogTitle, List<Post> posts){
         this.blogTitle = blogTitle;
         this.posts = posts;
     }
+
+    //Constructor for testing BlogController (create)
+    public Blog(String blogTitle, String handle){
+        this.blogTitle = blogTitle;
+        this.handle = handle;
+    }
+
 
     //Create constructor
     public Blog(String blogTitle, String handle, Date dateCreated, List<Category> categories){

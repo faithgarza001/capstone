@@ -2,11 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Blogs</title>
+    <title>All Blogs</title>
 </head>
 <body>
-<h1>My Blogs</h1>
+<h1>All Blogs</h1>
 <br>
+<div th:if="${#lists.isEmpty(blogs)}">
+    <h2>No blogs to show</h2>
+</div>
+<div th:if="!${#lists.isEmpty(blogs)}">
 <table>
     <thead>
     <tr>
@@ -29,5 +33,6 @@
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>
