@@ -14,18 +14,18 @@
     <table>
         <thead>
         <tr>
-            <th> Info</th>
+            <th> Title</th>
+            <th> Handle</th>
             <th> Date Created</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="blog : ${blogs}">
             <td>
-                <div>
-                    <h2 th:text="${blog.blogTitle}"></h2>
-                    <br>
-                    <p th:text="${blog.handle}"></p>
-                </div>
+                    <p th:text="${blog.blogTitle}"></p>
+            </td>
+            <td>
+                <p>/<span th:text="${blog.handle}"></span></p>
             </td>
             <td th:text="${blog.dateCreated}"></td>
         </tr>

@@ -11,28 +11,26 @@
     <h2>No blogs to show</h2>
 </div>
 <div th:if="!${#lists.isEmpty(blogs)}">
-<table>
-    <thead>
-    <tr>
-        <th> Info</th>
-        <th> Date Created</th>
-        <th> Categories</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="blog : ${blogs}">
-        <td>
-            <div>
-                <h2 th:text="${blog.blogTitle}"></h2>
-                <br>
-                <p th:text="${blog.handle}"></p>
-            </div>
-        </td>
-        <td th:text="${blog.dateCreated}"></td>
-        <td th:text="${blog.categories}"></td>
-    </tr>
-    </tbody>
-</table>
+    <table>
+        <thead>
+        <tr>
+            <th> Title</th>
+            <th> Handle</th>
+            <th> Date Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="blog : ${blogs}">
+            <td>
+                <p th:text="${blog.blogTitle}"></p>
+            </td>
+            <td>
+                <p>/<span th:text="${blog.handle}"></span></p>
+            </td>
+            <td th:text="${blog.dateCreated}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

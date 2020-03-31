@@ -38,16 +38,31 @@ import java.util.TimeZone;
             }
         }
 
-        //Saving a new blog to the database
-        @PostMapping("/dashboard/blogs/create")
-        public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle) {
-        if (handle == null){
+//        //Saving a new blog to the database
+//        @PostMapping("/dashboard/blogs/create")
+//        public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle) {
+//        if (handle == null){
+//
+//            handle = "hardCodedHandle";
+//        }
+//            Blog blog = new Blog(blogTitle, handle);
+//            blogDao.save(blog);
+//            return "redirect:blogs/index";
+//        }
 
-            handle = "hardCodedHandle";
-        }
-            Blog blog = new Blog(blogTitle, handle);
-            blogDao.save(blog);
-            return "redirect:blogs/index";
+        //Saving a new blog to the database
+        @PostMapping("/blogs/create")
+        public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle) {
+            Blog newBlog = new Blog();
+            newBlog.setBlogTitle(blogTitle);
+            if (handle == null){
+                handle = "hardCodedHandle";
+            }
+            newBlog.setHandle(handle);
+            User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            newBlog.setUser(loggedIn);
+            blogDao.save(newBlog);
+            return "dashboard/blogs";
         }
 
         //Editing a blog form
