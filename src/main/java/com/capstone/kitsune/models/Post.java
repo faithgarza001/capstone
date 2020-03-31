@@ -82,9 +82,10 @@ public class Post {
     }
 
     // Basic Constructor
-    public Post(String textTitle, String textBody){
+    public Post(String textTitle, String textBody, User user){
         this.textTitle = textTitle;
         this.textBody = textBody;
+        this.user = user;
     }
 
     // Images constructor
