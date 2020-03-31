@@ -6,12 +6,12 @@
 <body>
 <div class="container">
     <h1>Create Post</h1>
-    <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
+    <form th:action="@{/dashboard/posts/create}" th:method="post" th:object="${post}">
         Title:
-        <input th:field="*{title}" />
+        <input th:field="*{textTitle}" />
         <br />
         Body:
-        <textarea th:field="*{body}" />
+        <textarea th:field="*{textBody}" />
         <br />
         <input type="submit" />
     </form>

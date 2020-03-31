@@ -34,9 +34,9 @@ public class PostController {
 
     //Saving the post to the database
     @PostMapping("/dashboard/posts/create")
-    public String postNewPost(@RequestParam String title, @RequestParam String body) {
+    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = new Post(title, body);
+        Post post = new Post(textTitle, textBody, loggedInUser);
         postDao.save(post);
         return "redirect:/dashboard";
     }
@@ -56,10 +56,10 @@ public class PostController {
 
     //Saving the edit to the database
     @PostMapping("/dashboard/posts/{id}/edit")
-    public String savePostEdit(@PathVariable long id, @RequestParam String title, @RequestParam String body) {
+    public String savePostEdit(@PathVariable long id, @RequestParam String textTitle, @RequestParam String textBody) {
         Post post = postDao.getOne(id);
-        post.setTextTitle(title);
-        post.setTextBody(body);
+        post.setTextTitle(textTitle);
+        post.setTextBody(textBody);
         postDao.save(post);
         return "redirect:/dashboard";
     }
