@@ -62,7 +62,7 @@ import java.util.TimeZone;
             User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             newBlog.setUser(loggedIn);
             blogDao.save(newBlog);
-            return "dashboard/blogs";
+            return "blogs/index";
         }
 
         //Editing a blog form

@@ -68,6 +68,12 @@ public class Blog {
         this.blogTitle = blogTitle;
         this.handle = handle;
     }
+    //Constructor for testing BlogController (create)
+    public Blog(String blogTitle, String handle, User user){
+        this.blogTitle = blogTitle;
+        this.handle = handle;
+        this.user = user;
+    }
 
 
     //Create constructor

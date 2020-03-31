@@ -17,6 +17,7 @@
             <th> Title</th>
             <th> Handle</th>
             <th> Date Created</th>
+            <th> Created By</th>
         </tr>
         </thead>
         <tbody>
@@ -27,7 +28,11 @@
             <td>
                 <p>/<span th:text="${blog.handle}"></span></p>
             </td>
-            <td th:text="${blog.dateCreated}"></td>
+            <td th:text="${blog.dateCreated}">
+<!--                Need to parse date-->
+
+            </td><td th:text="${blog.user}"></td>
+<!--            Need to display username instead of user object-->
         </tr>
         </tbody>
     </table>
