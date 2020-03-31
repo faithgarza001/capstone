@@ -42,9 +42,11 @@ public class Blog {
     )
     private List<Category> categories;
 
+    //Empty Constructor
     public Blog() {
     }
 
+    //Full Constructor
     public Blog(long id, String blogTitle, String handle, Date dateCreated, List<Post> posts, User user, List<Category> categories) {
         this.id = id;
         this.blogTitle = blogTitle;
@@ -52,6 +54,27 @@ public class Blog {
         this.dateCreated = dateCreated;
         this.posts = posts;
         this.user = user;
+        this.categories = categories;
+    }
+
+    //Views Constructor
+    public Blog(String blogTitle, List<Post> posts){
+        this.blogTitle = blogTitle;
+        this.posts = posts;
+    }
+
+    //Create constructor
+    public Blog(String blogTitle, String handle, Date dateCreated, List<Category> categories){
+        this.blogTitle = blogTitle;
+        this.handle = handle;
+        this.dateCreated = dateCreated;
+        this.categories = categories;
+    }
+
+    //Edit Constructor
+    public Blog(String blogTitle, String handle, List<Category> categories){
+        this.blogTitle = blogTitle;
+        this.handle = handle;
         this.categories = categories;
     }
 

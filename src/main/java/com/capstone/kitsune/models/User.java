@@ -27,10 +27,10 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 45)
     private String lastName;
 
-    @Column(name = "blogs_followed", nullable = false)
+    @Column(name = "blogs_followed")
     private int blogsFollowed;
 
-    @Column(name = "profile_picture", nullable = false)
+    @Column(name = "profile_picture")
     private String profilePicture;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -48,6 +48,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(String username, String firstname, String lastname, String email, String password){
+        this.username = username;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.email = email;
+        this.password = password;
     }
 
     public long getId() {

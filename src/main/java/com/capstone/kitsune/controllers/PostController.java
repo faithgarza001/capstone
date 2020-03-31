@@ -19,6 +19,7 @@ public class PostController {
         this.postDao = postDao;
     }
 
+
     //Create form for a post
     @GetMapping("/dashboard/posts/create")
     public String showCreateForm(Model model) {
