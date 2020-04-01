@@ -4,6 +4,7 @@ import com.capstone.kitsune.models.Blog;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.UserRepo;
+import com.capstone.kitsune.services.BlogsService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import java.security.Principal;
 import java.util.Objects;
 
 @Controller
-public class BlogController {
+public class BlogController extends BlogsService {
     private BlogRepo blogDao;
     private UserRepo userDao;
 
@@ -43,12 +44,13 @@ public class BlogController {
         Blog newBlog = new Blog();
         User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newBlog.setBlogTitle(blogTitle);
-        //If handle input is not null, set handle to @RequestParam, else set handle to "hardCodedHandle"
+        //If handle input is not null, set handle to @RequestParam, else set handle to random 6 digit alphanumeric string
         if (handle.equals("")) {
-            newBlog.setHandle("hardCodedHandle");
+            newBlog.setHandle(getAlphaNumericString(6));
         } else {
             newBlog.setHandle(handle);
         }
+
 //        newBlog.setHandle(Objects.requireNonNullElse(handle, "hardCodedHandle"));
         newBlog.setUser(loggedIn);
         blogDao.save(newBlog);
