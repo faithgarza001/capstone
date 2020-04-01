@@ -8,9 +8,6 @@
 <div class="container">
     <h1>Edit User</h1>
     <form th:action="@{|/account/${username}/edit|}" th:method="post" th:object="${user}">
-        Username:
-        <input th:field="*{username}" />
-        <br />
         Password:
         <input th:field="*{password}" type="password" />
         <br />
