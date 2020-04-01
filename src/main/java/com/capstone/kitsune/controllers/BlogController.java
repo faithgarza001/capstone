@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
     public class BlogController {
@@ -37,44 +38,60 @@ import java.util.List;
             }
         }
 
-        //Saving the blog to the database
-        @PostMapping("/dashboard/blogs/create")
-        public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle, @RequestParam Date dateCreated, @RequestParam List<Category> categories) {
-            Blog blog = new Blog(blogTitle, handle, dateCreated, categories);
-            blogDao.save(blog);
-            return "redirect:/dashboard";
+//        //Saving a new blog to the database
+//        @PostMapping("/dashboard/blogs/create")
+//        public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle) {
+//        if (handle == null){
+//
+//            handle = "hardCodedHandle";
+//        }
+//            Blog blog = new Blog(blogTitle, handle);
+//            blogDao.save(blog);
+//            return "redirect:blogs/index";
+//        }
+
+        //Saving a new blog to the database
+        @PostMapping("/blogs/create")
+        public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle) {
+            Blog newBlog = new Blog();
+            newBlog.setBlogTitle(blogTitle);
+            if (handle == null){
+                handle = "hardCodedHandle";
+            }
+            newBlog.setHandle(handle);
+            User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            newBlog.setUser(loggedIn);
+            blogDao.save(newBlog);
+            return "blogs/view";
         }
 
         //Editing a blog form
         @GetMapping("/dashboard/blogs/{id}/edit")
-        public String editPostForm(@PathVariable long id, Model model) {
+        public String editBlogForm(@PathVariable long id, Model model) {
             User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (loggedInUser != null) {
                 Blog blog = blogDao.getOne(id);
                 model.addAttribute("blog", blog);
                 return "blogs/edit";
             } else {
-                return "redirect:/dashboard";
+                return "redirect:/login";
             }
         }
 
         //Saving the edit to the database
         @PostMapping("/dashboard/blogs/{id}/edit")
-        public String savePostEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam String handle, @RequestParam Date dateCreated, @RequestParam List<Category> categories) {
+        public String saveBlogEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam String handle) {
             Blog blog = blogDao.getOne(id);
             blog.setBlogTitle(blogTitle);
             blog.setHandle(handle);
-            blog.setDateCreated(dateCreated);
-            blog.setCategories(categories);
             blogDao.save(blog);
-            return "redirect:/dashboard";
+            return "redirect:blogs/index";
         }
 
-        // Getting all blogs
+        // Viewing All Blogs
         @GetMapping("/dashboard/blogs")
-        public String getPosts(Model model) {
-            model.addAttribute("blogs", blogDao.findAll());
-            return "blogs/index";
+        public String getAllBlogs(Model model) {
+                model.addAttribute("blogs", blogDao.findAll());
+                return "blogs/index";
         }
-
     }
