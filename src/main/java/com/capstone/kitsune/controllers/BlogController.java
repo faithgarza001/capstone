@@ -94,4 +94,13 @@ import java.util.TimeZone;
                 model.addAttribute("blogs", blogDao.findAll());
                 return "blogs/index";
         }
+
+        @PostMapping("/dashboard/blogs/{id}/delete")
+        public String deleteBlog(@PathVariable long id){
+            User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (loggedInUser.getId() == blogDao.getOne(id).getUser().getId()) {
+                blogDao.deleteById(id);
+            }
+            return "redirect:blogs/index";
+        }
     }
