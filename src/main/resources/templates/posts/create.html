@@ -13,7 +13,15 @@
         Body:
         <textarea th:field="*{textBody}" />
         <br />
-
+        Categories:
+        <ul>
+            <li th:each="category : ${categories}">
+                <div class="ui checkbox">
+                    <input type="checkbox" th:field="*{categories}" th:value="${category.id}">
+                    <label th:text="${category.name}"></label>
+                </div>
+            </li>
+        </ul>
         <input type="submit" />
     </form>
 </div>

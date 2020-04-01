@@ -1,5 +1,6 @@
 package com.capstone.kitsune.controllers;
 
+import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.PostRepo;
@@ -10,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -25,6 +30,19 @@ public class PostController {
     public String showCreateForm(Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
+            List<Category> categories = Arrays.asList(
+                    new Category(1L, "Math"),
+                    new Category(2L, "Science"),
+                    new Category(3L, "History"),
+                    new Category(4L, "Computer Science"),
+                    new Category(5L, "Data Science"),
+                    new Category(6L, "Web Development"),
+                    new Category(7L, "Physical Education"),
+                    new Category(8L, "Music"),
+                    new Category(9L, "Dance"),
+                    new Category(10L, "Astronomy")
+            );
+            model.addAttribute("categories", categories);
             model.addAttribute("post", new Post());
             return "posts/create";
         } else {
@@ -34,9 +52,9 @@ public class PostController {
 
     //Saving the post to the database
     @PostMapping("/dashboard/posts/create")
-    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody) {
+    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = new Post(textTitle, textBody, loggedInUser);
+        Post post = new Post(textTitle, textBody, loggedInUser, categories);
         postDao.save(post);
         return "redirect:/dashboard";
     }
