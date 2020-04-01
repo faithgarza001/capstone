@@ -20,8 +20,9 @@ public class BlogController {
     private BlogRepo blogDao;
     private UserRepo userDao;
 
-    public BlogController(BlogRepo blogDao) {
+    public BlogController(BlogRepo blogDao, UserRepo userDao) {
         this.blogDao = blogDao;
+        this.userDao = userDao;
     }
 
     //Create form for a blogs
@@ -81,21 +82,20 @@ public class BlogController {
 
     //Viewing All User's Blogs
     @GetMapping("/dashboard/blogs/myblogs")
-    public String getPost(Model model, Principal principal){
-////        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String userName = "";
-//        if (principal != null) {
-//            userName = principal.getName();
-////            userDao.findByUsername(userName);
-//        }
-//        model.addAttribute("userName", userName);
-//        model.addAttribute("blog",blogDao.findAll());
+    public String getMyBlogs(Model model, Principal principal){
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName = "";
+        if (principal != null) {
+            userName = principal.getName();
+        }
+        model.addAttribute("userName", userName);
+        model.addAttribute("blog",blogDao.findByUserId(loggedIn.getId()));
         return "blogs/myblogs";
     }
 
     //Viewing One User Blog
     @GetMapping("/dashboard/blogs/{id}")
-    public String getPost(@PathVariable long id, Model model, Principal principal){
+    public String getOneBlog(@PathVariable long id, Model model, Principal principal){
         String userName = "";
         if (principal != null) {
             userName = principal.getName();
