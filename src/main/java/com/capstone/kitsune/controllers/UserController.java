@@ -7,10 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
@@ -33,6 +30,8 @@ public class UserController {
     @PostMapping("/sign-up")
     public String saveUser(@ModelAttribute User user){
         String hash = passwordEncoder.encode(user.getPassword());
+        boolean debug = passwordEncoder.matches(user.getPassword(), hash);
+
         user.setPassword(hash);
         users.save(user);
         return "redirect:/login";
@@ -50,7 +49,19 @@ public class UserController {
         }
     }
 
+    @PostMapping("/account/{username}/edit")
+    public String accountEdit(@PathVariable String username, @RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName){
+        User user = users.findByUsername(username);
+        user.setUsername(username);
+        String hash = this.passwordEncoder.encode(user.getPassword());
+        boolean debug = this.passwordEncoder.matches(user.getPassword(), hash);
 
-
+        user.setPassword(hash);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        users.save(user);
+        return "redirect:/dashboard";
+    }
 
 }
