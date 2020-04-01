@@ -31,7 +31,7 @@
             <td th:text="${blog.dateCreated}">
 <!--                Need to parse date-->
 
-            </td><td th:text="${blog.user}"></td>
+            </td><td th:text="${blog.user.getUsername()}"></td>
 <!--            Need to display username instead of user object-->
         </tr>
         </tbody>
