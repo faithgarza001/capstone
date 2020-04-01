@@ -1,11 +1,9 @@
 package com.capstone.kitsune.controllers;
 
 import com.capstone.kitsune.models.Blog;
-import com.capstone.kitsune.models.Category;
-import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
-import com.capstone.kitsune.repositories.PostRepo;
+import com.capstone.kitsune.repositories.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
-import java.util.List;
+import java.security.Principal;
 import java.util.Objects;
-import java.util.TimeZone;
 
 @Controller
 public class BlogController {
     private BlogRepo blogDao;
+    private UserRepo userDao;
 
     public BlogController(BlogRepo blogDao) {
         this.blogDao = blogDao;
@@ -49,7 +46,7 @@ public class BlogController {
         User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newBlog.setUser(loggedIn);
         blogDao.save(newBlog);
-        return "blogs/view";
+        return "redirect:/dashboard/blogs/myblogs";
     }
 
     //Editing a blog form
@@ -80,5 +77,19 @@ public class BlogController {
     public String getAllBlogs(Model model) {
         model.addAttribute("blogs", blogDao.findAll());
         return "blogs/index";
+    }
+
+    //Viewing All User's Blogs
+    @GetMapping("/dashboard/blogs/myblogs")
+    public String getPost(Model model, Principal principal){
+//        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName = "";
+        if (principal != null) {
+            userName = principal.getName();
+//            userDao.findByUsername(userName);
+        }
+        model.addAttribute("userName", userName);
+        model.addAttribute("blog",blogDao.findAll());
+        return "blogs/myblogs";
     }
 }
