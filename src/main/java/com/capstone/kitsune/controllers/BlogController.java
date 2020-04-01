@@ -41,10 +41,15 @@ public class BlogController {
     @PostMapping("/blogs/create")
     public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle) {
         Blog newBlog = new Blog();
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newBlog.setBlogTitle(blogTitle);
         //If handle input is not null, set handle to @RequestParam, else set handle to "hardCodedHandle"
-        newBlog.setHandle(Objects.requireNonNullElse(handle, "hardCodedHandle"));
-        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (handle.equals("")) {
+            newBlog.setHandle("hardCodedHandle");
+        } else {
+            newBlog.setHandle(handle);
+        }
+//        newBlog.setHandle(Objects.requireNonNullElse(handle, "hardCodedHandle"));
         newBlog.setUser(loggedIn);
         blogDao.save(newBlog);
         return "redirect:/dashboard/blogs/myblogs";
@@ -82,7 +87,7 @@ public class BlogController {
 
     //Viewing All User's Blogs
     @GetMapping("/dashboard/blogs/myblogs")
-    public String getMyBlogs(Model model, Principal principal){
+    public String getMyBlogs(Model model, Principal principal) {
         // Getting logged in user
         User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userName = "";
@@ -93,19 +98,19 @@ public class BlogController {
         //Setting authorized username to be used in myblogs view
         model.addAttribute("userName", userName);
         // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
-        model.addAttribute("blogs",blogDao.findByUserId(loggedIn.getId()));
+        model.addAttribute("blogs", blogDao.findByUserId(loggedIn.getId()));
         return "blogs/myblogs";
     }
 
     //Viewing One User Blog
     @GetMapping("/dashboard/blogs/{id}")
-    public String getOneBlog(@PathVariable long id, Model model, Principal principal){
+    public String getOneBlog(@PathVariable long id, Model model, Principal principal) {
         String userName = "";
         if (principal != null) {
             userName = principal.getName();
         }
         model.addAttribute("userName", userName);
-        model.addAttribute("blog",blogDao.getOne(id));
+        model.addAttribute("blog", blogDao.getOne(id));
         return "blogs/show";
     }
 }
