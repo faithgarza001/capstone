@@ -83,13 +83,17 @@ public class BlogController {
     //Viewing All User's Blogs
     @GetMapping("/dashboard/blogs/myblogs")
     public String getMyBlogs(Model model, Principal principal){
+        // Getting logged in user
         User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userName = "";
         if (principal != null) {
+            // Setting username based on principal
             userName = principal.getName();
         }
+        //Setting authorized username to be used in myblogs view
         model.addAttribute("userName", userName);
-        model.addAttribute("blog",blogDao.findByUserId(loggedIn.getId()));
+        // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
+        model.addAttribute("blogs",blogDao.findByUserId(loggedIn.getId()));
         return "blogs/myblogs";
     }
 
