@@ -69,7 +69,7 @@ public class BlogController {
         blog.setBlogTitle(blogTitle);
         blog.setHandle(handle);
         blogDao.save(blog);
-        return "redirect:blogs/index";
+        return "redirect:/dashboard/blogs";
     }
 
     // Viewing All Blogs
@@ -79,17 +79,17 @@ public class BlogController {
         return "blogs/index";
     }
 
-    //Viewing All User's Blogs
-    @GetMapping("/dashboard/blogs/myblogs")
-    public String getPost(Model model, Principal principal){
-//        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userName = "";
-        if (principal != null) {
-            userName = principal.getName();
-//            userDao.findByUsername(userName);
-        }
-        model.addAttribute("userName", userName);
-        model.addAttribute("blog",blogDao.findAll());
-        return "blogs/myblogs";
-    }
+//    //Viewing All User's Blogs
+//    @GetMapping("/dashboard/blogs/myblogs")
+//    public String getPost(Model model, Principal principal){
+////        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String userName = "";
+//        if (principal != null) {
+//            userName = principal.getName();
+////            userDao.findByUsername(userName);
+//        }
+//        model.addAttribute("userName", userName);
+//        model.addAttribute("blog",blogDao.findAll());
+//        return "blogs/myblogs";
+//    }
 }
