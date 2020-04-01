@@ -1,5 +1,6 @@
 package com.capstone.kitsune.services;
 
+//Made a service, but file may belong somewhere else
 public class BlogsService {
     // function to generate a random string of length n for Blog handle
     public String getAlphaNumericString(int n) {
