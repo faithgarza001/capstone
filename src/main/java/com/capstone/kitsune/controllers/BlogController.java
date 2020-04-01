@@ -69,7 +69,7 @@ public class BlogController {
         blog.setBlogTitle(blogTitle);
         blog.setHandle(handle);
         blogDao.save(blog);
-        return "redirect:/dashboard/blogs";
+        return "redirect:/dashboard/blogs/{id}";
     }
 
     // Viewing All Blogs
