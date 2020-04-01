@@ -79,9 +79,9 @@ public class BlogController {
         return "blogs/index";
     }
 
-//    //Viewing All User's Blogs
-//    @GetMapping("/dashboard/blogs/myblogs")
-//    public String getPost(Model model, Principal principal){
+    //Viewing All User's Blogs
+    @GetMapping("/dashboard/blogs/myblogs")
+    public String getPost(Model model, Principal principal){
 ////        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        String userName = "";
 //        if (principal != null) {
@@ -90,6 +90,18 @@ public class BlogController {
 //        }
 //        model.addAttribute("userName", userName);
 //        model.addAttribute("blog",blogDao.findAll());
-//        return "blogs/myblogs";
-//    }
+        return "blogs/myblogs";
+    }
+
+    //Viewing One User Blog
+    @GetMapping("/dashboard/blogs/{id}")
+    public String getPost(@PathVariable long id, Model model, Principal principal){
+        String userName = "";
+        if (principal != null) {
+            userName = principal.getName();
+        }
+        model.addAttribute("userName", userName);
+        model.addAttribute("blog",blogDao.getOne(id));
+        return "blogs/show";
+    }
 }
