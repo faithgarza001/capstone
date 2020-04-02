@@ -12,8 +12,14 @@
 <div sec:authorize="isAuthenticated()">
 
     <div th:if="${userName == blog.user.username}">
-        <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}"><button>Edit My Blog</button></a>
+        <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+            <button>Edit My Blog</button>
+        </a>
     </div>
+</div>
+<div class="posts" th:each="post : ${posts}">
+    <h2 th:text="${post.textTitle}"></h2>
+    <p th:text="${post.textBody}"></p>
 </div>
 </body>
 </html>

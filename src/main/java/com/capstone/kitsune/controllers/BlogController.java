@@ -3,6 +3,7 @@ package com.capstone.kitsune.controllers;
 import com.capstone.kitsune.models.Blog;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
+import com.capstone.kitsune.repositories.PostRepo;
 import com.capstone.kitsune.repositories.UserRepo;
 import com.capstone.kitsune.services.BlogsService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,11 +20,11 @@ import java.util.Objects;
 @Controller
 public class BlogController extends BlogsService {
     private BlogRepo blogDao;
-    private UserRepo userDao;
+    private PostRepo postDao;
 
-    public BlogController(BlogRepo blogDao, UserRepo userDao) {
+    public BlogController(BlogRepo blogDao, PostRepo postDao) {
         this.blogDao = blogDao;
-        this.userDao = userDao;
+        this.postDao = postDao;
     }
 
     //Create form for a blogs
@@ -113,6 +114,8 @@ public class BlogController extends BlogsService {
         }
         model.addAttribute("userName", userName);
         model.addAttribute("blog", blogDao.getOne(id));
+        // Find all posts with the same blog_id as blogDao.getOne(id)
+        model.addAttribute("posts", postDao.findByBlogId(id));
         return "blogs/show";
     }
 }
