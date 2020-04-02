@@ -18,6 +18,7 @@
             <th> Handle</th>
             <th> Date Created</th>
             <th> Created By</th>
+            <th> Options</th>
         </tr>
         </thead>
         <tbody>
@@ -28,11 +29,20 @@
             <td>
                 <p>/<span th:text="${blog.handle}"></span></p>
             </td>
-            <td th:text="${blog.dateCreated}">
-<!--                Need to parse date-->
+            <td th:text="${blog.dateCreated}"></td>
+            <!--                Need to parse date-->
+            <td th:text="${blog.user.getUsername()}"></td>
+            <td>
+                <div th:if="${userName == blog.user.username}">
+                    <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+                        <button>Edit Blog</button>
+                    </a>
+                    <a th:href="@{|/dashboard/blogs/${blog.id}/delete|}">
+                        <button>Delete Blog</button>
+                    </a>
+                </div>
+            </td>
 
-            </td><td th:text="${blog.user}"></td>
-<!--            Need to display username instead of user object-->
         </tr>
         </tbody>
     </table>
