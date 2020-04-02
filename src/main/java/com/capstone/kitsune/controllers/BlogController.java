@@ -55,8 +55,6 @@ public class BlogController extends BlogsService {
             blogDao.save(newBlog);
             return "blogs/view";
         }
-
-//        newBlog.setHandle(Objects.requireNonNullElse(handle, "hardCodedHandle"));
         newBlog.setUser(loggedIn);
         blogDao.save(newBlog);
         return "redirect:/dashboard/blogs/myblogs";
