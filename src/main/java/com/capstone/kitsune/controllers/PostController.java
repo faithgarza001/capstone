@@ -1,5 +1,6 @@
 package com.capstone.kitsune.controllers;
 
+import com.capstone.kitsune.models.Blog;
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
@@ -38,9 +39,10 @@ public class PostController {
 
     //Saving the post to the database
     @PostMapping("/dashboard/posts/create")
-    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody) {
+    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Post post = new Post(textTitle, textBody, loggedInUser);
+        Blog blog = blogDao.getOne(id);
+        Post post = new Post(textTitle, textBody, loggedInUser, blog);
         postDao.save(post);
         return "redirect:/dashboard";
     }
