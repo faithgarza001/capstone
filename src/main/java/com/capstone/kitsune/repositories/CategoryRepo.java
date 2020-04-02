@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CategoryRepo extends JpaRepository<Category, Long> {
 
-    public List<Category> findByidIn(long[] ids);
+    List<Category> findByidIn(long[] ids);
 
 }

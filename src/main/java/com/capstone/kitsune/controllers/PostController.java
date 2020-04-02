@@ -33,18 +33,7 @@ public class PostController {
     public String showCreateForm(Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
-            List<Category> categories = Arrays.asList(
-                    new Category(1L, "Math"),
-                    new Category(2L, "Science"),
-                    new Category(3L, "History"),
-                    new Category(4L, "Computer Science"),
-                    new Category(5L, "Data Science"),
-                    new Category(6L, "Web Development"),
-                    new Category(7L, "Physical Education"),
-                    new Category(8L, "Music"),
-                    new Category(9L, "Dance"),
-                    new Category(10L, "Astronomy")
-            );
+            List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);
             model.addAttribute("post", new Post());
             return "posts/create";
