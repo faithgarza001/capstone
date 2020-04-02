@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Viewing Blog</title>
+</head>
+<body>
+<h1 th:text="${blog.blogTitle}"></h1>
+<p> By: <span th:text="${blog.user.username}"></span></p>
+<br>
+<div sec:authorize="isAuthenticated()">
+
+    <div th:if="${userName == blog.user.username}">
+        <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+            <button>Edit My Blog</button>
+        </a>
+    </div>
+</div>
+<div class="posts" th:each="post : ${posts}">
+    <h2 th:text="${post.textTitle}"></h2>
+    <p th:text="${post.textBody}"></p>
+</div>
+</body>
+</html>
