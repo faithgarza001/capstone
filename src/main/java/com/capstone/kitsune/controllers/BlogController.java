@@ -50,7 +50,7 @@ public class BlogController extends BlogsService {
             newBlog.setHandle(getAlphaNumericString(6));
         } else {
             newBlog.setHandle(handle);
-            User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//            User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             newBlog.setUser(loggedIn);
             blogDao.save(newBlog);
             return "blogs/view";
