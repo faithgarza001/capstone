@@ -2,6 +2,7 @@ package com.capstone.kitsune.controllers;
 
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
+import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.PostRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class PostController {
     private PostRepo postDao;
+    private BlogRepo blogDao;
 
-    public PostController(PostRepo postDao) {
+    public PostController(PostRepo postDao, BlogRepo blogDao) {
         this.postDao = postDao;
+        this.blogDao = blogDao;
     }
 
 
@@ -26,6 +29,7 @@ public class PostController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             model.addAttribute("post", new Post());
+            model.addAttribute("blogs", blogDao.findByUserId(loggedInUser.getId()));
             return "posts/create";
         } else {
             return "redirect:/login";
