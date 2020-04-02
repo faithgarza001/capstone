@@ -72,7 +72,7 @@ public class BlogController extends BlogsService {
             newBlog.setCategories(categoriesList);
             newBlog.setUser(loggedIn);
             blogDao.save(newBlog);
-            return "blogs/view";
+            return "blogs/myblogs";
         }
         newBlog.setCategories(categoriesList);
         newBlog.setUser(loggedIn);
