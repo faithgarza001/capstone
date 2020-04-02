@@ -1,10 +1,13 @@
 package com.capstone.kitsune.controllers;
 
 import com.capstone.kitsune.models.Blog;
+import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
+import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.repositories.PostRepo;
 import com.capstone.kitsune.repositories.UserRepo;
+import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.services.BlogsService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,13 +20,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.util.Objects;
 
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+
 @Controller
 public class BlogController extends BlogsService {
     private BlogRepo blogDao;
+    private CategoryRepo categoryDao;
     private PostRepo postDao;
 
-    public BlogController(BlogRepo blogDao, PostRepo postDao) {
+    public BlogController(BlogRepo blogDao, CategoryRepo categoryDao, PostRepo postDao) {
         this.blogDao = blogDao;
+        this.categoryDao = categoryDao;
         this.postDao = postDao;
     }
 
@@ -38,6 +49,8 @@ public class BlogController extends BlogsService {
     public String showCreateBlogForm(Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
+            List<Category> categories = categoryDao.findAll();
+            model.addAttribute("categories", categories);
             model.addAttribute("blog", new Blog());
             return "blogs/create";
         } else {
@@ -46,9 +59,15 @@ public class BlogController extends BlogsService {
     }
 
     //Saving a new blog to the database
-    @PostMapping("/blogs/create")
-    public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle) {
+    @PostMapping("/dashboard/blogs/create")
+    public String postNewBlog(@RequestParam String blogTitle, @RequestParam String handle, @RequestParam String[] categories) {
         Blog newBlog = new Blog();
+        long[] selectedCategoryIds = new long[categories.length];
+        for (int i = 0; i < categories.length; i++) {
+            selectedCategoryIds[i] = Long.parseLong(categories[i]);
+        }
+        List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
+        newBlog.setCategories(categoriesList);
         User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newBlog.setBlogTitle(blogTitle);
         //If handle input is not null, set handle to @RequestParam, else set handle to random 6 digit alphanumeric string
@@ -56,13 +75,12 @@ public class BlogController extends BlogsService {
             newBlog.setHandle(getAlphaNumericString(6));
         } else {
             newBlog.setHandle(handle);
-//            User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            newBlog.setCategories(categoriesList);
             newBlog.setUser(loggedIn);
             blogDao.save(newBlog);
-            return "blogs/view";
+            return "blogs/myblogs";
         }
-
-//        newBlog.setHandle(Objects.requireNonNullElse(handle, "hardCodedHandle"));
+        newBlog.setCategories(categoriesList);
         newBlog.setUser(loggedIn);
         blogDao.save(newBlog);
         return "redirect:/dashboard/blogs/myblogs";
@@ -74,6 +92,8 @@ public class BlogController extends BlogsService {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             Blog blog = blogDao.getOne(id);
+            List<Category> categories = categoryDao.findAll();
+            model.addAttribute("categories", categories);
             model.addAttribute("blog", blog);
             return "blogs/edit";
         } else {
@@ -83,9 +103,10 @@ public class BlogController extends BlogsService {
 
     //Saving the edit to the database
     @PostMapping("/dashboard/blogs/{id}/edit")
-    public String saveBlogEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam String handle) {
+    public String saveBlogEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam String handle, @RequestParam List<Category> categories) {
         Blog blog = blogDao.getOne(id);
         blog.setBlogTitle(blogTitle);
+        blog.setCategories(categories);
         blog.setHandle(handle);
         blogDao.save(blog);
         return "redirect:/dashboard/blogs/{id}";
@@ -127,5 +148,14 @@ public class BlogController extends BlogsService {
         // Find all posts with the same blog_id as blogDao.getOne(id)
         model.addAttribute("posts", postDao.findByBlogId(id));
         return "blogs/show";
+    }
+
+    @PostMapping("/dashboard/blogs/{id}/delete")
+    public String deleteBlog(@PathVariable long id){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser.getId() == blogDao.getOne(id).getUser().getId()) {
+            blogDao.deleteById(id);
+        }
+        return "redirect:blogs/index";
     }
 }

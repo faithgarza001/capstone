@@ -18,7 +18,8 @@
             <th> Handle</th>
             <th> Date Created</th>
             <th> Created By</th>
-            <th> Options</th>
+            <th> Categories</th>
+
         </tr>
         </thead>
         <tbody>
@@ -32,17 +33,21 @@
             <td th:text="${blog.dateCreated}"></td>
             <!--                Need to parse date-->
             <td th:text="${blog.user.getUsername()}"></td>
+<!--            <td>-->
+<!--                <div th:if="${userName == blog.user.username}">-->
+<!--                    <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">-->
+<!--                        <button>Edit Blog</button>-->
+<!--                    </a>-->
+<!--                    <a th:href="@{|/dashboard/blogs/${blog.id}/delete|}">-->
+<!--                        <button>Delete Blog</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </td>-->
             <td>
-                <div th:if="${userName == blog.user.username}">
-                    <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
-                        <button>Edit Blog</button>
-                    </a>
-                    <a th:href="@{|/dashboard/blogs/${blog.id}/delete|}">
-                        <button>Delete Blog</button>
-                    </a>
-                </div>
+                <span th:each="category : ${blog.categories}" type="hidden">
+                        <label th:text="${category.name}"></label>
+                </span>
             </td>
-
         </tr>
         </tbody>
     </table>

@@ -3,8 +3,10 @@ package com.capstone.kitsune.controllers;
 import com.capstone.kitsune.models.Blog;
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
+import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.PostRepo;
+import com.capstone.kitsune.repositories.CategoryRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +15,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 public class PostController {
     private PostRepo postDao;
     private BlogRepo blogDao;
+    private CategoryRepo categoryDao;
 
-    public PostController(PostRepo postDao, BlogRepo blogDao) {
+    public PostController(PostRepo postDao, BlogRepo blogDao, CategoryRepo categoryDao) {
         this.postDao = postDao;
         this.blogDao = blogDao;
+        this.categoryDao = categoryDao;
     }
 
     @GetMapping("/posts")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
@@ -35,6 +43,8 @@ public class PostController {
     public String showCreateForm(Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
+            List<Category> categories = categoryDao.findAll();
+            model.addAttribute("categories", categories);
             model.addAttribute("post", new Post());
             model.addAttribute("blogs", blogDao.findByUserId(loggedInUser.getId()));
             return "posts/create";
@@ -45,10 +55,18 @@ public class PostController {
 
     //Saving the post to the database
     @PostMapping("/dashboard/posts/create")
-    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id) {
+    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
-        Post post = new Post(textTitle, textBody, loggedInUser, blog);
+//convert string[] ids to long[] ids
+        long[] selectedCategoryIds = new long[categories.length];
+        for (int i = 0; i < categories.length; i++) {
+            selectedCategoryIds[i] = Long.parseLong(categories[i]);
+        }
+
+        List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
+
+        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList);
         postDao.save(post);
         return "redirect:/dashboard";
     }
