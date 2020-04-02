@@ -89,11 +89,12 @@ public class Post {
     }
 
     // Basic Constructor
-    public Post(String textTitle, String textBody, User user, Blog blog){
+    public Post(String textTitle, String textBody, User user, Blog blog, List<Category> categories){
         this.textTitle = textTitle;
         this.textBody = textBody;
         this.user = user;
         this.blog = blog;
+        this.categories = categories;
     }
 
     // Images constructor
