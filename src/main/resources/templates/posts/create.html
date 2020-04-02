@@ -13,6 +13,11 @@
         Body:
         <textarea th:field="*{textBody}" />
         <br />
+        Blog:
+        <select th:field="*{id}" required>
+            <option th:each="blog : ${blogs}" th:value="${blog.id}" th:utext="${blog.blogTitle}"></option>
+        </select>
+        <br />
         <input type="submit" />
     </form>
 </div>

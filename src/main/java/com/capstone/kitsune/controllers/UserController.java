@@ -68,16 +68,5 @@ public class UserController {
         User user = users.findByUsername(username);
         String hash = this.passwordEncoder.encode(password);
         boolean debug = this.passwordEncoder.matches(user.getPassword(), hash);
-
-        user.setPassword(hash);
-        user.setEmail(email);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        users.save(user);
-        return "redirect:/dashboard";
     }
-    }
-
-
-
 
