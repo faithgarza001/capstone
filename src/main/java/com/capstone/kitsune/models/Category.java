@@ -23,6 +23,11 @@ public class Category {
     public Category() {
     }
 
+    public Category(long id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
     public Category(long id, String name, List<Blog> blogs, List<Post> posts) {
         this.id = id;
         this.name = name;

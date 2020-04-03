@@ -6,14 +6,13 @@
 <body>
 <div class="container">
     <h1>Create Blog</h1>
-<!--    blogTitle, handle, dateCreated, categories-->
-    <form th:action="@{/dashboard/blogs/create}" th:method="post" th:object="${blog}">
-        Title:
-        <input th:field="*{blogTitle}" />
-        <br />
+    <!--    blogTitle, handle, dateCreated, categories-->
+    <form th:action="@{/dashboard/blogs/create}" th:method="post" th:object="${blog}"> Title:
+        <input th:field="*{blogTitle}"/>
+        <br/>
         Handle (optional):
-        <input th:field="*{handle}" />
-        <br />
+        <input th:field="*{handle}"/>
+        <br/>
         Categories:
         <ul>
             <li th:each="category : ${categories}" type="hidden">
@@ -23,7 +22,8 @@
                 </div>
             </li>
         </ul>
-        <input type="submit" />
+        <br/>
+        <input type="submit"/>
     </form>
 </div>
 </body>

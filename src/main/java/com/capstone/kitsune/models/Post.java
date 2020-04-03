@@ -89,6 +89,15 @@ public class Post {
         this.categories = categories;
     }
 
+    // Basic Constructor
+    public Post(String textTitle, String textBody, User user, Blog blog, List<Category> categories){
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+        this.user = user;
+        this.blog = blog;
+        this.categories = categories;
+    }
+
     // Images constructor
     public Post(long id, String textTitle, String textBody, List<Image> images, String postStatus, Date dateCreated, Blog blog, User user, List<Category> categories) {
         this.id = id;

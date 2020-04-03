@@ -33,7 +33,6 @@
 <!--                Need to parse date-->
 
             </td><td th:text="${blog.user.username}"></td>
-<!--            Need to display username instead of user object-->
             <td>
                 <span th:each="category : ${blog.categories}" type="hidden">
                         <label th:text="${category.name}"></label>
