@@ -154,6 +154,6 @@ public class BlogController extends BlogsService {
         if (loggedInUser.getId() == blogDao.getOne(id).getUser().getId()) {
             blogDao.deleteById(id);
         }
-        return "redirect:blogs/index";
+        return "redirect:/dashboard/blogs";
     }
 }
