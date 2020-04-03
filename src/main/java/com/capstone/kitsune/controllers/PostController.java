@@ -32,6 +32,7 @@ public class PostController {
         this.categoryDao = categoryDao;
     }
 
+
     // Viewing All Posts in Dashboard
     @GetMapping("/dashboard")
     public String getDashboard(Model model) {
@@ -44,7 +45,7 @@ public class PostController {
     @GetMapping("/dashboard/posts")
     public String getAllPosts(Model model) {
         model.addAttribute("posts", postDao.findAll());
-        return "posts/allposts";
+        return "posts/index";
     }
 
 
@@ -64,6 +65,14 @@ public class PostController {
         model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
         return "posts/myposts";
     }
+
+    @GetMapping("/posts")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
+    public String getPosts(Model model){
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
+    }
+
+
 
     //Create form for a post
     @GetMapping("/dashboard/posts/create")
