@@ -156,4 +156,17 @@ public class BlogController extends BlogsService {
         }
         return "redirect:/dashboard/blogs";
     }
+
+    @GetMapping("/dashboard/search")
+    public String blogSearchPage(Model model) {
+        model.addAttribute("blog", new Blog());
+        return "blogs/search";
+    }
+
+    @PostMapping("/dashboard/search")
+    public String blogSearch(Model model, String handle) {
+        List<Blog> foundBlogs = blogDao.findByHandle(handle);
+        model.addAttribute("foundBlogs", foundBlogs);
+        return "/dashboard/search";
+    }
 }

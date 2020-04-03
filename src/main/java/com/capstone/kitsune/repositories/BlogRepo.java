@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface BlogRepo extends JpaRepository<Blog, Long> {
     List<Blog> findByUserId(Long user_id);
-    List<Blog> findByHandleOrCategories(String handle, List<Category> categories);
+    List<Blog> findByHandle(String handle);
 }
