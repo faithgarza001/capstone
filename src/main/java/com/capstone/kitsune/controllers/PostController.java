@@ -39,7 +39,7 @@ public class PostController {
         return "dashboard/index";
     }
     //Viewing All User's Posts
-    @GetMapping("/dashboard/posts/myblogs")
+    @GetMapping("/dashboard/posts/myposts")
     public String getMyPosts(Model model, Principal principal) {
         // Getting logged in user
         User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
