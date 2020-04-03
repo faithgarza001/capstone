@@ -35,9 +35,19 @@ public class PostController {
     // Viewing All Posts in Dashboard
     @GetMapping("/dashboard")
     public String getDashboard(Model model) {
+        //This will be posts from followed blogs when functionality is complete
         model.addAttribute("posts", postDao.findAll());
         return "dashboard/index";
     }
+
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard/posts")
+    public String getDashboard(Model model) {
+        model.addAttribute("posts", postDao.findAll());
+        return "dashboard/allposts";
+    }
+
+
     //Viewing All User's Posts
     @GetMapping("/dashboard/posts/myposts")
     public String getMyPosts(Model model, Principal principal) {
