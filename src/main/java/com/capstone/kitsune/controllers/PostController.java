@@ -42,9 +42,9 @@ public class PostController {
 
     // Viewing All Posts in Dashboard
     @GetMapping("/dashboard/posts")
-    public String getDashboard(Model model) {
+    public String getAllPosts(Model model) {
         model.addAttribute("posts", postDao.findAll());
-        return "dashboard/allposts";
+        return "posts/allposts";
     }
 
 
