@@ -31,6 +31,12 @@ public class PostController {
         this.categoryDao = categoryDao;
     }
 
+    @GetMapping("/posts")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
+    public String getPosts(Model model){
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
+    }
+
 
     //Create form for a post
     @GetMapping("/dashboard/posts/create")

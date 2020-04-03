@@ -38,6 +38,12 @@ public class BlogController extends BlogsService {
         this.postDao = postDao;
     }
 
+    @GetMapping("/blogs")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
+    public String getBlogs(Model model){
+        model.addAttribute("posts", blogDao.findAll());
+        return "blogs/index";
+    }
+
     //Create form for a blogs
     @GetMapping("/dashboard/blogs/create")
     public String showCreateBlogForm(Model model) {
@@ -72,7 +78,7 @@ public class BlogController extends BlogsService {
             newBlog.setCategories(categoriesList);
             newBlog.setUser(loggedIn);
             blogDao.save(newBlog);
-            return "blogs/view";
+            return "blogs/myblogs";
         }
         newBlog.setCategories(categoriesList);
         newBlog.setUser(loggedIn);
