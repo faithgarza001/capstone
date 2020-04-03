@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,28 @@ public class PostController {
         this.categoryDao = categoryDao;
     }
 
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard")
+    public String getDashboard(Model model) {
+        model.addAttribute("posts", postDao.findAll());
+        return "dashboard/index";
+    }
+    //Viewing All User's Posts
+    @GetMapping("/dashboard/posts/myblogs")
+    public String getMyPosts(Model model, Principal principal) {
+        // Getting logged in user
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName = "";
+        if (principal != null) {
+            // Setting username based on principal
+            userName = principal.getName();
+        }
+        //Setting authorized username to be used in myblogs view
+        model.addAttribute("userName", userName);
+        // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
+        model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
+        return "posts/myposts";
+    }
 
     //Create form for a post
     @GetMapping("/dashboard/posts/create")
