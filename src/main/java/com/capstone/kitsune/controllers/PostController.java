@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -44,7 +42,7 @@ public class PostController {
     @GetMapping("/dashboard/posts")
     public String getAllPosts(Model model) {
         model.addAttribute("posts", postDao.findAll());
-        return "posts/allposts";
+        return "posts/index";
     }
 
 
