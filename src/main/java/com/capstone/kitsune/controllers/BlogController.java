@@ -6,8 +6,6 @@ import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.repositories.PostRepo;
-import com.capstone.kitsune.repositories.UserRepo;
-import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.services.BlogsService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,11 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.Objects;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 @Controller
 public class BlogController extends BlogsService {
@@ -155,18 +149,5 @@ public class BlogController extends BlogsService {
             blogDao.deleteById(id);
         }
         return "redirect:/dashboard/blogs";
-    }
-
-    @GetMapping("/dashboard/search")
-    public String blogSearchPage(Model model) {
-        model.addAttribute("searchText", searchText);
-        return "blogs/search";
-    }
-
-    @PostMapping("/dashboard/search")
-    public String blogSearch(@RequestParam String searchText, Model model) {
-        List<Blog> foundBlogs = blogDao.findByHandle(searchText);
-        model.addAttribute("foundBlogs", foundBlogs);
-        return "blogs/search";
     }
 }
