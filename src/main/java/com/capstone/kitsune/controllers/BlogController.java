@@ -164,13 +164,15 @@ public class BlogController extends BlogsService {
                 followed = new ArrayList<Blog>();
             }
             Blog b = blogDao.findByid(id);
-            followed.add(b);
-            updateUser.setFollowing(followed);
-            userDao.save(updateUser);
+            if(!followed.contains(b)) {
+                followed.add(b);
+                updateUser.setFollowing(followed);
+                userDao.save(updateUser);
 
-            followed = null;
-            updateUser = userDao.findByid(loggedInUser.getId());
-            followed = updateUser.getFollowing();
+                followed = null;
+                updateUser = userDao.findByid(loggedInUser.getId());
+                followed = updateUser.getFollowing();
+            }
             return "redirect:/dashboard/blogs/{id}";
         }else{
             return "redirect:/login";

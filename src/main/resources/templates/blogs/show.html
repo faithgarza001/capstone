@@ -8,6 +8,9 @@
 <body>
 <h1 th:text="${blog.blogTitle}"></h1>
 <p> By: <span th:text="${blog.user.username}"></span></p>
+<span th:each="category : ${blog.categories}" type="hidden">
+    <label th:text="${category.name}"></label>
+</span>
 <br>
 <div sec:authorize="isAuthenticated()">
     <div th:if="${userName == blog.user.username}">
