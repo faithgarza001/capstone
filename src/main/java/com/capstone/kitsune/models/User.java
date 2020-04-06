@@ -39,6 +39,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Blog> following;
+
     // Copy constructor for authentication
     public User(User copy) {
         id = copy.id;
@@ -50,12 +53,58 @@ public class User {
     public User() {
     }
 
+    // Full Constructor
+    public User(String username, String firstname, String lastname, String email, String password, List<Blog> following, List<Blog> blogs, List<Post> posts, int blogsFollowed, String profilePicture){
+        this.username = username;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.email = email;
+        this.password = password;
+        this.following = following;
+        this.blogs = blogs;
+        this.posts = posts;
+        this.blogsFollowed = blogsFollowed;
+        this.profilePicture = profilePicture;
+    }
+
+    // Profile constructor
+    public User(String username, String firstname, String lastname, String email, String password, List<Blog> following, List<Blog> blogs, List<Post> posts){
+        this.username = username;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.email = email;
+        this.password = password;
+        this.following = following;
+        this.blogs = blogs;
+        this.posts = posts;
+    }
+
+
+    //Following Constructor
+    public User(String username, String firstname, String lastname, String email, String password, List<Blog> following){
+        this.username = username;
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.email = email;
+        this.password = password;
+        this.following = following;
+    }
+
+    //Registration Constructor
     public User(String username, String firstname, String lastname, String email, String password){
         this.username = username;
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = email;
         this.password = password;
+    }
+
+    public List<Blog> getFollowing(){
+        return this.following;
+    }
+
+    public void setFollowing(List<Blog> following){
+        this.following = following;
     }
 
     public long getId() {

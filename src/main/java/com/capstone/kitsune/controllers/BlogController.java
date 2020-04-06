@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class BlogController extends BlogsService {
@@ -149,5 +149,18 @@ public class BlogController extends BlogsService {
             blogDao.deleteById(id);
         }
         return "redirect:/dashboard/blogs";
+    }
+
+    @PostMapping("/dashboard/blogs/{id}/following")
+    public String following(@PathVariable long id){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser != null) {
+            List<Blog> followed = loggedInUser.getFollowing();
+            followed.add(blogDao.getOne(id));
+            loggedInUser.setFollowing(followed);
+        }else{
+            return "redirect:/login";
+        }
+        return "redirect:/dashboard/blogs/{id}";
     }
 }
