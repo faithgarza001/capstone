@@ -6,6 +6,7 @@ import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.repositories.PostRepo;
+import com.capstone.kitsune.repositories.UserRepo;
 import com.capstone.kitsune.services.BlogsService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,11 +24,13 @@ public class BlogController extends BlogsService {
     private BlogRepo blogDao;
     private CategoryRepo categoryDao;
     private PostRepo postDao;
+    private UserRepo userDao;
 
-    public BlogController(BlogRepo blogDao, CategoryRepo categoryDao, PostRepo postDao) {
+    public BlogController(BlogRepo blogDao, CategoryRepo categoryDao, PostRepo postDao, UserRepo userDao) {
         this.blogDao = blogDao;
         this.categoryDao = categoryDao;
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/blogs")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
@@ -136,7 +139,7 @@ public class BlogController extends BlogsService {
             userName = principal.getName();
         }
         model.addAttribute("userName", userName);
-        model.addAttribute("blog", blogDao.getOne(id));
+        model.addAttribute("blog", blogDao.findByid(id));
         // Find all posts with the same blog_id as blogDao.getOne(id)
         model.addAttribute("posts", postDao.findByBlogId(id));
         return "blogs/show";
@@ -151,16 +154,26 @@ public class BlogController extends BlogsService {
         return "redirect:/dashboard/blogs";
     }
 
-    @PostMapping("/dashboard/blogs/{id}/following")
+    @PostMapping("/dashboard/blogs/{id}/follow")
     public String following(@PathVariable long id){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
-            List<Blog> followed = loggedInUser.getFollowing();
-            followed.add(blogDao.getOne(id));
-            loggedInUser.setFollowing(followed);
+            User updateUser = userDao.findByid(loggedInUser.getId());
+            List<Blog> followed = updateUser.getFollowing();
+            if(followed == null){
+                followed = new ArrayList<Blog>();
+            }
+            Blog b = blogDao.findByid(id);
+            followed.add(b);
+            updateUser.setFollowing(followed);
+            userDao.save(updateUser);
+
+            followed = null;
+            updateUser = userDao.findByid(loggedInUser.getId());
+            followed = updateUser.getFollowing();
+            return "redirect:/dashboard/blogs/{id}";
         }else{
             return "redirect:/login";
         }
-        return "redirect:/dashboard/blogs/{id}";
     }
 }

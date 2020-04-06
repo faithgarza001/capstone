@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 use kitsune_db;
 delete from categories where 1=1;
 insert into categories values (1, 'Math');
