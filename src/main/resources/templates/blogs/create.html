@@ -16,7 +16,6 @@
         Categories:
         <ul>
             <li th:each="category : ${categories}" type="hidden">
-
                 <div class="ui checkbox">
                     <input type="checkbox" th:field="*{categories}" th:value="${category.id}">
                     <label th:text="${category.name}"></label>
@@ -24,7 +23,6 @@
             </li>
         </ul>
         <br/>
-
         <input type="submit"/>
     </form>
 </div>

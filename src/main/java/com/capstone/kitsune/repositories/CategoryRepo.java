@@ -9,5 +9,4 @@ import java.util.List;
 public interface CategoryRepo extends JpaRepository<Category, Long> {
 
     List<Category> findByidIn(long[] ids);
-
 }

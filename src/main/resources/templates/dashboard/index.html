@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<h1>All Posts (Will be Followed Posts when functionality is added)</h1>
+<br>
+<div th:if="${#lists.isEmpty(posts)}">
+    <h2>No posts to show</h2>
+</div>
+<div th:if="!${#lists.isEmpty(posts)}">
+    <table>
+        <thead>
+        <tr>
+            <th> Title</th>
+            <th> Body</th>
+            <th> Date Created</th>
+            <th> Created By</th>
+            <th> Categories</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${posts}">
+            <td>
+                <p th:text="${post.textTitle}"></p>
+            </td>
+            <td>
+                <p th:text="${post.textBody}"></p>
+            </td>
+            <td th:text="${post.dateCreated}"></td>
+            <!--                Need to parse date-->
+            <td th:text="${post.user.getUsername()}"></td>
+            <!--            <td>-->
+            <!--                <div th:if="${userName == blog.user.username}">-->
+            <!--                    <a th:href="@{|/dashboard/posts/${post.id}/edit|}">-->
+            <!--                        <button>Edit Blog</button>-->
+            <!--                    </a>-->
+            <!--                    <a th:href="@{|/dashboard/posts/${post.id}/delete|}">-->
+            <!--                        <button>Delete Blog</button>-->
+            <!--                    </a>-->
+            <!--                </div>-->
+            <!--            </td>-->
+            <td>
+                <span th:each="category : ${post.categories}" type="hidden">
+                        <label th:text="${category.name}"></label>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

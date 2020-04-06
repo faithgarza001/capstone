@@ -3,6 +3,7 @@ package com.capstone.kitsune.models;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,12 +43,15 @@ public class Blog {
     )
     private List<Category> categories;
 
+    @ManyToMany(mappedBy ="following", cascade = CascadeType.ALL)
+    private List<User> followers;
+
     //Empty Constructor
     public Blog() {
     }
 
     //Full Constructor
-    public Blog(long id, String blogTitle, String handle, Date dateCreated, List<Post> posts, User user, List<Category> categories) {
+    public Blog(long id, String blogTitle, String handle, Date dateCreated, List<Post> posts, User user, List<Category> categories, List<User> followers) {
         this.id = id;
         this.blogTitle = blogTitle;
         this.handle = handle;
@@ -55,6 +59,7 @@ public class Blog {
         this.posts = posts;
         this.user = user;
         this.categories = categories;
+        this.followers = followers;
     }
 
     //My Blog Constructor
@@ -89,6 +94,13 @@ public class Blog {
         this.blogTitle = blogTitle;
         this.handle = handle;
         this.categories = categories;
+    }
+    public List<User> getFollowers(){
+        return this.followers;
+    }
+
+    public void setFollowers(List<User> followers){
+        this.followers = followers;
     }
 
     public long getId() {

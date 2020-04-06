@@ -2,34 +2,35 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Blogs</title>
+    <title>My Posts</title>
 </head>
 <body>
-<h1>My Blogs</h1>
+<h1>My Posts</h1>
 <br>
-<div th:if="${#lists.isEmpty(blogs)}">
+<div th:if="${#lists.isEmpty(posts)}">
     <h2>No blogs to show</h2>
 </div>
-<div th:if="!${#lists.isEmpty(blogs)}">
+<div th:if="!${#lists.isEmpty(posts)}">
     <table>
         <thead>
         <tr>
             <th> Title</th>
-            <th> Handle</th>
+            <th> Body</th>
             <th> Date Created</th>
+            <th> Categories</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="blog : ${blogs}">
+        <tr th:each="post : ${posts}">
             <td>
-                    <p th:text="${blog.blogTitle}"></p>
+                <p th:text="${post.textTitle}"></p>
             </td>
             <td>
-                <p>/<span th:text="${blog.handle}"></span></p>
+                <p th:text="${post.textBody}"></p>
             </td>
-            <td th:text="${blog.dateCreated}"></td>
+            <td th:text="${post.dateCreated}"></td>
             <td>
-                <span th:each="category : ${blog.categories}" type="hidden">
+                <span th:each="category : ${post.categories}" type="hidden">
                         <label th:text="${category.name}"></label>
                 </span>
             </td>
