@@ -178,4 +178,10 @@ public class BlogController extends BlogsService {
             return "redirect:/login";
         }
     }
+
+    @GetMapping("/dashboard/searchbyhandle")
+    public String searchHandle(@RequestParam(value="search") String handle, Model model) {
+        model.addAttribute("blogs", blogDao.findByHandle(handle));
+        return "blogs/search";
+    }
 }
