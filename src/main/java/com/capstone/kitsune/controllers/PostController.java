@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -33,6 +32,40 @@ public class PostController {
         this.postDao = postDao;
         this.blogDao = blogDao;
         this.categoryDao = categoryDao;
+    }
+
+
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard")
+    public String getDashboard(Model model) {
+        //This will be posts from followed blogs when functionality is complete
+        model.addAttribute("posts", postDao.findAll());
+        return "dashboard/index";
+    }
+
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard/posts")
+    public String getAllPosts(Model model) {
+        model.addAttribute("posts", postDao.findAll());
+        return "posts/index";
+    }
+
+
+    //Viewing All User's Posts
+    @GetMapping("/dashboard/posts/myposts")
+    public String getMyPosts(Model model, Principal principal) {
+        // Getting logged in user
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName = "";
+        if (principal != null) {
+            // Setting username based on principal
+            userName = principal.getName();
+        }
+        //Setting authorized username to be used in myblogs view
+        model.addAttribute("userName", userName);
+        // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
+        model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
+        return "posts/myposts";
     }
 
     @GetMapping("/posts")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
