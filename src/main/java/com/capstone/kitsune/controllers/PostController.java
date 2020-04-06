@@ -1,5 +1,9 @@
 package com.capstone.kitsune.controllers;
 
+import com.capstone.kitsune.models.Category;
+import com.capstone.kitsune.models.Post;
+import com.capstone.kitsune.models.User;
+import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.models.Blog;
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
@@ -70,8 +74,6 @@ public class PostController {
         return "posts/index";
     }
 
-
-
     //Create form for a post
     @GetMapping("/dashboard/posts/create")
     public String showCreateForm(Model model) {
@@ -92,14 +94,12 @@ public class PostController {
     public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
-//convert string[] ids to long[] ids
+        //convert string[] ids to long[] ids
         long[] selectedCategoryIds = new long[categories.length];
         for (int i = 0; i < categories.length; i++) {
             selectedCategoryIds[i] = Long.parseLong(categories[i]);
         }
-
         List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
-
         Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList);
         postDao.save(post);
         return "redirect:/dashboard";
@@ -111,6 +111,8 @@ public class PostController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             Post post = postDao.getOne(id);
+            List<Category> categories = categoryDao.findAll();
+            model.addAttribute("categories", categories);
             model.addAttribute("post", post);
             return "posts/edit";
         } else {
@@ -120,10 +122,16 @@ public class PostController {
 
     //Saving the edit to the database
     @PostMapping("/dashboard/posts/{id}/edit")
-    public String savePostEdit(@PathVariable long id, @RequestParam String textTitle, @RequestParam String textBody) {
+    public String savePostEdit(@PathVariable long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam String[] categories) {
         Post post = postDao.getOne(id);
+        long[] selectedCategoryIds = new long[categories.length];
+        for (int i = 0; i < categories.length; i++) {
+            selectedCategoryIds[i] = Long.parseLong(categories[i]);
+        }
+        List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
         post.setTextTitle(textTitle);
         post.setTextBody(textBody);
+        post.setCategories(categoriesList);
         postDao.save(post);
         return "redirect:/dashboard";
     }
@@ -137,4 +145,5 @@ public class PostController {
         }
         return "redirect:/dashboard";
     }
+
 }
