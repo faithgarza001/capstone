@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="partials/navbar :: navbar"></div>
 <div class="wrapper">
 
     <header class="container my-5">
@@ -27,5 +27,8 @@
         <h5 class="card-title">A place to explore, learn, create</h5>
     </div>
 </div>
+
+<div th:replace="partials/footer :: footer"></div>
+
 </body>
 </html>
