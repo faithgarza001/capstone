@@ -32,6 +32,7 @@
 <div class="posts" th:each="post : ${posts}">
     <h2 th:text="${post.textTitle}"></h2>
     <p th:text="${post.textBody}"></p>
+    <img src="" alt="">
     <div sec:authorize="isAuthenticated()">
         <div th:if="${userName == post.user.username}">
             <a th:href="@{|/dashboard/posts/${post.id}/edit|}"><button>Edit Post</button></a>
