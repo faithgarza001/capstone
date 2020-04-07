@@ -5,7 +5,7 @@
     <title>My Blogs</title>
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="partials/navbar :: navbar"></div>
 <h1>My Blogs</h1>
 <br>
 <div th:if="${#lists.isEmpty(blogs)}">
@@ -38,6 +38,6 @@
         </tbody>
     </table>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="partials/footer :: footer"></div>
 </body>
 </html>
