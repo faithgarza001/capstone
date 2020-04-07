@@ -13,7 +13,7 @@ public class GoogleController {
     public String googleCSE() {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
-            return "gsearch";
+            return "search/gsearch";
         } else {
             return "redirect:/login";
         }
