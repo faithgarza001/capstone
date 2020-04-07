@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Create Post</title>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
 </head>
-<body>
 <div th:replace="partials/navbar :: navbar"></div>
+<body>
 <div class="container">
-    <h1>Create Post</h1>
-    <form th:action="@{/dashboard/posts/create}" th:method="post" th:object="${post}">
+    <h1>Reblog Post</h1>
+    <form th:action="@{|/dashboard/posts/${post.id}/reblog|}" th:method="post" th:object="${post}">
         Title:
         <input th:field="*{textTitle}" />
         <br />
@@ -31,8 +32,6 @@
         <input type="submit" />
     </form>
 </div>
-
 <div th:replace="partials/footer :: footer"></div>
-
 </body>
 </html>

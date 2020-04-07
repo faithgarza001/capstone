@@ -1,6 +1,5 @@
 package com.capstone.kitsune.controllers;
 
-import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -64,5 +63,6 @@ public class UserController {
         users.save(user);
         return "redirect:/dashboard";
     }
+
 }
 

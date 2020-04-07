@@ -6,7 +6,7 @@
     <title>Viewing Blog</title>
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="partials/navbar :: navbar"></div>
 <h1 th:text="${blog.blogTitle}"></h1>
 <p> By: <span th:text="${blog.user.username}"></span></p>
 <span th:each="category : ${blog.categories}" type="hidden">
@@ -36,6 +36,9 @@
                 <button>Delete Post</button>
             </form>
         </div>
+        <div>
+            <a th:href="@{|/dashboard/posts/${post.id}/reblog|}"><button>Reblog</button></a>
+        </div>
     </div>
 </div>
 <div>
@@ -44,6 +47,6 @@
         <span th:text="${follower.blogTitle}"></span>
     </div>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="partials/footer :: footer"></div>
 </body>
 </html>
