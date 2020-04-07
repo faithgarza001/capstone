@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div th:replace="partials/navbar :: navbar"></div>
 <div class="wrapper">
-    <nav th:replace="partials/navbar :: navbar"></nav>
+
     <header class="container my-5">
 
         <div class="jumbotron">
@@ -26,5 +27,8 @@
         <h5 class="card-title">A place to explore, learn, create</h5>
     </div>
 </div>
+
+<div th:replace="partials/footer :: footer"></div>
+
 </body>
 </html>

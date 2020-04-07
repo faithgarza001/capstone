@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<div class="about-search mt-2">
+    <h2>Sites included in custom search</h2>
+    <ul>
+        <li><a href="https://www.gutenberg.org/wiki/Main_Page">Project Gutenberg</a>- more info</li>
+        <li><a href="https://openlibrary.org/">Open Library by Internet Archive</a>- more info</li>
+        <li><a href="https://openstax.org">OpenStax by Rice University</a>- more info</li>
+        <li><a href="https://open.umn.edu/opentextbooks">Open Textbook Library by UMN</a>- more info</li>
+        <li><a href="https://www.britannica.com/">Encyclopedia Britannica</a>- more info</li>
+        <li><a href="https://en.wikipedia.org/wiki/Wikipedia">Wikipedia</a>- more info</li>
+    </ul>
+</div>
+<div class="mt-4">
+<!--    <iframe width="560" height="315" src="https://www.youtube.com/embed/F_G7BJBDrKU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+    <script async src="https://cse.google.com/cse.js?cx=004105696008600156915:oqp24uhc3ra"></script>
+    <div class="gcse-searchbox" data-enableHistory="true" data-personalizedAds="false" data-image_as_filetype="jpg, png, gif" style="width: 25vw"></div>
+    <div class="gcse-searchresults"></div>
+</div>
+
+<div th:replace="partials/footer :: footer"></div>
+</body>
+</html>
