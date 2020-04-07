@@ -1,14 +1,13 @@
 package com.capstone.kitsune.controllers;
 
-import com.capstone.kitsune.models.Category;
-import com.capstone.kitsune.models.Post;
-import com.capstone.kitsune.models.User;
-import com.capstone.kitsune.repositories.*;
 import com.capstone.kitsune.models.Blog;
+import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
-import com.capstone.kitsune.models.Category;
+import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.CategoryRepo;
+import com.capstone.kitsune.repositories.PostRepo;
+import com.capstone.kitsune.repositories.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
