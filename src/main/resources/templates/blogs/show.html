@@ -15,7 +15,9 @@
 <br>
 <div sec:authorize="isAuthenticated()">
     <div th:if="${userName == blog.user.username}">
-        <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}"><button>Edit Blog</button></a>
+        <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+            <button>Edit Blog</button>
+        </a>
         <form th:action="@{|/dashboard/blogs/${blog.id}/delete|}" th:method="POST" style="display:inline">
             <button>Delete Blog</button>
         </form>
@@ -26,12 +28,21 @@
         </form>
     </div>
 </div>
+<div class="youtube" style="margin: 1em">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/9sWEecNUW-o" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 <div class="posts" th:each="post : ${posts}">
     <h2 th:text="${post.textTitle}"></h2>
     <p th:text="${post.textBody}"></p>
+    <div th:if="!${#strings.isEmpty(post.images)}">
+        <img th:attr="src=@{${post.images}}" alt="" class="post-img" src="#">
+    </div>
     <div sec:authorize="isAuthenticated()">
         <div th:if="${userName == post.user.username}">
-            <a th:href="@{|/dashboard/posts/${post.id}/edit|}"><button>Edit Post</button></a>
+            <a th:href="@{|/dashboard/posts/${post.id}/edit|}">
+                <button>Edit Post</button>
+            </a>
             <form th:action="@{|/dashboard/Posts/${post.id}/delete|}" th:method="POST" style="display:inline">
                 <button>Delete Post</button>
             </form>

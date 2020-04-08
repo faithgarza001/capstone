@@ -12,7 +12,17 @@ public class GoogleController {
     public String googleCSE() {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
-            return "gsearch";
+            return "search/gsearch";
+        } else {
+            return "redirect:/login";
+        }
+    }
+
+    @GetMapping("/dashboard/search/videos")
+    public String youtube() {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser != null) {
+            return "search/youtube";
         } else {
             return "redirect:/login";
         }

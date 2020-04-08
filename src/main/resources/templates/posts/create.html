@@ -7,12 +7,15 @@
 <div th:replace="partials/navbar :: navbar"></div>
 <div class="container">
     <h1>Create Post</h1>
-    <form th:action="@{/dashboard/posts/create}" th:method="post" th:object="${post}">
+    <form th:action="@{/dashboard/posts/create}" th:method="post" th:object="${post}" enctype="multipart/form-data">
         Title:
         <input th:field="*{textTitle}" />
         <br />
         Body:
-        <textarea th:field="*{textBody}" />
+        <textarea th:field="*{textBody}"></textarea>
+        <br />
+        Upload File:
+        <input th:field="*{images}" type="file" name="files" multiple>
         <br />
         Blog:
         <select th:field="*{id}" required>
