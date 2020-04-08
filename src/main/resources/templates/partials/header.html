@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="header">
-    <meta charset="UTF-8" />
-    <title>El Blog!!!</title>
-    <!-- include stylesheets, etc here -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:fragment="main-header(title)">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}"></title>
+    <!--    Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--Font Aweseome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
 </head>
-<body>
-<header><h5>El blog</h5></header>
-</body>
 </html>
