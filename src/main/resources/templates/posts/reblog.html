@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+</head>
+<div th:replace="partials/navbar :: navbar"></div>
+<body>
+<div class="container">
+    <h1>Reblog Post</h1>
+    <form th:action="@{|/dashboard/posts/${post.id}/reblog|}" th:method="post" th:object="${post}">
+        Title:
+        <input th:field="*{textTitle}" />
+        <br />
+        Body:
+        <textarea th:field="*{textBody}" />
+        <br />
+        Blog:
+        <select th:field="*{id}" required>
+            <option th:each="blog : ${blogs}" th:value="${blog.id}" th:utext="${blog.blogTitle}"></option>
+        </select>
+        <br />
+        Categories:
+        <ul>
+            <li th:each="category : ${categories}" type="hidden">
+                <div class="ui checkbox">
+                    <input type="checkbox" th:field="*{categories}" th:value="${category.id}">
+                    <label th:text="${category.name}"></label>
+                </div>
+            </li>
+        </ul>
+        <input type="submit" />
+    </form>
+</div>
+<div th:replace="partials/footer :: footer"></div>
+</body>
+</html>

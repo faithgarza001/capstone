@@ -1,16 +1,13 @@
 package com.capstone.kitsune.controllers;
 
-import com.capstone.kitsune.models.Category;
-import com.capstone.kitsune.models.Post;
-import com.capstone.kitsune.models.User;
-import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.models.Blog;
+import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
-import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.repositories.BlogRepo;
-import com.capstone.kitsune.repositories.PostRepo;
 import com.capstone.kitsune.repositories.CategoryRepo;
+import com.capstone.kitsune.repositories.PostRepo;
+import com.capstone.kitsune.repositories.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,11 +24,13 @@ public class PostController {
     private PostRepo postDao;
     private BlogRepo blogDao;
     private CategoryRepo categoryDao;
+    private UserRepo userDao;
 
-    public PostController(PostRepo postDao, BlogRepo blogDao, CategoryRepo categoryDao) {
+    public PostController(PostRepo postDao, BlogRepo blogDao, CategoryRepo categoryDao, UserRepo userDao) {
         this.postDao = postDao;
         this.blogDao = blogDao;
         this.categoryDao = categoryDao;
+        this.userDao = userDao;
     }
 
 
@@ -143,6 +142,30 @@ public class PostController {
         if (loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
             postDao.deleteById(id);
         }
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/dashboard/posts/{id}/reblog")
+    public String reblogPostForm(@PathVariable long id, Model model){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser != null) {
+            Post post = postDao.getOne(id);
+            List<Category> categories = categoryDao.findAll();
+            model.addAttribute("categories", categories);
+            model.addAttribute("post", post);
+            model.addAttribute("blogs", blogDao.findByUserId(loggedInUser.getId()));
+            return "posts/reblog";
+        } else {
+            return "redirect:/dashboard";
+        }
+    }
+
+    @PostMapping("/dashboard/posts/{id}/reblog")
+    public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Blog blog = blogDao.getOne(id);
+        Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories);
+        postDao.save(post2);
         return "redirect:/dashboard";
     }
 

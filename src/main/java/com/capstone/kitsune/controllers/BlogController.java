@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class BlogController extends BlogsService {
@@ -177,5 +178,18 @@ public class BlogController extends BlogsService {
         }else{
             return "redirect:/login";
         }
+    }
+
+    @GetMapping("dashboard/searchbyhandle")
+    public String search(Model model) {
+        return "blogs/search";
+    }
+
+    @PostMapping("/dashboard/searchbyhandle")
+    public String searchHandle(@RequestParam(value="handle") String handle, Model model) {
+        List<Blog> blogs = blogDao.findByhandleContains(handle);
+        model.addAttribute("blogs", blogs);
+        model.addAttribute("search", "");
+        return "blogs/search";
     }
 }
