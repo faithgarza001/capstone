@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/dashboard", "/dashboard/posts/create", "/dashboard/blogs/create", "/dashboard/blogs/{id}/edit", "/dashboard/posts/{id}/edit", "/dashboard/posts/{id}", "/dashboard/blogs/{id}", "/dashboard/posts/{id}/delete", "/dashboard/blogs/{id}/delete", "/account/{username}", "/account/{username}/edit")
+                        "/dashboard", "/dashboard/posts/create", "/dashboard/blogs/create", "/dashboard/blogs/{id}/edit", "/dashboard/posts/{id}/edit", "/dashboard/posts/{id}", "/dashboard/blogs/{id}", "/dashboard/posts/{id}/delete", "/dashboard/blogs/{id}/delete", "/account/{username}", "/account/{username}/edit", "dashboard/search/texts", "dashboard/search/videos")
                 .authenticated()
                 .and()
                 .headers().frameOptions().sameOrigin()
