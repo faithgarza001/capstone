@@ -18,4 +18,14 @@ public class GoogleController {
             return "redirect:/login";
         }
     }
+
+    @GetMapping("/dashboard/search/videos")
+    public String youtube() {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser != null) {
+            return "search/youtube";
+        } else {
+            return "redirect:/login";
+        }
+    }
 }
