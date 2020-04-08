@@ -108,7 +108,7 @@ public class PostController {
     @GetMapping("/dashboard/posts/{id}/edit")
     public String editPostForm(@PathVariable long id, Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedInUser != null) {
+        if (loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
             Post post = postDao.getOne(id);
             List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);
