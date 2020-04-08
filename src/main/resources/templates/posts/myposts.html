@@ -9,7 +9,7 @@
 <h1>My Posts</h1>
 <br>
 <div th:if="${#lists.isEmpty(posts)}">
-    <h2>No blogs to show</h2>
+    <h2>No posts to show</h2>
 </div>
 <div th:if="!${#lists.isEmpty(posts)}">
     <table>
