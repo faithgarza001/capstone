@@ -38,9 +38,8 @@ public class UserController {
 
     //navigating to home page
 
-
-    @GetMapping("/account/edit")
-    public String showAccountEditForm(Model model) {
+    @GetMapping("/account/{username}/edit")
+    public String showAccountEditForm(Model model, @PathVariable String username) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = users.findByid(loggedInUser.getId());
         model.addAttribute("user", user);
@@ -65,7 +64,8 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = users.findByid(loggedInUser.getId());
         model.addAttribute("user", user);
-        return "profile";
+        return "users/account";
+
     }
 }
 

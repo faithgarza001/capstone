@@ -8,8 +8,8 @@ $(function() {
             part: "snippet",
             type: "video",
             q: encodeURIComponent($("#search").val()).replace(/%20/g, "+"),
-            maxResults: 3,
-            order: "viewCount",
+            maxResults: 25,
+            relevanceLanguage: "en"
         });
         // execute the request
         request.execute(function(response) {
@@ -17,7 +17,7 @@ $(function() {
             $("#results").html("");
             $.each(results.items, function(index, item) {
                 // ERROR: GET http://localhost:8083/dashboard/tpl/item.html 404
-                $.get("tpl/item.html", function(data) {
+                $.get("/tpl/item.html", function(data) {
                     $("#results").append(tplawesome(data, [{"title":item.snippet.title, "videoid":item.id.videoId}]));
                 });
             });
@@ -33,7 +33,7 @@ function resetVideoHeight() {
 }
 
 function init() {
-    gapi.client.setApiKey(googleAPIs);
+    gapi.client.setApiKey(key);
     gapi.client.load("youtube", "v3", function() {
         // yt api is ready
     });

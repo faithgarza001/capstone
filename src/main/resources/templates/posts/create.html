@@ -14,9 +14,6 @@
         Body:
         <textarea th:field="*{textBody}"></textarea>
         <br />
-        Upload File:
-        <input th:field="*{images}" type="file" name="files" multiple>
-        <br />
         Blog:
         <select th:field="*{id}" required>
             <option th:each="blog : ${blogs}" th:value="${blog.id}" th:utext="${blog.blogTitle}"></option>
