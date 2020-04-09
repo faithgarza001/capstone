@@ -6,8 +6,8 @@
 </head>
 <div>
     <div th:replace="partials/navbar :: navbar"></div>
-<!--    Container start-->
-    <div class="container">
+    <!--    Container start-->
+    <div class="container mt-2">
         <!--    Row start: All three sections are in the same row-->
         <div class="row">
 
@@ -35,36 +35,40 @@
             <!--        End Dashboard Navigation-->
 
             <!--    Form Start-->
-            <h1 class="head">Create Blog</h1>
-            <form class="forms d-flex flex-column" th:action="@{/dashboard/blogs/create}" th:method="post"
-                  th:object="${blog}">
-                <div class="d-flex justify-content-center">
-                    Title:
-                    <input th:field="*{blogTitle}"/>
+            <div class="col-lg-6">
+                <h3 class="dash-header">New blog</h3>
+                <div class="form-container">
+                    <form class="forms d-flex flex-column" th:action="@{/dashboard/blogs/create}" th:method="post"
+                          th:object="${blog}">
+                        <div class="d-flex justify-content-left">
+                            <label for="" class="pr-2">Title</label>
+                            <input th:field="*{blogTitle}" placeholder="Blog Title" class="pl-2"/>
+                        </div>
+                        <br/>
+                        <div class="d-flex justify-content-left">
+                            <label for="" class="pr-2">Handle</label>
+                            <input th:field="*{handle}" class="pl-2" placeholder="Auto-assigned if blank"/>
+                        </div>
+                        <br/>
+                        <div class="d-flex flex-row">
+                            <label for="" class="pr-2">Categories</label>
+                            <ul class="categories">
+                                <li th:each="category : ${categories}" type="hidden">
+                                    <div class="ui checkbox">
+                                        <input type="checkbox" th:field="*{categories}" th:value="${category.id}">
+                                        <label th:text="${category.name}"></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <br/>
+                        <input class="btn submit-btn" type="submit"/>
+                    </form>
                 </div>
-                <br/>
-                <div class="d-flex justify-content-center">
-                    Handle (optional):
-                    <input th:field="*{handle}"/>
-                </div>
-                <br/>
-                <div class="d-flex justify-content-center">
-                    Categories:
-                    <ul>
-                        <li th:each="category : ${categories}" type="hidden">
-                            <div class="ui checkbox">
-                                <input type="checkbox" th:field="*{categories}" th:value="${category.id}">
-                                <label th:text="${category.name}"></label>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <br/>
-                <input type="submit"/>
-            </form>
+            </div>
             <!--    Form End-->
 
-<!--            Dash Search Info Start-->
+            <!--            Dash Search Info Start-->
             <div class="col-lg-3 d-none d-lg-block">
                 <h3 class="dash-header text-right">Search Kitsune</h3>
                 <div class="pr-1 text-right dash-nav">
@@ -83,9 +87,9 @@
             <!--            Dash Search Info Start-->
 
         </div>
-<!--        Row end-->
+        <!--        Row end-->
     </div>
-<!--    Container end-->
+    <!--    Container end-->
     <div th:replace="partials/footer :: footer"></div>
     </body>
 </html>

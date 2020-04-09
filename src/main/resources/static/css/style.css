@@ -85,3 +85,31 @@ hr {
 }
 
 /*Form Styling*/
+.form-container {
+    font-weight: bold;
+    font-size: large;
+    border-radius: 25px;
+    background-color: #FFFFFF;
+    color: #ed6d50;
+    padding: 2rem;
+    border: #239cd3 solid 2px;
+}
+
+.categories {
+    list-style-type: none;
+    color: #ed6d50;;
+    font-weight: bold;
+    font-size: large;
+}
+
+.submit-btn {
+    background-color: #ed6d50;;
+    color: #FFFFFF;
+    font-weight: bold;
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: #fc910d;
+    color: #FFFFFF;
+}
