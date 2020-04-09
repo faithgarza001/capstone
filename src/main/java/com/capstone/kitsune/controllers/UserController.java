@@ -65,7 +65,12 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = users.findByid(loggedInUser.getId());
         model.addAttribute("user", user);
+<<<<<<< HEAD
         return "profile";
+=======
+        return "users/account";
+
+>>>>>>> c9bcca4180f1710e7d3cdc2810bc41fa56b1a9c2
     }
 }
 
