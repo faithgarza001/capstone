@@ -63,12 +63,6 @@ hr {
     color: #fc910d;
 }
 
-.categories {
-    font-weight: lighter;
-    font-size: small;
-    color: #fc910d;
-}
-
 .dash-text {
     font-size: small;
     color: #FFFFFF;
@@ -80,8 +74,10 @@ hr {
     border: none;
 }
 
-.date-created {
+.date-created, .created-by, .categories {
+    font-weight: lighter;
     font-size: small;
+    color: #fc910d;
 }
 
 /*Form Styling*/
@@ -95,7 +91,7 @@ hr {
     border: #239cd3 solid 2px;
 }
 
-.categories {
+.form-categories {
     list-style-type: none;
     color: #ed6d50;;
     font-weight: bold;

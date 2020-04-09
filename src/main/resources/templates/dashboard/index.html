@@ -50,13 +50,17 @@
                         <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural lead-in
                             to
                             additional content.</p>
-                        <p th:text="${post.dateCreated}" class="date-created"></p>
+
+                            <p class="card-info"> Created on <span th:text="${post.dateCreated}" class="date-created"></span> by <span></span></p>
+                            <p th:text="${post.user.getUsername()}" class="created-by"></p>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-between">
        <span class="categories" th:each="category : ${post.categories}" type="hidden">
                            Categories: <label th:text="${category.name}"></label>
                     </span>
-                        <a href="#" th:text="${post.user.getUsername()}" class="btn follow-btn btn-primary">B</a>
+                        <a href="#" th:text="${post.blog.getBlogTitle()}" class="btn follow-btn btn-primary">Follow
+                            Blog</a>
                     </div>
                 </div>
             </div>
