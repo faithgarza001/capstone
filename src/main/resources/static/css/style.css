@@ -1,7 +1,67 @@
-.form{
+.form {
     background-color: aqua;
     width: 400px;
     height: 500px;
     border-radius: 7px;
     padding: 20px;
+}
+
+html {
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+body {
+    background-color: #1674b1;
+}
+
+.navbar {
+    font-family: "Helvetica Neue", sans-serif;
+    background-color: #1674b1;
+    color: #ffffff;
+    border-bottom: #239cd3 solid 1px;
+}
+
+hr {
+    border: #239cd3 solid 2px;
+}
+
+.dash-nav {
+    color: #ffffff;
+}
+
+.dash-header {
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.dash-link {
+    font-weight: bold;
+    color: #FFFFFF;
+    padding-bottom: .5em;
+}
+
+.dash-link:hover {
+    color: #fc910d;
+}
+
+.categories {
+    font-weight: lighter;
+    font-size: small;
+    color: #fc910d;
+}
+
+.dash-text {
+    font-size: small;
+    color: #FFFFFF;
+}
+
+.follow-btn {
+    background-color: #ed6d50;
+    color: #FFFFFF;
+    border: none;
+}
+
+.date-created {
+    font-size: small;
 }

@@ -6,52 +6,60 @@
 </head>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
-<h1>All Posts (Will be Followed Posts when functionality is added)</h1>
 <br>
 <div th:if="${#lists.isEmpty(posts)}">
     <h2>No posts to show</h2>
 </div>
-<div th:if="!${#lists.isEmpty(posts)}">
-    <table>
-        <thead>
-        <tr>
-            <th> Title</th>
-            <th> Body</th>
-            <th> Date Created</th>
-            <th> Created By</th>
-            <th> Categories</th>
+<div th:if="!${#lists.isEmpty(posts)}" class="mt-2 container">
+    <div class="row">
+        <div class="col-lg-3 d-none d-lg-block">
+            <h3 class="dash-header">username</h3>
+            <div class="dash-nav pl-1">
+                <hr>
+                <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
+                <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3 class="dash-header">Recent Posts</h3>
+            <div class="post-container">
+            </div>
+            <div class="card post mb-3" th:each="post : ${posts}">
+                <div class="card-body">
+                    <h6 th:text="${post.textTitle}" class="card-title">Card title</h6>
+                    <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural lead-in to
+                        additional content.</p>
+                    <p th:text="${post.dateCreated}" class="date-created"></p>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+       <span class="categories" th:each="category : ${post.categories}" type="hidden">
+                           Categories: <label th:text="${category.name}"></label>
+                    </span>
+                    <a href="#" th:text="${post.user.getUsername()}" class="btn follow-btn btn-primary">B</a>
+                </div>
+            </div>
+        </div>
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="post : ${posts}">
-            <td>
-                <p th:text="${post.textTitle}"></p>
-            </td>
-            <td>
-                <p th:text="${post.textBody}"></p>
-            </td>
-            <td th:text="${post.dateCreated}"></td>
-            <!--                Need to parse date-->
-            <td th:text="${post.user.getUsername()}"></td>
-            <!--            <td>-->
-            <!--                <div th:if="${userName == blog.user.username}">-->
-            <!--                    <a th:href="@{|/dashboard/posts/${post.id}/edit|}">-->
-            <!--                        <button>Edit Blog</button>-->
-            <!--                    </a>-->
-            <!--                    <a th:href="@{|/dashboard/posts/${post.id}/delete|}">-->
-            <!--                        <button>Delete Blog</button>-->
-            <!--                    </a>-->
-            <!--                </div>-->
-            <!--            </td>-->
-            <td>
-                <span th:each="category : ${post.categories}" type="hidden">
-                        <label th:text="${category.name}"></label>
-                </span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="col-lg-3 d-none d-lg-block">
+            <h3 class="dash-header text-right">Search Kitsune</h3>
+            <div class="pr-1 text-right dash-nav">
+                <hr>
+                <h6><em><a class="dash-link" th:href="@{/dashboard/search/texts}">Google Custom Search</a></em></h6>
+                <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.</p>
+                <h6><em><a class="dash-link" th:href="@{/dashboard/search/videos}">YouTube Search</a></em></h6>
+                <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.</p>
+                <h6><em><a class="dash-link" href="#">Site Search</a></em></h6>
+                <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="partials/footer :: footer"></div>
 </body>
