@@ -13,7 +13,10 @@
 <div th:if="!${#lists.isEmpty(posts)}" class="mt-2 container">
     <div class="row">
         <div class="col-lg-3 d-none d-lg-block">
-            <h3 class="dash-header">username</h3>
+            <div class="d-flex">
+                <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/50" alt="Profile Picture">
+                <h3 class="dash-header" th:text="${user}">username</h3>
+            </div>
             <div class="dash-nav pl-1">
                 <hr>
                 <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>

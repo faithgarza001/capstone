@@ -38,6 +38,8 @@ public class PostController {
     @GetMapping("/dashboard")
     public String getDashboard(Model model) {
         //This will be posts from followed blogs when functionality is complete
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", loggedInUser.getUsername());
         model.addAttribute("posts", postDao.findAll());
         return "dashboard/index";
     }
@@ -65,12 +67,6 @@ public class PostController {
         // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
         model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
         return "posts/myposts";
-    }
-
-    @GetMapping("/posts")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
-    public String getPosts(Model model){
-        model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
     }
 
     //Create form for a post
@@ -146,7 +142,7 @@ public class PostController {
     }
 
     @GetMapping("/dashboard/posts/{id}/reblog")
-    public String reblogPostForm(@PathVariable long id, Model model){
+    public String reblogPostForm(@PathVariable long id, Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             Post post = postDao.getOne(id);
