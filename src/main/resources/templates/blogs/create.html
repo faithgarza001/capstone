@@ -1,32 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/header :: head('New Blog')">
+    <meta charset="UTF-8">
     <title>Create Blog</title>
 </head>
-<body>
-<div th:replace="partials/navbar :: navbar"></div>
-<div class="container">
-    <h1>Create Blog</h1>
-    <!--    blogTitle, handle, dateCreated, categories-->
-    <form th:action="@{/dashboard/blogs/create}" th:method="post" th:object="${blog}"> Title:
-        <input th:field="*{blogTitle}"/>
-        <br/>
-        Handle (optional):
-        <input th:field="*{handle}"/>
-        <br/>
-        Categories:
-        <ul>
-            <li th:each="category : ${categories}" type="hidden">
-                <div class="ui checkbox">
-                    <input type="checkbox" th:field="*{categories}" th:value="${category.id}">
-                    <label th:text="${category.name}"></label>
+<div>
+    <div th:replace="partials/navbar :: navbar"></div>
+<!--    Container start-->
+    <div class="container">
+        <!--    Row start: All three sections are in the same row-->
+        <div class="row">
+
+            <!--        Dashboard Navigation: account, create, view my blogs/posts-->
+            <div class="col-lg-3 d-none d-lg-block">
+                <!--            Container for profile picture thumbnail and logged in username-->
+                <div class="d-flex">
+                    <!--                Profile Picture-->
+                    <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
+                         alt="Profile Picture">
+                    <!--               Displays logged in username-->
+                    <h3 class="dash-header" th:text="${user}">username</h3>
                 </div>
-            </li>
-        </ul>
-        <br/>
-        <input type="submit"/>
-    </form>
-</div>
-<div th:replace="partials/footer :: footer"></div>
-</body>
+                <!--            Navigation for user's account/blog/post -->
+                <div class="dash-nav pl-1">
+                    <hr>
+                    <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
+                    <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
+                </div>
+            </div>
+            <!--        End Dashboard Navigation-->
+
+            <!--    Form Start-->
+            <h1 class="head">Create Blog</h1>
+            <form class="forms d-flex flex-column" th:action="@{/dashboard/blogs/create}" th:method="post"
+                  th:object="${blog}">
+                <div class="d-flex justify-content-center">
+                    Title:
+                    <input th:field="*{blogTitle}"/>
+                </div>
+                <br/>
+                <div class="d-flex justify-content-center">
+                    Handle (optional):
+                    <input th:field="*{handle}"/>
+                </div>
+                <br/>
+                <div class="d-flex justify-content-center">
+                    Categories:
+                    <ul>
+                        <li th:each="category : ${categories}" type="hidden">
+                            <div class="ui checkbox">
+                                <input type="checkbox" th:field="*{categories}" th:value="${category.id}">
+                                <label th:text="${category.name}"></label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <br/>
+                <input type="submit"/>
+            </form>
+            <!--    Form End-->
+
+<!--            Dash Search Info Start-->
+            <div class="col-lg-3 d-none d-lg-block">
+                <h3 class="dash-header text-right">Search Kitsune</h3>
+                <div class="pr-1 text-right dash-nav">
+                    <hr>
+                    <h6><em><a class="dash-link" th:href="@{/dashboard/search/texts}">Google Custom Search</a></em></h6>
+                    <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua.</p>
+                    <h6><em><a class="dash-link" th:href="@{/dashboard/search/videos}">YouTube Search</a></em></h6>
+                    <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua.</p>
+                    <h6><em><a class="dash-link" href="#">Site Search</a></em></h6>
+                    <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+            <!--            Dash Search Info Start-->
+
+        </div>
+<!--        Row end-->
+    </div>
+<!--    Container end-->
+    <div th:replace="partials/footer :: footer"></div>
+    </body>
 </html>

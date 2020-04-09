@@ -7,16 +7,26 @@
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <br>
+<!--Displays if user is not following any blogs with posts-->
 <div th:if="${#lists.isEmpty(posts)}">
     <h2>No posts to show</h2>
 </div>
+<!--Displays if user is following blogs with posts-->
 <div th:if="!${#lists.isEmpty(posts)}" class="mt-2 container">
+    <!--    All three sections are in the same row-->
     <div class="row">
+
+        <!--        Dashboard Navigation: account, create, view my blogs/posts-->
         <div class="col-lg-3 d-none d-lg-block">
+            <!--            Container for profile picture thumbnail and logged in username-->
             <div class="d-flex">
-                <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/50" alt="Profile Picture">
+                <!--                Profile Picture-->
+                <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
+                     alt="Profile Picture">
+                <!--               Displays logged in username-->
                 <h3 class="dash-header" th:text="${user}">username</h3>
             </div>
+            <!--            Navigation for user's account/blog/post -->
             <div class="dash-nav pl-1">
                 <hr>
                 <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
@@ -27,22 +37,27 @@
                 <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
             </div>
         </div>
+        <!--        End Dashboard Navigation-->
+
+        <!--        Recent Posts: posts from followed blogs-->
         <div class="col-lg-6">
             <h3 class="dash-header">Recent Posts</h3>
             <div class="post-container">
-            </div>
-            <div class="card post mb-3" th:each="post : ${posts}">
-                <div class="card-body">
-                    <h6 th:text="${post.textTitle}" class="card-title">Card title</h6>
-                    <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural lead-in to
-                        additional content.</p>
-                    <p th:text="${post.dateCreated}" class="date-created"></p>
-                </div>
-                <div class="card-footer d-flex justify-content-between">
+
+                <div class="card post mb-3" th:each="post : ${posts}">
+                    <div class="card-body">
+                        <h6 th:text="${post.textTitle}" class="card-title">Card title</h6>
+                        <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural lead-in
+                            to
+                            additional content.</p>
+                        <p th:text="${post.dateCreated}" class="date-created"></p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
        <span class="categories" th:each="category : ${post.categories}" type="hidden">
                            Categories: <label th:text="${category.name}"></label>
                     </span>
-                    <a href="#" th:text="${post.user.getUsername()}" class="btn follow-btn btn-primary">B</a>
+                        <a href="#" th:text="${post.user.getUsername()}" class="btn follow-btn btn-primary">B</a>
+                    </div>
                 </div>
             </div>
         </div>
