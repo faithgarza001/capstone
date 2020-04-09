@@ -28,6 +28,14 @@
                 </div>
             </li>
         </ul>
+        <h1>Post picture upload</h1>
+
+        <label for="fileupload">Select a post photo to upload</label>
+            <input type="hidden" id="fileupload">
+            <button id="picker" type="button">Pick file</button>
+        <input type="hidden" class="control" id="linkUrl" name="linkUrl" th:value="*{linkUrl}"/>
+
+        <div id="thumbnail-container"></div>
         <input type="submit" />
     </form>
 </div>
@@ -35,4 +43,81 @@
 <div th:replace="partials/footer :: footer"></div>
 
 </body>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<!--<script src="./js/filestack.js"></script>-->
+<script>
+    const yourAPIKey = "AWzLpw58MRQPc3U5j22Coz";
+
+    // Set up the picker
+    const client = filestack.init(yourAPIKey);
+    const options = {
+        onUploadDone: updateForm,
+        maxSize: 10 * 1024 * 1024,
+        accept: 'image/*',
+        uploadInBackground: false,
+    };
+    const picker = client.picker(options);
+
+    // Get references to the DOM elements
+
+    // const form = document.getElementById('pick-form');
+    const fileInput = document.getElementById('fileupload');
+    const btn = document.getElementById('picker');
+    // const nameBox = document.getElementById('nameBox');
+    let linkUrl = document.getElementById('linkUrl');
+
+    // Add our event listeners
+
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        picker.open();
+        // picker.onClose(handleChange);
+    });
+
+    // form.addEventListener('submit', function (e) {
+    //     e.preventDefault();
+    //     alert('Submitting: ' + fileInput.value);
+    // });
+
+    // Helper to overwrite the field input value
+
+    function updateForm (result) {
+        const fileData = result.filesUploaded[0];
+        fileInput.value = fileData.url;
+
+        // Some ugly DOM code to show some data.
+        const name = document.createTextNode('Selected: ' + fileData.filename);
+        const url = document.createElement('a');
+        url.href = fileData.url;
+        url.appendChild(document.createTextNode(fileData.url));
+        // nameBox.appendChild(name);
+        // urlBox.appendChild(document.createTextNode('Uploaded to: '));
+        picUrl = url.href.toString();
+        linkUrl.attributes.item(4).value = picUrl;
+
+        // If file is resizable image, resize and embed it as a thumbnail preview
+        if (['jpeg', 'png'].indexOf(fileData.mimetype.split('/')[1]) !== -1) {
+            const container = document.getElementById('thumbnail-container');
+            const thumbnail = document.getElementById('thumbnail') || new Image();
+            thumbnail.id = 'thumbnail';
+            thumbnail.src = client.transform(fileData.handle, {
+                resize: {
+                    width: 200
+                }
+            });
+
+            if (!container.contains(thumbnail)) {
+                container.appendChild(thumbnail);
+            }
+        }
+    };
+    // const thumbnail = document.getElementById('thumbnail-container');
+    //
+    //
+    // thumbnail.onchange  = handleChange;
+    //
+    // function handleChange() {
+    //     linkUrl.value = fileInput.value.toString();
+    // }
+</script>
 </html>
