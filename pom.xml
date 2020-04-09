@@ -96,7 +96,9 @@
             </plugin>
         </plugins>
         <resources>
-            <filtering>true</filtering>
+            <resource>
+                <filtering>true</filtering>
+            </resource>
         </resources>
     </build>
 
