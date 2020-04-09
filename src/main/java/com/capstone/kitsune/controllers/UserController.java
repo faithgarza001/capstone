@@ -41,31 +41,31 @@ public class UserController {
     @GetMapping("/account/{username}/edit")
     public String showAccountEditForm(Model model, @PathVariable String username) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedInUser != null) {
-            User user = users.findByUsername(username);
-            model.addAttribute("user", user);
-            return "users/edit";
-        } else {
-            return "redirect:/dashboard";
-        }
+        User user = users.findByid(loggedInUser.getId());
+        model.addAttribute("user", user);
+        return "users/edit";
     }
 
-    @PostMapping("/account/(username)/edit")
-    public String accountEdit(@PathVariable String username, @RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName) {
-        User user = users.findByUsername(username);
+    @PostMapping("/account/edit")
+    public String accountEdit(@RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.findByid(loggedInUser.getId());
         String hash = this.passwordEncoder.encode(password);
-        boolean debug = this.passwordEncoder.matches(user.getPassword(), hash);
-
-        user.setPassword(hash);
-        user.setEmail(email);
+        user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(hash);
         users.save(user);
         return "redirect:/dashboard";
     }
-    
-    @RequestMapping("/account")
-    public String profile(){
+
+    @GetMapping("/account")
+    public String account(Model model){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.findByid(loggedInUser.getId());
+        model.addAttribute("user", user);
         return "users/account";
+
     }
 }
 
