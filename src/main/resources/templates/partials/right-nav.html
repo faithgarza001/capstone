@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:fragment="right-nav">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="col-lg-3 d-none d-lg-block sticky-top">
+    <div class="sticky-top mt-2">
+        <h3 class="dash-header text-right">Search Kitsune</h3>
+        <div class="pr-1 text-right dash-nav">
+            <hr>
+            <h6><em><a class="dash-link" th:href="@{/dashboard/search/texts}">Google Custom Search</a></em></h6>
+            <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</p>
+            <h6><em><a class="dash-link" th:href="@{/dashboard/search/videos}">YouTube Search</a></em></h6>
+            <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</p>
+            <h6><em><a class="dash-link" href="#">Site Search</a></em></h6>
+            <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
