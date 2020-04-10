@@ -78,7 +78,12 @@ public class BlogController extends BlogsService {
 
     // Viewing All Blogs
     @GetMapping("/dashboard/blogs")
-    public String getAllBlogs(Model model) {
+    public String getAllBlogs(Model model, Principal principal) {
+        String userName = "";
+        if (principal != null) {
+            userName = principal.getName();
+        }
+        model.addAttribute("userName", userName);
         model.addAttribute("blogs", blogDao.findAll());
         return "blogs/index";
     }

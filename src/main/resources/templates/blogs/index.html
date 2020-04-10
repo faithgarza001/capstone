@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>All Blogs</title>
@@ -38,6 +39,22 @@
                 <span th:each="category : ${blog.categories}" type="hidden">
                         <label th:text="${category.name}"></label>
                 </span>
+            </td>
+            <td>
+                <div sec:authorize="isAuthenticated()">
+                    <div th:if="${userName == blog.user.username}">
+                        <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+                            <button>Edit Blog</button>
+                        </a>
+                    </div>
+                    <div th:if="${userName != blog.user.username}">
+                        <div>
+                            <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
+                                <button>Follow Blog</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>

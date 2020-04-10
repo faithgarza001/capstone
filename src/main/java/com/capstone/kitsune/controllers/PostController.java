@@ -64,9 +64,16 @@ public class PostController {
         return "redirect:/dashboard";
     }
 
-    // Viewing All Posts in Dashboard
     @GetMapping("/dashboard")
-    public String getDashboard(Model model) {
+    public String dashboard(Model model){
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("users", userDao.getOne(loggedIn.getId()));
+        return "dashboard/dashboard";
+    }
+
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard/posts")
+    public String getAllPost(Model model) {
         //This will be posts from followed blogs when functionality is complete
         model.addAttribute("posts", postDao.findAll());
         return "dashboard/index";
