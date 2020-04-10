@@ -33,6 +33,36 @@ public class PostController {
         this.userDao = userDao;
     }
 
+    //Create form for a post
+    @GetMapping("/dashboard/posts/create")
+    public String showCreateForm(Model model) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser != null) {
+            List<Category> categories = categoryDao.findAll();
+            model.addAttribute("categories", categories);
+            model.addAttribute("post", new Post());
+            model.addAttribute("blogs", blogDao.findByUserId(loggedInUser.getId()));
+            return "posts/create";
+        } else {
+            return "redirect:/login";
+        }
+    }
+
+    //Saving the post to the database
+    @PostMapping("/dashboard/posts/create")
+    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Blog blog = blogDao.getOne(id);
+        //convert string[] ids to long[] ids
+        long[] selectedCategoryIds = new long[categories.length];
+        for (int i = 0; i < categories.length; i++) {
+            selectedCategoryIds[i] = Long.parseLong(categories[i]);
+        }
+        List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
+        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList);
+        postDao.save(post);
+        return "redirect:/dashboard";
+    }
 
     // Viewing All Posts in Dashboard
     @GetMapping("/dashboard")
@@ -71,43 +101,6 @@ public class PostController {
         // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
         model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
         return "posts/myposts";
-    }
-
-    @GetMapping("/posts")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
-    public String getPosts(Model model){
-        model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
-    }
-
-    //Create form for a post
-    @GetMapping("/dashboard/posts/create")
-    public String showCreateForm(Model model) {
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedInUser != null) {
-            List<Category> categories = categoryDao.findAll();
-            model.addAttribute("categories", categories);
-            model.addAttribute("post", new Post());
-            model.addAttribute("blogs", blogDao.findByUserId(loggedInUser.getId()));
-            return "posts/create";
-        } else {
-            return "redirect:/login";
-        }
-    }
-
-    //Saving the post to the database
-    @PostMapping("/dashboard/posts/create")
-    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories) {
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Blog blog = blogDao.getOne(id);
-        //convert string[] ids to long[] ids
-        long[] selectedCategoryIds = new long[categories.length];
-        for (int i = 0; i < categories.length; i++) {
-            selectedCategoryIds[i] = Long.parseLong(categories[i]);
-        }
-        List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
-        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList);
-        postDao.save(post);
-        return "redirect:/dashboard";
     }
 
     //Editing a post form

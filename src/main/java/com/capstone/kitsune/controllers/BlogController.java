@@ -34,12 +34,6 @@ public class BlogController extends BlogsService {
         this.userDao = userDao;
     }
 
-    @GetMapping("/blogs")//@GetMapping: defines a method that should be invoked when a GET request is received for the specified URI
-    public String getBlogs(Model model){
-        model.addAttribute("posts", blogDao.findAll());
-        return "blogs/index";
-    }
-
     //Create form for a blogs
     @GetMapping("/dashboard/blogs/create")
     public String showCreateBlogForm(Model model) {
@@ -82,32 +76,6 @@ public class BlogController extends BlogsService {
         return "redirect:/dashboard/blogs/myblogs";
     }
 
-    //Editing a blog form
-    @GetMapping("/dashboard/blogs/{id}/edit")
-    public String editBlogForm(@PathVariable long id, Model model) {
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedInUser != null) {
-            Blog blog = blogDao.getOne(id);
-            List<Category> categories = categoryDao.findAll();
-            model.addAttribute("categories", categories);
-            model.addAttribute("blog", blog);
-            return "blogs/edit";
-        } else {
-            return "redirect:/login";
-        }
-    }
-
-    //Saving the edit to the database
-    @PostMapping("/dashboard/blogs/{id}/edit")
-    public String saveBlogEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam String handle, @RequestParam List<Category> categories) {
-        Blog blog = blogDao.getOne(id);
-        blog.setBlogTitle(blogTitle);
-        blog.setCategories(categories);
-        blog.setHandle(handle);
-        blogDao.save(blog);
-        return "redirect:/dashboard/blogs/{id}";
-    }
-
     // Viewing All Blogs
     @GetMapping("/dashboard/blogs")
     public String getAllBlogs(Model model) {
@@ -145,6 +113,33 @@ public class BlogController extends BlogsService {
         model.addAttribute("posts", postDao.findByBlogId(id));
         return "blogs/show";
     }
+
+    //Editing a blog form
+    @GetMapping("/dashboard/blogs/{id}/edit")
+    public String editBlogForm(@PathVariable long id, Model model) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedInUser != null) {
+            Blog blog = blogDao.getOne(id);
+            List<Category> categories = categoryDao.findAll();
+            model.addAttribute("categories", categories);
+            model.addAttribute("blog", blog);
+            return "blogs/edit";
+        } else {
+            return "redirect:/login";
+        }
+    }
+
+    //Saving the edit to the database
+    @PostMapping("/dashboard/blogs/{id}/edit")
+    public String saveBlogEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam String handle, @RequestParam List<Category> categories) {
+        Blog blog = blogDao.getOne(id);
+        blog.setBlogTitle(blogTitle);
+        blog.setCategories(categories);
+        blog.setHandle(handle);
+        blogDao.save(blog);
+        return "redirect:/dashboard/blogs/{id}";
+    }
+
 
     @PostMapping("/dashboard/blogs/{id}/delete")
     public String deleteBlog(@PathVariable long id){

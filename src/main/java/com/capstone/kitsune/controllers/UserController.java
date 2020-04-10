@@ -36,6 +36,15 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/account")
+    public String account(Model model){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.findByid(loggedInUser.getId());
+        model.addAttribute("user", user);
+        return "users/account";
+
+    }
+
     //navigating to home page
 
 
@@ -60,15 +69,6 @@ public class UserController {
         user.setEmail(email);
         users.save(user);
         return "redirect:/account";
-    }
-
-    @GetMapping("/account")
-    public String account(Model model){
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = users.findByid(loggedInUser.getId());
-        model.addAttribute("user", user);
-        return "users/account";
-
     }
 
     @PostMapping("/account/delete")
