@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+<head th:replace="partials/header :: head('Viewing Blog')">
     <meta charset="UTF-8">
     <title>Viewing Blog</title>
 </head>
@@ -16,16 +16,18 @@
 <div sec:authorize="isAuthenticated()">
     <div th:if="${userName == blog.user.username}">
         <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
-            <button>Edit Blog</button>
+            <button class="btn">Edit Blog</button>
         </a>
         <form th:action="@{|/dashboard/blogs/${blog.id}/delete|}" th:method="POST" style="display:inline">
-            <button>Delete Blog</button>
+            <button class="btn">Delete Blog</button>
         </form>
     </div>
-    <div>
-        <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
-            <button>Follow Blog</button>
-        </form>
+    <div th:if="${userName != blog.user.username}">
+        <div>
+            <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
+                <button class="btn">Follow Blog</button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="youtube" style="margin: 1em">
@@ -52,16 +54,16 @@
         </div>
     </div>
 </div>
-<div>
-    <h1>Followers:</h1>
-    <div th:each="follower : ${blog.followers}">
-        <span th:text="${follower.blogs}"></span>
-    </div>
-    <h1>Following:</h1>
-    <div th:each="following : ${blog.user.following}">
-        <span th:text="${following.blogTitle}"></span>
-    </div>
-</div>
+<!--<div>-->
+<!--    <h1>Followers:</h1>-->
+<!--    <div th:each="follower : ${blog.followers}">-->
+<!--        <span th:text="${follower.username}"></span>-->
+<!--    </div>-->
+<!--    <h1>Following:</h1>-->
+<!--    <div th:each="following : ${blog.user.following}">-->
+<!--        <span th:text="${following.blogTitle}"></span>-->
+<!--    </div>-->
+<!--</div>-->
 <div th:replace="partials/footer :: footer"></div>
 </body>
 </html>

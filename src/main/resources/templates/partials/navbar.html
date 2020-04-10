@@ -7,8 +7,11 @@
 
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" th:href="@{/}">Kitsune</a>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg">
+    <a class="navbar-brand" th:href="@{/}">
+        <img th:src="@{/img/kitsune_logo_v1.png}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        Kitsune
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,37 +24,13 @@
                 <a class="nav-link" th:href="@{/login}">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/account}">My Account</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/dashboard/blogs}">All Blogs</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/dashboard/blogs/create}">New Blog</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" th:href="@{/dashboard/posts}">All Posts</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/dashboard/posts/myposts}">My Posts</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/dashboard/posts/create}">New Post</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/dashboard/search/texts}">Search for Text Content</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/dashboard/search/videos}">Search for Videos</a>
             </li>
             <li class="nav-item ml-auto">
                 <a class="nav-link" th:href="@{/logout}">logout</a>

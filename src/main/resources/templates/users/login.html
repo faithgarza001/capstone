@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/header :: head('Login')">
     <meta charset="UTF-8" />
     <title>Log In</title>
 </head>
@@ -19,7 +19,7 @@
     <input id="username" name="username" type="text" />
     <label for="password">Password</label>
     <input id="password" name="password" type="password" />
-    <input type="submit" value="Log In" />
+    <input type="submit" value="Log In" class="btn"/>
 </form>
 <div th:replace="partials/footer :: footer"></div>
 </body>

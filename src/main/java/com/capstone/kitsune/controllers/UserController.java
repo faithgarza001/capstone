@@ -36,6 +36,15 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/account")
+    public String account(Model model){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.findByid(loggedInUser.getId());
+        model.addAttribute("user", user);
+        return "users/account";
+
+    }
+
     //navigating to home page
 
 
@@ -51,22 +60,23 @@ public class UserController {
     public String accountEdit(@RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = users.findByid(loggedInUser.getId());
-        String hash = this.passwordEncoder.encode(password);
+        if(password != null && password != "") {
+            String hash = this.passwordEncoder.encode(password);
+            user.setPassword(hash);
+        }
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
-        user.setPassword(hash);
         users.save(user);
-        return "redirect:/dashboard";
+        return "redirect:/account";
     }
 
-    @GetMapping("/account")
-    public String account(Model model){
+    @PostMapping("/account/delete")
+    public String accountDelete(){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = users.findByid(loggedInUser.getId());
-        model.addAttribute("user", user);
-        return "profile";
-
+        long id = loggedInUser.getId();
+        users.deleteById(id);
+        return "redirect:/sign-up";
     }
 }
 
