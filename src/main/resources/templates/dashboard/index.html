@@ -54,7 +54,8 @@
 
             <div th:if="!${#lists.isEmpty(posts)}">
                 <div class="post-container d-flex flex-column-reverse">
-                    <div class="card post mb-3" th:each="post : ${posts}">
+                    <div th:each="blog : ${users.following}">
+                    <div class="card post mb-3" th:each="post : ${blog.posts}">
                         <div class="card-body">
                             <h5 th:text="${post.textTitle}" class="card-title">Card title</h5>
                             <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural
@@ -74,8 +75,12 @@
                             <a th:href="@{/dashboard/blogs/{id}(id=${post.blog.id})}"
                                th:text="${post.blog.getBlogTitle()}"
                                class="btn follow-btn align-self-center" data-blogURL="">Follow Blog</a>
+                            <div>
+                                <a th:href="@{|/dashboard/posts/${post.id}/reblog|}"><button>Reblog</button></a>
+                            </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

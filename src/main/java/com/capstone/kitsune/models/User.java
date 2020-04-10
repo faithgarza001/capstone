@@ -104,6 +104,13 @@ public class User {
         this.password = password;
     }
 
+    public User(String firstname, String lastname, String email, String password){
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.email = email;
+        this.password = password;
+    }
+
     public List<Blog> getFollowing(){
         return this.following;
     }

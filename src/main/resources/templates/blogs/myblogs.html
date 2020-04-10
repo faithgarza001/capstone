@@ -34,6 +34,11 @@
                         <label th:text="${category.name}"></label>
                 </span>
             </td>
+            <td>
+                <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+                    <button>Edit Blog</button>
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>

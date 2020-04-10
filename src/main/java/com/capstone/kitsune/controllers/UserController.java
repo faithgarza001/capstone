@@ -36,36 +36,47 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/account")
+    public String account(Model model){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.findByid(loggedInUser.getId());
+        model.addAttribute("user", user);
+        return "users/account";
+
+    }
+
     //navigating to home page
 
-    @GetMapping("/account/{username}/edit")
-    public String showAccountEditForm(Model model, @PathVariable String username) {
+
+    @GetMapping("/account/edit")
+    public String showAccountEditForm(Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedInUser != null) {
-            User user = users.findByUsername(username);
-            model.addAttribute("user", user);
-            return "users/edit";
-        } else {
-            return "redirect:/dashboard";
+        User user = users.findByid(loggedInUser.getId());
+        model.addAttribute("user", user);
+        return "users/edit";
+    }
+
+    @PostMapping("/account/edit")
+    public String accountEdit(@RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = users.findByid(loggedInUser.getId());
+        if(password != null && password != "") {
+            String hash = this.passwordEncoder.encode(password);
+            user.setPassword(hash);
         }
-    }
-
-    @PostMapping("/account/(username)/edit")
-    public String accountEdit(@PathVariable String username, @RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName) {
-        User user = users.findByUsername(username);
-        String hash = this.passwordEncoder.encode(password);
-        boolean debug = this.passwordEncoder.matches(user.getPassword(), hash);
-
-        user.setPassword(hash);
-        user.setEmail(email);
+        user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setEmail(email);
         users.save(user);
-        return "redirect:/dashboard";
+        return "redirect:/account";
     }
-    
-    @RequestMapping("/account")
-    public String profile(){
-        return "users/account";
+
+    @PostMapping("/account/delete")
+    public String accountDelete(){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long id = loggedInUser.getId();
+        users.deleteById(id);
+        return "redirect:/sign-up";
     }
 }
 

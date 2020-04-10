@@ -1,20 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/header :: head('My Account')">
-
-
-    <title></title>
-</head>
+<head th:replace="partials/header :: head('My Account')"/>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
-
-
-<h1>This is the Profile Page</h1>
-
-<form action="/profile" method="post">
-
-</form>
+<div class="container">
+    <h1>Profile</h1>
+    First and Last name:
+    <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
+    Username:
+    <h2 th:text="${user.username}"></h2>
+    Email:
+    <h2 th:text="${user.email}"></h2>
+    <br/>
+    My Blogs and Categories:
+    <br/>
+    <span th:each="blog : ${user.blogs}" >
+        Blog: <label th:text="${blog.blogTitle}"></label>
+        <br/>
+        <span th:each="category: *{blog.categories}">
+              Categories: <label th:text="${category.name}"></label><br/>
+        </span>
+    </span>
+    <br/>
+    Followers:
+    <br/>
+    <span th:each="follower : ${user.blogs}" >
+        <span th:each="follow: *{follower.followers}">
+               Username: <label th:text="${follow.username}"></label><br/>
+        </span>
+    </span>
+    <br/>
+    Following:
+    <br/>
+    <span th:each="following : ${user.following}">
+        Blog: <label th:text="${following.blogTitle}"></label>
+        <br/>
+        <span th:each="follows: *{following.categories}">
+              Categories: <label th:text="${follows.name}"></label><br/>
+        </span>
+    </span>
+    <div>
+        <form th:action="@{|/account/delete|}" th:method="POST" style="display:inline">
+            <button>Delete Account</button>
+        </form>
+        <a th:href="@{|/account/edit|}">
+            <button>Edit Account</button>
+        </a>
+    </div>
+</div>
 <div th:replace="partials/footer :: footer"></div>
 </body>
-
 </html>

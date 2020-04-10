@@ -9,7 +9,7 @@
 <div th:replace="partials/navbar :: navbar"></div>
 <div class="container">
     <h1>Edit User</h1>
-    <form th:action="@{|/account/${username}/edit|}" th:method="post" th:object="${user}">
+    <form th:action="@{|/account/edit|}" th:method="post" th:object="${user}">
         Password:
         <input th:field="*{password}" type="password"/>
         <br/>
@@ -21,10 +21,7 @@
         <br/>
         Last Name:
         <input th:field="*{lastName}"/>
-        <br/>
-        Profile Picture:
-        <input th:field="*{profilePicture}" type="file" name="files" multiple>
-        <br/>
+        <br />
         <input type="submit"/>
     </form>
 </div>

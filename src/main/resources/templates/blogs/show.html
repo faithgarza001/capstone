@@ -22,10 +22,12 @@
             <button class="btn">Delete Blog</button>
         </form>
     </div>
-    <div>
-        <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
-            <button class="btn">Follow Blog</button>
-        </form>
+    <div th:if="${userName != blog.user.username}">
+        <div>
+            <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
+                <button class="btn">Follow Blog</button>
+            </form>
+        </div>
     </div>
 </div>
 <div class="youtube" style="margin: 1em">
@@ -52,12 +54,16 @@
         </div>
     </div>
 </div>
-<div>
-    <h1>Following:</h1>
-    <div th:each="follower : ${blog.user.following}">
-        <span th:text="${follower.blogTitle}"></span>
-    </div>
-</div>
+<!--<div>-->
+<!--    <h1>Followers:</h1>-->
+<!--    <div th:each="follower : ${blog.followers}">-->
+<!--        <span th:text="${follower.username}"></span>-->
+<!--    </div>-->
+<!--    <h1>Following:</h1>-->
+<!--    <div th:each="following : ${blog.user.following}">-->
+<!--        <span th:text="${following.blogTitle}"></span>-->
+<!--    </div>-->
+<!--</div>-->
 <div th:replace="partials/footer :: footer"></div>
 </body>
 </html>

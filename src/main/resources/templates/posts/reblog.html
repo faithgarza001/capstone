@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/header :: head('Reblog')">
     <meta charset="UTF-8">
-    <title>Edit Post</title>
+    <title>Reblog</title>
 </head>
 <div th:replace="partials/navbar :: navbar"></div>
 <body>
 <div class="container">
-    <h1>Reblog Post</h1>
+    <h1>Reblog</h1>
     <form th:action="@{|/dashboard/posts/${post.id}/reblog|}" th:method="post" th:object="${post}">
         Title:
         <input th:field="*{textTitle}" />

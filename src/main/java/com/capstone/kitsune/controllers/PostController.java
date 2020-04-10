@@ -33,42 +33,6 @@ public class PostController {
         this.userDao = userDao;
     }
 
-
-    // Viewing All Posts in Dashboard
-    @GetMapping("/dashboard")
-    public String getDashboard(Model model) {
-        //This will be posts from followed blogs when functionality is complete
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", loggedInUser.getUsername());
-        model.addAttribute("posts", postDao.findAll());
-        return "dashboard/index";
-    }
-
-    // Viewing All Posts in Dashboard
-    @GetMapping("/dashboard/posts")
-    public String getAllPosts(Model model) {
-        model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
-    }
-
-
-    //Viewing All User's Posts
-    @GetMapping("/dashboard/posts/myposts")
-    public String getMyPosts(Model model, Principal principal) {
-        // Getting logged in user
-        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userName = "";
-        if (principal != null) {
-            // Setting username based on principal
-            userName = principal.getName();
-        }
-        //Setting authorized username to be used in myblogs view
-        model.addAttribute("userName", userName);
-        // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
-        model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
-        return "posts/myposts";
-    }
-
     //Create form for a post
     @GetMapping("/dashboard/posts/create")
     public String showCreateForm(Model model) {
@@ -100,11 +64,60 @@ public class PostController {
         return "redirect:/dashboard";
     }
 
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard")
+    public String getDashboard(Model model) {
+        //This will be posts from followed blogs when functionality is complete
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", loggedInUser.getUsername());
+        model.addAttribute("users", userDao.getOne(loggedInUser.getId()));
+        return "dashboard/index";
+    }
+
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard/posts")
+    public String getAllPost(Model model) {
+        //This will be posts from followed blogs when functionality is complete
+        model.addAttribute("posts", postDao.findAll());
+        return "dashboard/index";
+    }
+
+    // Viewing All Posts in Dashboard
+    @GetMapping("/dashboard/posts/{id}")
+    public String getAllPosts(Model model, @PathVariable long id, Principal principal) {
+        String userName = "";
+        if (principal != null) {
+            userName = principal.getName();
+        }
+        model.addAttribute("userName", userName);
+        // Find all posts with the same blog_id as blogDao.getOne(id)
+        model.addAttribute("post", postDao.getOne(id));
+        return "posts/show";
+    }
+
+
+    //Viewing All User's Posts
+    @GetMapping("/dashboard/posts/myposts")
+    public String getMyPosts(Model model, Principal principal) {
+        // Getting logged in user
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName = "";
+        if (principal != null) {
+            // Setting username based on principal
+            userName = principal.getName();
+        }
+        //Setting authorized username to be used in myblogs view
+        model.addAttribute("userName", userName);
+        // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
+        model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
+        return "posts/myposts";
+    }
+
     //Editing a post form
     @GetMapping("/dashboard/posts/{id}/edit")
     public String editPostForm(@PathVariable long id, Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedInUser != null) {
+        if (loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
             Post post = postDao.getOne(id);
             List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);
