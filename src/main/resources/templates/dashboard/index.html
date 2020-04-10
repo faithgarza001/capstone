@@ -51,7 +51,7 @@
                                 </div>
                                 <a th:href="@{/dashboard/blogs/{id}(id=${post.blog.id})}"
                                    th:text="${post.blog.getBlogTitle()}"
-                                   class="btn follow-btn align-self-center" data-blogURL="">Follow Blog</a>
+                                   class="btn follow-btn align-self-center" data-blogURL="">View Blog</a>
                                 <div>
                                     <a th:href="@{|/dashboard/posts/${post.id}/reblog|}">
                                         <button>Reblog</button>

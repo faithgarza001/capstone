@@ -40,6 +40,7 @@ body {
 .navbar-brand:hover {
     color: #fc910d;
 }
+
 /*Dividers*/
 hr {
     border: #239cd3 solid 2px;
@@ -86,11 +87,11 @@ hr {
     color: #ed6d50;
 }
 
-.card-info{
+.card-info {
     font-size: small;
 }
 
-.card{
+.card {
     border-radius: 25px;
     background-color: #FFFFFF;
     border: #239cd3 solid 2px;
@@ -125,4 +126,26 @@ hr {
 .btn:hover {
     background-color: #fc910d;
     color: #FFFFFF;
+}
+
+/*Tables*/
+table {
+    margin: auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+
+th, td {
+    border-bottom: 2px solid #239cd3;
+}
+
+th {
+    background-color: #ed6d50;
+    color: #FFFFFF;
+}
+
+tr {
+    background-color: #FFFFFF;
+    color: #ed6d50;
 }
