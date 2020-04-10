@@ -177,11 +177,6 @@ public class BlogController extends BlogsService {
         }
     }
 
-//    @GetMapping("dashboard/search/handle")
-//    public String search(Model model) {
-//        return "blogs/search";
-//    }
-
     @PostMapping("/dashboard/search/site")
     public String searchHandle(@RequestParam(value="search", defaultValue = "") String search, Model model) {
         List<Blog> blogs = blogDao.findAllByhandleOrcategories(search);
