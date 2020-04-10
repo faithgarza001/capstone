@@ -64,11 +64,14 @@ public class PostController {
         return "redirect:/dashboard";
     }
 
+    // Viewing All Posts in Dashboard
     @GetMapping("/dashboard")
-    public String dashboard(Model model){
-        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("users", userDao.getOne(loggedIn.getId()));
-        return "dashboard/dashboard";
+    public String getDashboard(Model model) {
+        //This will be posts from followed blogs when functionality is complete
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", loggedInUser.getUsername());
+        model.addAttribute("users", userDao.getOne(loggedInUser.getId()));
+        return "dashboard/index";
     }
 
     // Viewing All Posts in Dashboard
@@ -152,7 +155,7 @@ public class PostController {
     }
 
     @GetMapping("/dashboard/posts/{id}/reblog")
-    public String reblogPostForm(@PathVariable long id, Model model){
+    public String reblogPostForm(@PathVariable long id, Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             Post post = postDao.getOne(id);

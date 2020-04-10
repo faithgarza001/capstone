@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/header :: head('Reblog')">
     <meta charset="UTF-8">
     <title>Reblog</title>
 </head>
@@ -29,7 +29,7 @@
                 </div>
             </li>
         </ul>
-        <input type="submit" />
+        <input type="submit" class="btn"/>
     </form>
 </div>
 <div th:replace="partials/footer :: footer"></div>

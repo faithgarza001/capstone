@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
+<head th:replace="partials/header :: head('Viewing Blog')">
     <meta charset="UTF-8">
     <title>Viewing Blog</title>
 </head>
@@ -16,16 +16,16 @@
 <div sec:authorize="isAuthenticated()">
     <div th:if="${userName == blog.user.username}">
         <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
-            <button>Edit Blog</button>
+            <button class="btn">Edit Blog</button>
         </a>
         <form th:action="@{|/dashboard/blogs/${blog.id}/delete|}" th:method="POST" style="display:inline">
-            <button>Delete Blog</button>
+            <button class="btn">Delete Blog</button>
         </form>
     </div>
     <div th:if="${userName != blog.user.username}">
         <div>
             <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
-                <button>Follow Blog</button>
+                <button class="btn">Follow Blog</button>
             </form>
         </div>
     </div>
