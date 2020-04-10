@@ -8,7 +8,10 @@
 </head>
 <body>
 <nav th:fragment="navbar" class="navbar navbar-expand-lg">
-    <a class="navbar-brand" th:href="@{/}">Kitsune</a>
+    <a class="navbar-brand" th:href="@{/}">
+        <img th:src="@{/img/kitsune_logo_v1.png}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        Kitsune
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

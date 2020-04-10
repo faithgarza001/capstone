@@ -12,6 +12,7 @@ html {
 }
 
 body {
+    color: #FFFFFF;
     background-color: #1674b1;
 }
 
@@ -32,6 +33,10 @@ body {
 }
 
 .nav-link:hover {
+    color: #fc910d;
+}
+
+.navbar-brand:hover {
     color: #fc910d;
 }
 /*Dividers*/
@@ -68,21 +73,19 @@ hr {
     color: #FFFFFF;
 }
 
-.follow-btn {
-    background-color: #ed6d50;
-    color: #FFFFFF;
-    border: none;
-}
-
 .date-created, .created-by, .categories {
     font-weight: lighter;
     font-size: small;
-    color: #fc910d;
+    color: #ed6d50;
 }
 
 .card-info{
     font-weight: lighter;
     font-size: small;
+}
+
+.card{
+    color: black;
 }
 
 /*Form Styling*/
@@ -103,14 +106,14 @@ hr {
     font-size: large;
 }
 
-.submit-btn {
+.btn {
     background-color: #ed6d50;;
     color: #FFFFFF;
     font-weight: bold;
     border: none;
 }
 
-.submit-btn, .follow-btn:hover {
+.btn:hover {
     background-color: #fc910d;
     color: #FFFFFF;
 }
