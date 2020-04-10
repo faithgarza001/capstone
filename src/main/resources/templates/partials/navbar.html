@@ -29,18 +29,16 @@
                 <a class="nav-link" th:href="@{/dashboard/posts}">All Posts</a>
             </li>
             <th:block sec:authorize="!isAuthenticated()">
-                <div class="d-flex">
-                    <li class="nav-item mr-auto p-2">
+                    <li class="nav-item">
                         <a class="nav-link" th:href="@{/sign-up}">Sign Up</a>
                     </li>
-                    <li class="nav-item mr-auto p-2">
+                    <li class="nav-item">
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
-                </div>
             </th:block>
             <th:block sec:authorize="isAuthenticated()">
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" th:href="@{/logout}">logout</a>
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
             </th:block>
         </ul>

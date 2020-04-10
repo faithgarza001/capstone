@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+        <!--        Dashboard Navigation: account, create, view my blogs/posts-->
+        <div th:fragment="left-nav" class="col-lg-3 d-none d-lg-block">
+            <div class="sticky-top">
+                <!--            Container for profile picture thumbnail and logged in username-->
+                <div class="d-flex">
+                    <!--                Profile Picture-->
+                    <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
+                         alt="Profile Picture">
+                    <!--               Displays logged in username-->
+                    <h3 class="dash-header" th:text="${user}">username</h3>
+                </div>
+                <!--            Navigation for user's account/blog/post -->
+                <div class="dash-nav pl-1">
+                    <hr>
+                    <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
+                    <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
+                </div>
+            </div>
+        </div>
+        <!--        End Dashboard Navigation-->
 </body>
 </html>
