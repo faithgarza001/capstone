@@ -43,10 +43,16 @@ public class PostController {
     }
 
     // Viewing All Posts in Dashboard
-    @GetMapping("/dashboard/posts")
-    public String getAllPosts(Model model) {
-        model.addAttribute("posts", postDao.findAll());
-        return "posts/index";
+    @GetMapping("/dashboard/posts/{id}")
+    public String getAllPosts(Model model, @PathVariable long id, Principal principal) {
+        String userName = "";
+        if (principal != null) {
+            userName = principal.getName();
+        }
+        model.addAttribute("userName", userName);
+        // Find all posts with the same blog_id as blogDao.getOne(id)
+        model.addAttribute("post", postDao.getOne(id));
+        return "posts/show";
     }
 
 

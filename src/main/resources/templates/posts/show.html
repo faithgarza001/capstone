@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<div th:replace="partials/navbar :: navbar"></div>
+<h1 th:text="${post.textTitle}"></h1>
+<p> By: <span th:text="${post.blog.blogTitle}"></span></p>
+<p th:text="${post.textBody}"></p>
+<span th:each="category : ${post.blog.categories}" type="hidden">
+    <label th:text="${category.name}"></label>
+</span>
+<br>
+<div sec:authorize="isAuthenticated()">
+    <div th:if="${userName == post.blog.user.username}">
+        <a th:href="@{|/dashboard/posts/${post.id}/edit|}">
+            <button>Edit Post</button>
+        </a>
+        <form th:action="@{|/dashboard/posts/${post.id}/delete|}" th:method="POST" style="display:inline">
+            <button>Delete Post</button>
+        </form>
+    </div>
+    <div>
+        <a th:href="@{|/dashboard/posts/${post.id}/reblog|}"><button>Reblog</button></a>
+    </div>
+</div>
 </body>
 </html>
