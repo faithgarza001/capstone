@@ -8,7 +8,7 @@
 <div th:replace="partials/navbar :: navbar"></div>
 <form th:object="${blogs}" th:action="@{/dashboard/searchbyhandle}" method="post">
     <input type="text" th:name="handle" th:value="${search}" class="form-control"/>
-    <input type="submit" class="btn btn-primary"/>
+    <input type="submit" class="btn"/>
     <table>
         <tr>
             <th>Blogs</th>

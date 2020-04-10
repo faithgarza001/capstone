@@ -7,63 +7,66 @@
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <br>
-<!--Displays if user is not following any blogs with posts-->
-<div th:if="${#lists.isEmpty(posts)}">
-    <h2>No posts to show</h2>
-</div>
-<!--Displays if user is following blogs with posts-->
-<div th:if="!${#lists.isEmpty(posts)}" class="mt-2 container">
-    <!--    All three sections are in the same row-->
-    <div class="row">
+<!--    All three sections are in the same row-->
+<div class="row">
 
-        <!--        Dashboard Navigation: account, create, view my blogs/posts-->
-        <div class="col-lg-3 d-none d-lg-block">
-            <div class="sticky-top">
-                <!--            Container for profile picture thumbnail and logged in username-->
-                <div class="d-flex">
-                    <!--                Profile Picture-->
-                    <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
-                         alt="Profile Picture">
-                    <!--               Displays logged in username-->
-                    <h3 class="dash-header" th:text="${user}">username</h3>
-                </div>
-                <!--            Navigation for user's account/blog/post -->
-                <div class="dash-nav pl-1">
-                    <hr>
-                    <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
-                    <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
-                </div>
+    <!--        Dashboard Navigation: account, create, view my blogs/posts-->
+    <div class="col-lg-3 d-none d-lg-block">
+        <div class="sticky-top">
+            <!--            Container for profile picture thumbnail and logged in username-->
+            <div class="d-flex">
+                <!--                Profile Picture-->
+                <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
+                     alt="Profile Picture">
+                <!--               Displays logged in username-->
+                <h3 class="dash-header" th:text="${user}">username</h3>
+            </div>
+            <!--            Navigation for user's account/blog/post -->
+            <div class="dash-nav pl-1">
+                <hr>
+                <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
+                <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
+                <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
             </div>
         </div>
-        <!--        End Dashboard Navigation-->
+    </div>
+    <!--        End Dashboard Navigation-->
 
-        <!--        Recent Posts: posts from followed blogs-->
-        <div class="col-lg-6">
-            <h3 class="dash-header mt-2">Recent Posts</h3>
-            <hr style="border: #1674b1 solid 2px;">
-            <div class="post-container d-flex flex-column-reverse">
-                <div class="card post mb-3" th:each="post : ${posts}">
-                    <div class="card-body">
-                        <h5 th:text="${post.textTitle}" class="card-title">Card title</h5>
-                        <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural lead-in
-                            to
-                            additional content.</p>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <div class="d-flex flex-column">
+    <!--        Recent Posts: posts from followed blogs-->
+    <div class="col-lg-6">
+        <h3 class="dash-header mt-2">Recent Posts</h3>
+        <hr style="border: #1674b1 solid 2px;">
+        <div class="post-container d-flex flex-column-reverse">
+            <!--Displays if user is not following any blogs with posts-->
+            <div th:if="${#lists.isEmpty(posts)}">
+                <h2>Follow blogs to show posts in your dashboard</h2>
+            </div>
+                <!--Displays if user is following blogs with posts-->
+                <div th:if="!${#lists.isEmpty(posts)}" class="mt-2 container">
+                    <div class="card post mb-3" th:each="post : ${posts}">
+                        <div class="card-body">
+                            <h5 th:text="${post.textTitle}" class="card-title">Card title</h5>
+                            <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural
+                                lead-in
+                                to
+                                additional content.</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <div class="d-flex flex-column">
                             <span class="categories" th:each="category : ${post.categories}" type="hidden">
                                 <label th:text="${category.name}"></label>
                              </span>
-                            <p class="card-info"> Created on <span th:text="${post.dateCreated}"
-                                                                   class="date-created"></span> by <span
-                                    th:text="${post.user.getUsername()}" class="created-by"></span></p>
+                                <p class="card-info"> Created on <span th:text="${post.dateCreated}"
+                                                                       class="date-created"></span> by <span
+                                        th:text="${post.user.getUsername()}" class="created-by"></span></p>
+                            </div>
+                            <a th:href="@{/dashboard/blogs/{id}(id=${post.blog.id})}"
+                               th:text="${post.blog.getBlogTitle()}"
+                               class="btn follow-btn align-self-center" data-blogURL="">Follow Blog</a>
                         </div>
-                        <a th:href="@{/dashboard/blogs/{id}(id=${post.blog.id})}" th:text="${post.blog.getBlogTitle()}"
-                           class="btn follow-btn align-self-center" data-blogURL="">Follow Blog</a>
                     </div>
                 </div>
             </div>
@@ -87,13 +90,12 @@
             </div>
         </div>
     </div>
-</div>
-<div th:replace="partials/footer :: footer"></div>
+    <div th:replace="partials/footer :: footer"></div>
 
-<script type='text/javascript'>
-    $(document).ready(function () {
+    <script type='text/javascript'>
+        $(document).ready(function () {
 
-    });
-</script>
+        });
+    </script>
 </body>
 </html>

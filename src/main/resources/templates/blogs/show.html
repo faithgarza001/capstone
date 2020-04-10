@@ -16,15 +16,15 @@
 <div sec:authorize="isAuthenticated()">
     <div th:if="${userName == blog.user.username}">
         <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
-            <button>Edit Blog</button>
+            <button class="btn">Edit Blog</button>
         </a>
         <form th:action="@{|/dashboard/blogs/${blog.id}/delete|}" th:method="POST" style="display:inline">
-            <button>Delete Blog</button>
+            <button class="btn">Delete Blog</button>
         </form>
     </div>
     <div>
         <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
-            <button>Follow Blog</button>
+            <button class="btn">Follow Blog</button>
         </form>
     </div>
 </div>
