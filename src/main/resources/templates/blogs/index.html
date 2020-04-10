@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="partials/header :: head('All Blogs')"/>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
@@ -39,13 +40,13 @@
             <td>
                 <div sec:authorize="isAuthenticated()">
                     <div th:if="${userName == blog.user.username}">
-                        <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+                        <a th:href="@{|/dashboard/blogs/${blog.handle}/edit|}">
                             <button>Edit Blog</button>
                         </a>
                     </div>
                     <div th:if="${userName != blog.user.username}">
                         <div>
-                            <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
+                            <form th:action="@{|/dashboard/blogs/${blog.handle}/follow|}" th:method="POST" style="display:inline">
                                 <button>Follow Blog</button>
                             </form>
                         </div>

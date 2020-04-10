@@ -79,7 +79,7 @@ public class PostController {
     public String getAllPost(Model model) {
         //This will be posts from followed blogs when functionality is complete
         model.addAttribute("posts", postDao.findAll());
-        return "dashboard/index";
+        return "posts/index";
     }
 
     // Viewing All Posts in Dashboard

@@ -106,25 +106,23 @@ public class BlogController extends BlogsService {
     }
 
     //Viewing One User Blog
-    @GetMapping("/dashboard/blogs/{id}")
-    public String getOneBlog(@PathVariable long id, Model model, Principal principal) {
+    @GetMapping("/dashboard/blogs/{handle}")
+    public String getOneBlog(@PathVariable String handle, Model model, Principal principal) {
         String userName = "";
         if (principal != null) {
             userName = principal.getName();
         }
         model.addAttribute("userName", userName);
-        model.addAttribute("blog", blogDao.findByid(id));
-        // Find all posts with the same blog_id as blogDao.getOne(id)
-        model.addAttribute("posts", postDao.findByBlogId(id));
+        model.addAttribute("blog", blogDao.findByhandle(handle));
         return "blogs/show";
     }
 
     //Editing a blog form
-    @GetMapping("/dashboard/blogs/{id}/edit")
-    public String editBlogForm(@PathVariable long id, Model model) {
+    @GetMapping("/dashboard/blogs/{handle}/edit")
+    public String editBlogForm(@PathVariable String handle, Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
-            Blog blog = blogDao.getOne(id);
+            Blog blog = blogDao.findByhandle(handle);
             List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);
             model.addAttribute("blog", blog);
@@ -135,14 +133,13 @@ public class BlogController extends BlogsService {
     }
 
     //Saving the edit to the database
-    @PostMapping("/dashboard/blogs/{id}/edit")
-    public String saveBlogEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam String handle, @RequestParam List<Category> categories) {
-        Blog blog = blogDao.getOne(id);
+    @PostMapping("/dashboard/blogs/{handle}/edit")
+    public String saveBlogEdit(@PathVariable String handle, @RequestParam String blogTitle, @RequestParam List<Category> categories) {
+        Blog blog = blogDao.findByhandle(handle);
         blog.setBlogTitle(blogTitle);
         blog.setCategories(categories);
-        blog.setHandle(handle);
         blogDao.save(blog);
-        return "redirect:/dashboard/blogs/{id}";
+        return "redirect:/dashboard/blogs/{handle}";
     }
 
 
@@ -155,8 +152,8 @@ public class BlogController extends BlogsService {
         return "redirect:/dashboard/blogs";
     }
 
-    @PostMapping("/dashboard/blogs/{id}/follow")
-    public String following(@PathVariable long id){
+    @PostMapping("/dashboard/blogs/{handle}/follow")
+    public String following(@PathVariable String handle){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             User updateUser = userDao.findByid(loggedInUser.getId());
@@ -164,7 +161,7 @@ public class BlogController extends BlogsService {
             if(followed == null){
                 followed = new ArrayList<Blog>();
             }
-            Blog b = blogDao.findByid(id);
+            Blog b = blogDao.findByhandle(handle);
             if(!followed.contains(b)) {
                 followed.add(b);
                 updateUser.setFollowing(followed);
@@ -174,18 +171,18 @@ public class BlogController extends BlogsService {
                 updateUser = userDao.findByid(loggedInUser.getId());
                 followed = updateUser.getFollowing();
             }
-            return "redirect:/dashboard/blogs/{id}";
+            return "redirect:/dashboard/blogs/{handle}";
         }else{
             return "redirect:/login";
         }
     }
 
-    @GetMapping("dashboard/searchbyhandle")
+    @GetMapping("dashboard/search/handle")
     public String search(Model model) {
         return "blogs/search";
     }
 
-    @PostMapping("/dashboard/searchbyhandle")
+    @PostMapping("/dashboard/search/handle")
     public String searchHandle(@RequestParam(value="handle") String handle, Model model) {
         List<Blog> blogs = blogDao.findByhandleContains(handle);
         model.addAttribute("blogs", blogs);

@@ -8,7 +8,7 @@
 <div th:replace="partials/navbar :: navbar"></div>
 <div class="container">
     <h1>Edit Blog</h1>
-    <form th:action="@{|/dashboard/blogs/${blog.id}/edit|}" th:method="post" th:object="${blog}">
+    <form th:action="@{|/dashboard/blogs/${blog.handle}/edit|}" th:method="post" th:object="${blog}">
         Title:
         <input th:field="*{blogTitle}" />
         <br />

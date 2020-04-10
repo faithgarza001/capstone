@@ -72,7 +72,7 @@
                                                                        class="date-created"></span> by <span
                                         th:text="${post.user.getUsername()}" class="created-by"></span></p>
                             </div>
-                            <a th:href="@{/dashboard/blogs/{id}(id=${post.blog.id})}"
+                            <a th:href="@{|/dashboard/blogs/${blog.handle}|}"
                                th:text="${post.blog.getBlogTitle()}"
                                class="btn follow-btn align-self-center" data-blogURL="">Follow Blog</a>
                             <div>

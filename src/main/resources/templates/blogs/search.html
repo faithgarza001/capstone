@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
-<form th:object="${blogs}" th:action="@{/dashboard/searchbyhandle}" method="post">
+<form th:object="${blogs}" th:action="@{/dashboard/search/handle}" method="post">
     <input type="text" th:name="handle" th:value="${search}" class="form-control"/>
     <input type="submit" class="btn"/>
     <table>
@@ -15,7 +15,7 @@
         </tr>
         <tr th:each="blog : ${blogs}">
             <td>
-                <a th:href="@{|/dashboard/blogs/${blog.id}|}"><p th:text="${blog.blogTitle}"></p></a>
+                <a th:href="@{|/dashboard/blogs/${blog.handle}|}"><p th:text="${blog.blogTitle}"></p></a>
             </td>
         </tr>
     </table>
