@@ -43,12 +43,12 @@
 
         <!--        Recent Posts: posts from followed blogs-->
         <div class="col-lg-6">
-            <h3 class="dash-header">Recent Posts</h3>
+            <h3 class="dash-header mt-2">Recent Posts</h3>
+            <hr style="border: #1674b1 solid 2px;">
             <div class="post-container d-flex flex-column-reverse">
-
                 <div class="card post mb-3" th:each="post : ${posts}">
                     <div class="card-body">
-                        <h6 th:text="${post.textTitle}" class="card-title">Card title</h6>
+                        <h5 th:text="${post.textTitle}" class="card-title">Card title</h5>
                         <p th:text="${post.textBody}" class="card-text">With supporting text below as a natural lead-in
                             to
                             additional content.</p>

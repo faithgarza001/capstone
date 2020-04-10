@@ -29,6 +29,7 @@ body {
 }
 
 .nav-link {
+    font-weight: bold;
     color: #ffffff;
 }
 
@@ -73,6 +74,12 @@ hr {
     color: #FFFFFF;
 }
 
+.card-title {
+    color: #ed6d50;
+    font-weight: bolder;
+    font-size: large;
+}
+
 .date-created, .created-by, .categories {
     font-weight: lighter;
     font-size: small;
@@ -80,12 +87,14 @@ hr {
 }
 
 .card-info{
-    font-weight: lighter;
     font-size: small;
 }
 
 .card{
-    color: black;
+    border-radius: 25px;
+    background-color: #FFFFFF;
+    border: #239cd3 solid 2px;
+    color: #000000;
 }
 
 /*Form Styling*/
