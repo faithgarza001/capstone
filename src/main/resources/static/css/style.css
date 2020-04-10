@@ -49,6 +49,58 @@ hr {
 /*Landing Styling*/
 
 
+/*Login*/
+.login {
+    transform: translateY(50%);
+    color: #ed6d50;
+}
+
+.login-header {
+    font-weight: bold;
+    color: #ed6d50;
+}
+
+.login-msg {
+    font-weight: lighter;
+    color: #fc910d;
+}
+
+.login-input {
+    width: 100%;
+    color: #fc910d;
+    font-size: small;
+    border: #ed6d50 1px solid;
+    border-radius: 6px;
+    /*transform: translateX(-1rem);*/
+    z-index: -1;
+    height: 2rem;
+}
+
+.login-icon {
+    height: 2rem;
+    width: 2rem;
+    z-index: 1000;
+    background-color: #ed6d50;
+    color: #FFFFFF;
+    border-radius: 6px;
+    text-align: center;
+    padding-top: 6px;
+    margin-right: 2px;
+}
+
+.dot {
+    height: 50px;
+    width: 50px;
+    background-color: #1674b1;
+    border-radius: 50%;
+    display: inline-block;
+    z-index: -1;
+}
+
+.logo {
+    z-index: 1000;
+}
+
 /*Dashboard Styling*/
 .dash-nav {
     color: #ffffff;
@@ -137,7 +189,8 @@ table {
 
 
 th, td {
-    border-bottom: 2px solid #239cd3;
+    border-bottom: 2px solid #fc910d;
+    border-top: 2px solid #fc910d;
 }
 
 th {
