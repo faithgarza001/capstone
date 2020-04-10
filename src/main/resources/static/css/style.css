@@ -80,6 +80,11 @@ hr {
     color: #fc910d;
 }
 
+.card-info{
+    font-weight: lighter;
+    font-size: small;
+}
+
 /*Form Styling*/
 .form-container {
     font-weight: bold;
@@ -105,7 +110,7 @@ hr {
     border: none;
 }
 
-.submit-btn:hover {
+.submit-btn, .follow-btn:hover {
     background-color: #fc910d;
     color: #FFFFFF;
 }
