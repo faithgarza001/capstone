@@ -9,15 +9,15 @@
 <div class="row d-flex justify-content-center align-items-center">
 <!--    <div class="col-md-3">-->
         <div class="login card p-5 d-flex justify-content-center">
-            <h2 class="login-header mb-4">Welcome Back!</h2>
-            <div th:if="${param.error}" class="login-msg">
+            <h2 class="login-header mb-2">Welcome Back!</h2>
+            <div th:if="${param.error}" class="login-msg mb-2">
                 Invalid Username and Password.
             </div>
-            <div th:if="${param.logout}" class="login-msg">
+            <div th:if="${param.logout}" class="login-msg mb-2">
                 You have been logged out.
             </div>
             <form th:action="@{/login}" method="post">
-                <div class="d-flex flex-column align-items-center">
+                <div class="d-flex flex-column align-items-center mt-2">
                     <div class="d-flex align-items-center">
                         <label for="username"><i class="fas fa-user login-icon"></i></label>
                         <input class="mb-2 login-input" id="username" name="username" type="text"
@@ -31,8 +31,8 @@
                     </div>
                 </div>
                 <br/>
+                <input type="submit" value="Log In" class="btn login-btn"/>
             </form>
-            <input type="submit" value="Log In" class="btn"/>
         </div>
     </div>
 <!--</div>-->

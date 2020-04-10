@@ -62,7 +62,7 @@ hr {
 
 .login-msg {
     font-weight: lighter;
-    color: #fc910d;
+    color: #239cd3;
 }
 
 .login-input {
@@ -74,6 +74,11 @@ hr {
     /*transform: translateX(-1rem);*/
     z-index: -1;
     height: 2rem;
+}
+
+.login-btn {
+    width: 100%;
+    text-align: center;
 }
 
 .login-icon {
