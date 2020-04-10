@@ -7,45 +7,53 @@
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <br>
-<!--    All three sections are in the same row-->
-<div class="row">
 
-    <!--        Dashboard Navigation: account, create, view my blogs/posts-->
-    <div class="col-lg-3 d-none d-lg-block">
-        <div class="sticky-top">
-            <!--            Container for profile picture thumbnail and logged in username-->
-            <div class="d-flex">
-                <!--                Profile Picture-->
-                <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
-                     alt="Profile Picture">
-                <!--               Displays logged in username-->
-                <h3 class="dash-header" th:text="${user}">username</h3>
-            </div>
-            <!--            Navigation for user's account/blog/post -->
-            <div class="dash-nav pl-1">
-                <hr>
-                <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
-                <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
-                <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
-                <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
-                <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
-                <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
+<!--Displays if user is following blogs with posts-->
+<div class="mt-2 container">
+    <!--    All three sections are in the same row-->
+    <div class="row">
+
+        <!--        Dashboard Navigation: account, create, view my blogs/posts-->
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="sticky-top">
+                <!--            Container for profile picture thumbnail and logged in username-->
+                <div class="d-flex">
+                    <!--                Profile Picture-->
+                    <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
+                         alt="Profile Picture">
+                    <!--               Displays logged in username-->
+                    <h3 class="dash-header" th:text="${user}">username</h3>
+                </div>
+                <!--            Navigation for user's account/blog/post -->
+                <div class="dash-nav pl-1">
+                    <hr>
+                    <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
+                    <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
+                    <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
+                </div>
             </div>
         </div>
-    </div>
-    <!--        End Dashboard Navigation-->
+        <!--        End Dashboard Navigation-->
 
-    <!--        Recent Posts: posts from followed blogs-->
-    <div class="col-lg-6">
-        <h3 class="dash-header mt-2">Recent Posts</h3>
-        <hr style="border: #1674b1 solid 2px;">
-        <div class="post-container d-flex flex-column-reverse">
+        <!--        Recent Posts: posts from followed blogs-->
+        <div class="col-lg-6">
+            <h3 class="dash-header mt-2">Recent Posts</h3>
+            <hr style="border: #1674b1 solid 2px;">
             <!--Displays if user is not following any blogs with posts-->
             <div th:if="${#lists.isEmpty(posts)}">
-                <h2>Follow blogs to show posts in your dashboard</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">No posts to show (yet!)</h5>
+                        <p class="card-text">Follow <a th:href="@{/dashboard/blogs}" style="color: #fc910d; "><u>blogs</u></a> to show posts in your dashboard</p>
+                    </div>
+                </div>
             </div>
-                <!--Displays if user is following blogs with posts-->
-                <div th:if="!${#lists.isEmpty(posts)}" class="mt-2 container">
+
+            <div th:if="!${#lists.isEmpty(posts)}">
+                <div class="post-container d-flex flex-column-reverse">
                     <div class="card post mb-3" th:each="post : ${posts}">
                         <div class="card-body">
                             <h5 th:text="${post.textTitle}" class="card-title">Card title</h5>
@@ -90,12 +98,13 @@
             </div>
         </div>
     </div>
-    <div th:replace="partials/footer :: footer"></div>
+</div>
+<div th:replace="partials/footer :: footer"></div>
 
-    <script type='text/javascript'>
-        $(document).ready(function () {
+<script type='text/javascript'>
+    $(document).ready(function () {
 
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
