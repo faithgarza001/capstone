@@ -46,13 +46,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 /* Pages that can be viewed without having to log in */
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/blogs/{handle}", "/sign-up") // anyone can see the home and the ads pages
+                .antMatchers("/", "/dashboard/blogs/{handle}", "/dashboard/posts/{id}", "/sign-up") // anyone can see the home and the ads pages
                 .permitAll()
                 /* Pages that require authentication */
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/dashboard", "/dashboard/posts/create", "/dashboard/blogs/create", "/dashboard/blogs/{id}/edit", "/dashboard/posts/{id}/edit", "/dashboard/posts/{id}", "/dashboard/blogs/{id}", "/dashboard/posts/{id}/delete", "/dashboard/blogs/{id}/delete", "/account/{username}", "/account/{username}/edit", "dashboard/search/texts", "dashboard/search/videos")
+                        "/dashboard",
+                        "/dashboard/posts/create",
+                        "/dashboard/blogs/create",
+                        "/dashboard/posts/myposts",
+                        "/dashboard/blogs/myblogs",
+                        "/dashboard/posts",
+                        "/dashboard/blogs",
+                        "/dashboard/blogs/{handle}/edit",
+                        "/dashboard/posts/{id}/edit",
+                        "/dashboard/posts/{id}/delete",
+                        "/dashboard/blogs/{id}/delete",
+                        "/account",
+                        "/account/edit",
+                        "/account/delete",
+                        "/dashboard/search/texts",
+                        "/dashboard/search/videos",
+                        "/dashboard/search/site")
                 .authenticated()
                 .and()
                 .headers().frameOptions().sameOrigin()
