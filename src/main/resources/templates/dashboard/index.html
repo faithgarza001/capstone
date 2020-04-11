@@ -14,7 +14,7 @@
         <div th:replace="partials/left-nav :: left-nav"></div>
 
         <!--        Recent Posts: posts from followed blogs-->
-        <div class="col-lg-6">
+        <div class="col-lg-6" >
             <h3 class="dash-header mt-2">Recent Posts</h3>
             <hr style="border: #1674b1 solid 2px;">
             <!--Displays if user is not following any blogs with posts-->
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <!--Displays if user is following blogs with posts-->
-            <div th:if="!${#lists.isEmpty(posts)}">
+            <div th:if="!${#lists.isEmpty(users.following)}">
                 <div class="post-container d-flex flex-column-reverse">
                     <div th:each="blog : ${users.following}">
                         <div class="card post mb-3" th:each="post : ${blog.posts}">
@@ -59,6 +59,7 @@
                                 <a th:href="@{|/dashboard/posts/${post.id}/reblog|}"><button>Reblog</button></a>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,6 +71,7 @@
 <!--        End container and row-->
     </div>
 </div>
+
 <div th:replace="partials/footer :: footer"></div>
 
 </body>
