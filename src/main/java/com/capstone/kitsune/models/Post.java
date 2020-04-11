@@ -155,6 +155,15 @@ public class Post {
     public Post() {
     }
 
+    public Post(String textTitle, String textBody, User user, Blog blog, List<Category> categories, String videoEmbedCode) {
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+        this.videoEmbedCode = videoEmbedCode;
+        this.blog = blog;
+        this.user = user;
+        this.categories = categories;
+    }
+
     public long getId() {
         return id;
     }

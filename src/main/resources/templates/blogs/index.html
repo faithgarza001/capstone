@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="partials/header :: head('Dashboard')">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="partials/header :: head('All Blogs')"/>
     <meta charset="UTF-8">
     <title>Dashboard</title>
 </head>
@@ -46,7 +47,6 @@
                 <span th:each="category : ${blog.categories}" type="hidden">
                         <label th:text="${category.name}"></label>
                 </span>
-
                         </td>
                         <td sec:authorize="isAuthenticated()">
                             <div class="row d-flex justify-content-center">

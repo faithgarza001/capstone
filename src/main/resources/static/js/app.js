@@ -36,4 +36,5 @@ function init() {
     gapi.client.load("youtube", "v3", function() {
         // yt api is ready
     });
+
 }
