@@ -58,6 +58,7 @@ hr {
 .login-header {
     font-weight: bold;
     color: #ed6d50;
+    font-family: 'Patrick Hand', cursive;
 }
 
 .login-msg {
@@ -79,6 +80,10 @@ hr {
 .login-btn {
     width: 100%;
     text-align: center;
+}
+
+.logout-btn {
+    transform: translateY(-3px);
 }
 
 .login-icon {

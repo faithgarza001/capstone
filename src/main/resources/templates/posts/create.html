@@ -29,6 +29,12 @@
                             <textarea th:field="*{textBody}" class="pl-2" placeholder="Text to display on your post"></textarea>
                         </div>
                         <br/>
+<!--                        Testing iframe-->
+                        <div class="d-flex justify-content-left align-items-baseline">
+                            <label for="" class="pr-2">Video URL</label>
+                            <input th:field="*{videoEmbedCode}" placeholder="Video URL" class="pl-2"/>
+                        </div>
+                        <br/>
                         <div class="d-flex justify-content-left align-items-baseline">
                             <label for="" class="pr-2">Blog</label>
                             <select th:field="*{id}" required>

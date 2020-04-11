@@ -9,11 +9,11 @@
 <div class="row d-flex justify-content-center align-items-center">
 <!--    <div class="col-md-3">-->
         <div class="login card p-5 d-flex justify-content-center">
-            <h2 class="login-header mb-2">Welcome Back!</h2>
-            <div th:if="${param.error}" class="login-msg mb-2">
+            <h1 class="login-header mb-2 text-center">Welcome Back!</h1>
+            <div th:if="${param.error}" class="login-msg mb-2 text-center">
                 Invalid Username and Password.
             </div>
-            <div th:if="${param.logout}" class="login-msg mb-2">
+            <div th:if="${param.logout}" class="login-msg mb-2 text-center">
                 You have been logged out.
             </div>
             <form th:action="@{/login}" method="post">

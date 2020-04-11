@@ -42,6 +42,12 @@
                                         to
                                         additional content.</p>
                                 </div>
+
+<!--                                Testing iframes-->
+                                <div th:if="${post.videoEmbedCode} != null">
+                                <iframe class="video w100" width="640" height="360" th:src="${post.videoEmbedCode}" frameborder="0"
+                                        allowfullscreen></iframe>
+                                </div>
                                 <div class="card-footer d-flex justify-content-between">
                                     <div class="d-flex flex-column">
                             <span class="categories" th:each="category : ${post.categories}" type="hidden">
