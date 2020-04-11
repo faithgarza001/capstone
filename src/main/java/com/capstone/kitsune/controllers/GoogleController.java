@@ -8,12 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//@PropertySource(ignoreResourceNotFound = true, value = "classpath:application.properties")
 @Controller
 public class GoogleController {
-
-//    @Value("${youtube.api.key}")
-//    private String youtubeAPIKey;
 
     @GetMapping("/dashboard/search/texts")
     public String googleCSE() {
@@ -29,7 +25,6 @@ public class GoogleController {
     public String youtube() {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
-//            model.addAttribute("key", youtubeAPIKey);
             return "search/youtube";
         } else {
             return "redirect:/login";
