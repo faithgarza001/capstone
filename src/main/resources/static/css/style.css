@@ -72,7 +72,7 @@ hr {
     border: #ed6d50 1px solid;
     border-radius: 6px;
     /*transform: translateX(-1rem);*/
-    z-index: -1;
+    z-index: 1;
     height: 2rem;
 }
 
