@@ -8,18 +8,22 @@ import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.repositories.PostRepo;
 import com.capstone.kitsune.repositories.UserRepo;
+import org.hibernate.Session;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@Scope("session")
 public class PostController {
     private PostRepo postDao;
     private BlogRepo blogDao;
@@ -35,8 +39,16 @@ public class PostController {
 
     //Create form for a post
     @GetMapping("/dashboard/posts/create")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(HttpServletRequest request, Model model, @ModelAttribute(name="videoEmbedCode") String videoEmbedCode) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        System.out.println("Vid ID: " + (String)request.getSession().getAttribute("videoEmbedCode"));
+
+
+        model.addAttribute("videoEmbedCode", (String)request.getSession().getAttribute("videoEmbedCode"));
+        HttpSession foo = request.getSession();
+
+
         if (loggedInUser != null) {
             List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);
@@ -61,7 +73,7 @@ public class PostController {
         List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
         Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, videoEmbedCode);
         postDao.save(post);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard/posts/{id}";
     }
 
     // Viewing All Posts in Dashboard
