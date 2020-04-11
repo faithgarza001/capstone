@@ -4,37 +4,17 @@
     <meta charset="UTF-8">
     <title>Create Blog</title>
 </head>
-<div>
+<body>
     <div th:replace="partials/navbar :: navbar"></div>
-    <!--    Container start-->
-    <div class="container mt-2">
-        <!--    Row start: All three sections are in the same row-->
+    <!--Container start-->
+    <div class="mt-3 container">
+        <!--   Row start: All three sections are in the same row-->
         <div class="row">
+            <!--      Responsive user sticky navigation partial-->
+            <div th:replace="partials/left-nav :: left-nav"></div>
 
-            <!--        Dashboard Navigation: account, create, view my blogs/posts-->
-            <div class="col-lg-3 d-none d-lg-block">
-                <!--            Container for profile picture thumbnail and logged in username-->
-                <div class="d-flex">
-                    <!--                Profile Picture-->
-                    <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
-                         alt="Profile Picture">
-                    <!--               Displays logged in username-->
-                    <h3 class="dash-header" th:text="${user}">username</h3>
-                </div>
-                <!--            Navigation for user's account/blog/post -->
-                <div class="dash-nav pl-1">
-                    <hr>
-                    <h6><a class="dash-link" th:href="@{/account}">My Account</a></h6>
-                    <h6><a class="dash-link" href="#">Followed Blogs</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/myblogs}">My Blogs</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/blogs/create}">New Blog</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/posts/myposts}">My Posts</a></h6>
-                    <h6><a class="dash-link" th:href="@{/dashboard/posts/create}">New Post</a></h6>
-                </div>
-            </div>
-            <!--        End Dashboard Navigation-->
 
-            <!--    Form Start-->
+            <!-- Form Start-->
             <div class="col-lg-6">
                 <h3 class="dash-header">New Post</h3>
                 <div class="form-container">
@@ -74,28 +54,14 @@
             </div>
             <!--    Form End-->
 
-            <!--            Dash Search Info Start-->
-            <div class="col-lg-3 d-none d-lg-block">
-                <h3 class="dash-header text-right">Search Kitsune</h3>
-                <div class="pr-1 text-right dash-nav">
-                    <hr>
-                    <h6><em><a class="dash-link" th:href="@{/dashboard/search/texts}">Google Custom Search</a></em></h6>
-                    <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
-                    <h6><em><a class="dash-link" th:href="@{/dashboard/search/videos}">YouTube Search</a></em></h6>
-                    <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
-                    <h6><em><a class="dash-link" href="#">Site Search</a></em></h6>
-                    <p class="dash-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <!--            Dash Search Info Start-->
+            <!--Responsive Search sticky navigation partial-->
+            <div th:replace="partials/right-nav :: right-nav"></div>
 
+            <!--        End container and row-->
         </div>
-        <!--        Row end-->
     </div>
-    <!--    Container end-->
+
+<!--    Footer-->
     <div th:replace="partials/footer :: footer"></div>
     </body>
 </html>

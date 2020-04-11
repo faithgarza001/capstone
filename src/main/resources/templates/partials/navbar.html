@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Navbar</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 <body>
@@ -12,17 +13,12 @@
         <img th:src="@{/img/kitsune_logo_v1.png}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
         Kitsune
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/sign-up}">Sign Up</a>
-            </li>
-            <li class="nav-item ml-auto">
-                <a class="nav-link" th:href="@{/login}">Login</a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>
             </li>
@@ -32,14 +28,29 @@
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/dashboard/posts}">All Posts</a>
             </li>
+        </ul>
+        <th:block sec:authorize="!isAuthenticated()">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/sign-up}">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+            </ul>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+            <ul class="ml-auto">
             <li class="nav-item ml-auto">
                 <form th:action="@{/logout}" th:method="post">
                     <button class="btn-link btn" style="margin-top: 8px">Logout</button>
                 </form>
             </li>
-        </ul>
+            </ul>
+        </th:block>
+
     </div>
 </nav>
-
+<br>
 </body>
 </html>
