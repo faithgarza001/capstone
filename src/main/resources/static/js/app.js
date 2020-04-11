@@ -16,6 +16,7 @@ $(function() {
             var results = response.result;
             $("#results").html("");
             $.each(results.items, function(index, item) {
+                console.log(item);
                 // ERROR: GET http://localhost:8083/dashboard/tpl/item.html 404
                 $.get("/tpl/item.html", function(data) {
                     $("#results").append(tplawesome(data, [{"title":item.snippet.title, "videoid":item.id.videoId}]));

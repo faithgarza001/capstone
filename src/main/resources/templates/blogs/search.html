@@ -6,8 +6,8 @@
 </head>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
-<form th:object="${blogs}" th:action="@{/dashboard/searchbyhandle}" method="post">
-    <input type="text" th:name="handle" th:value="${search}" class="form-control"/>
+<form th:object="${blog}" th:action="@{/dashboard/search/site}" method="post">
+    <input type="text" th:name="search" th:value="${search}" class="form-control"/>
     <input type="submit" class="btn"/>
     <table>
         <tr>
@@ -15,11 +15,27 @@
         </tr>
         <tr th:each="blog : ${blogs}">
             <td>
-                <a th:href="@{|/dashboard/blogs/${blog.id}|}"><p th:text="${blog.blogTitle}"></p></a>
+                <a th:href="@{|/dashboard/blogs/${blog.handle}|}"><p th:text="${blog.blogTitle}"></p></a>
             </td>
         </tr>
     </table>
 </form>
+<!--<form th:object="${blog}" th:action="@{/dashboard/search/site}" th:action="@{search}" method="post" class="input-group">-->
+<!--    <input class="form-control form-control-dark" type="text" placeholder="Search" name="search" aria-label="Search">-->
+<!--    <div class="input-group-append">-->
+<!--        <button class="btn btn-outline-light" value="Search">Search</button>-->
+<!--    </div>-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <th>Blogs</th>-->
+<!--        </tr>-->
+<!--        <tr th:each="blog : ${blog}">-->
+<!--            <td>-->
+<!--                <a th:href="@{|/dashboard/blogs/${blog.handle}|}"><p th:text="${blog.blogTitle}"></p></a>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</form>-->
 <div th:replace="partials/footer :: footer"></div>
 </body>
 </html>
