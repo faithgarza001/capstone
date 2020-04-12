@@ -44,7 +44,7 @@ public class Post {
     @JoinColumn(name = "blog_id")
     private Blog blog;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "posts_categories",
             joinColumns = {@JoinColumn(name = "post_id")},

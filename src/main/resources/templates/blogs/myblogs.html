@@ -35,9 +35,14 @@
                 </span>
             </td>
             <td>
-                <a th:href="@{|/dashboard/blogs/${blog.handle}/edit|}">
+                <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
                     <button>Edit Blog</button>
                 </a>
+            </td>
+            <td>
+                <form th:action="@{|/dashboard/blogs/${blog.id}/delete|}" th:method="POST" style="display:inline">
+                    <button>Delete Blog</button>
+                </form>
             </td>
         </tr>
         </tbody>

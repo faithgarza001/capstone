@@ -10,9 +10,9 @@
 <h1 th:text="${post.textTitle}"></h1>
 <p> By: <span th:text="${post.blog.blogTitle}"></span></p>
 <p th:text="${post.textBody}"></p>
-<!--<div th:if="${post.videoEmbedCode} != null">-->
-<iframe width="560" height="315"  th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<!--</div>-->
+<div th:if="${post.videoEmbedCode} != null">
+    <iframe width="560" height="315"  th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 <span th:each="category : ${post.blog.categories}" type="hidden">
     <label th:text="${category.name}"></label>
 </span>

@@ -15,16 +15,22 @@
     <table>
         <thead>
         <tr>
-            <th> Title</th>
-            <th> Body</th>
-            <th> Date Created</th>
-            <th> Categories</th>
+            <th> Title </th>
+            <th> Video </th>
+            <th> Body </th>
+            <th> Date Created </th>
+            <th> Categories </th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="post : ${posts}">
             <td>
                 <p th:text="${post.textTitle}"></p>
+            </td>
+            <td>
+                <div th:if="${post.videoEmbedCode} != null">
+                    <iframe width="560" height="315"  th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
             </td>
             <td>
                 <p th:text="${post.textBody}"></p>

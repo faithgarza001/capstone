@@ -73,7 +73,7 @@ public class PostController {
         List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
         Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, (String)request.getSession().getAttribute("videoEmbedCode"));
         postDao.save(post);
-        return "redirect:/dashboard/blogs/{id}";
+        return "redirect:/dashboard/posts";
     }
 
     // Viewing All Posts in Dashboard
@@ -161,6 +161,9 @@ public class PostController {
     public String deletePost(@PathVariable long id) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
+            Post post = postDao.getOne(id);
+            post.setCategories(null);
+            postDao.save(post);
             postDao.deleteById(id);
         }
         return "redirect:/dashboard";
@@ -182,10 +185,10 @@ public class PostController {
     }
 
     @PostMapping("/dashboard/posts/{id}/reblog")
-    public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories) {
+    public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories, @RequestParam String videoEmbedCode) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
-        Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories);
+        Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories, videoEmbedCode);
         postDao.save(post2);
         return "redirect:/dashboard";
     }

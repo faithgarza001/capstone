@@ -12,13 +12,16 @@
         Title:
         <input th:field="*{textTitle}" />
         <br />
-        Body:
-        <textarea th:field="*{textBody}" />
-        <br />
         Blog:
         <select th:field="*{id}" required>
             <option th:each="blog : ${blogs}" th:value="${blog.id}" th:utext="${blog.blogTitle}"></option>
         </select>
+        <br />
+        Video id:
+        <input th:field="*{videoEmbedCode}" />
+        <br />
+        Body:
+        <textarea th:field="*{textBody}" />
         <br />
         Categories:
         <ul>
