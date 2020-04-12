@@ -62,7 +62,7 @@ public class PostController {
 
     //Saving the post to the database
     @PostMapping("/dashboard/posts/create")
-    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @RequestParam String videoEmbedCode) {
+    public String postNewPost(HttpServletRequest request, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @ModelAttribute(name="videoEmbedCode") String videoEmbedCode) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
         //convert string[] ids to long[] ids
@@ -71,9 +71,9 @@ public class PostController {
             selectedCategoryIds[i] = Long.parseLong(categories[i]);
         }
         List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
-        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, videoEmbedCode);
+        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, (String)request.getSession().getAttribute("videoEmbedCode"));
         postDao.save(post);
-        return "redirect:/dashboard/posts/{id}";
+        return "redirect:/dashboard/blogs/{id}";
     }
 
     // Viewing All Posts in Dashboard
