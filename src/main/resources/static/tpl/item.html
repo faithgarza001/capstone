@@ -5,11 +5,12 @@
     <h2>{{title}}</h2>
     <iframe class="video w100" width="640" height="360" src="//www.youtube.com/embed/{{videoid}}" frameborder="0"
             allowfullscreen></iframe>
-    <p id="texttocopy">{{videoid}}</p>
-    <a th:href="@{/dashboard/posts/create}">
-        <button id="copy" class="btn copy-btn mb-3" onclick="copyToClipboard(texttocopy) copyConfirm()">Copy Video ID</button>
-    </a>
-
+<!--    <a th:href="@{/dashboard/posts/create}">-->
+<!--        <button data-url="//www.youtube.com/embed/{{videoid}}">Post Video to Blog</button>-->
+<!--    </a>-->
+    <form th:action="@{/dashboard/post/create}" modelAttribute="videoEmbedCode" th:method="get">
+        <button value="{{videoid}}" name="button">Post Video To Blog</button>
+    </form>
 </div>
 <script>
     function copyToClipboard(element) {
