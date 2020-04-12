@@ -212,3 +212,16 @@ tr {
     background-color: #FFFFFF;
     color: #ed6d50;
 }
+
+/*Youtube Search*/
+
+#texttocopy {
+    color: #1674b1;
+    z-index: -1;
+    visibility: hidden;
+}
+
+.copy-btn {
+    transform: translateY(-2rem);
+    z-index: 1;
+}
