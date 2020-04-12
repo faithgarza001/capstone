@@ -12,5 +12,20 @@
         <button value="{{videoid}}" name="button">Post Video To Blog</button>
     </form>
 </div>
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).html()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+    function copyConfirm(){
+        $("#copy").onclick( function f() {
+            $(this).text("Copied to Clipboard!")
+        })
+    }
+</script>
 </body>
 </html>
