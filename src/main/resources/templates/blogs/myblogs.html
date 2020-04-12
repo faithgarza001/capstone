@@ -44,6 +44,10 @@
                     <button>Delete Blog</button>
                 </form>
             </td>
+            <td>
+                <a th:href="@{/dashboard/blogs/{id}(id=${blog.id})}"
+                   class="btn btn-sm align-self-center"><i class="far fa-eye"></i></a>
+            </td>
         </tr>
         </tbody>
     </table>
