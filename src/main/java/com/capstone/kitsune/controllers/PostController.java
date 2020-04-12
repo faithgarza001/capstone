@@ -62,7 +62,7 @@ public class PostController {
 
     //Saving the post to the database
     @PostMapping("/dashboard/posts/create")
-    public String postNewPost(HttpServletRequest request, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @ModelAttribute(name="videoEmbedCode") String videoEmbedCode) {
+    public String postNewPost(HttpServletRequest request, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @ModelAttribute(name="videoEmbedCode") String videoEmbedCode, @RequestParam String linkUrl) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
         //convert string[] ids to long[] ids
@@ -71,7 +71,10 @@ public class PostController {
             selectedCategoryIds[i] = Long.parseLong(categories[i]);
         }
         List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
-        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, (String)request.getSession().getAttribute("videoEmbedCode"));
+        if(!linkUrl.contains("https://")){
+            linkUrl = "https://" + linkUrl;
+        }
+        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, (String)request.getSession().getAttribute("videoEmbedCode"), linkUrl);
         postDao.save(post);
         return "redirect:/dashboard/posts";
     }
@@ -142,7 +145,7 @@ public class PostController {
 
     //Saving the edit to the database
     @PostMapping("/dashboard/posts/{id}/edit")
-    public String savePostEdit(@PathVariable long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam String[] categories) {
+    public String savePostEdit(@PathVariable long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam String[] categories, @RequestParam String linkUrl) {
         Post post = postDao.getOne(id);
         long[] selectedCategoryIds = new long[categories.length];
         for (int i = 0; i < categories.length; i++) {
@@ -152,6 +155,10 @@ public class PostController {
         post.setTextTitle(textTitle);
         post.setTextBody(textBody);
         post.setCategories(categoriesList);
+        if(!linkUrl.contains("https://")){
+            linkUrl = "https://" + linkUrl;
+        }
+        post.setLinkUrl(linkUrl);
         postDao.save(post);
         return "redirect:/dashboard";
     }
@@ -185,10 +192,13 @@ public class PostController {
     }
 
     @PostMapping("/dashboard/posts/{id}/reblog")
-    public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories, @RequestParam String videoEmbedCode) {
+    public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories, @RequestParam String videoEmbedCode, @RequestParam String linkUrl) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
-        Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories, videoEmbedCode);
+        if(!linkUrl.contains("https://")){
+            linkUrl = "https://" + linkUrl;
+        }
+        Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories, videoEmbedCode, linkUrl);
         postDao.save(post2);
         return "redirect:/dashboard";
     }

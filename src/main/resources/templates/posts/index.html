@@ -17,6 +17,8 @@
         <tr>
             <th> Title</th>
             <th> Body</th>
+            <th> Video </th>
+            <th> Link </th>
             <th> Date Created</th>
             <th> Created By</th>
             <th> Categories</th>
@@ -30,6 +32,16 @@
             </td>
             <td>
                 <p th:text="${post.textBody}"></p>
+            </td>
+            <td>
+                <div th:if="${post.videoEmbedCode} != null">
+                    <iframe width="560" height="315"  th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </td>
+            <td>
+                <div th:if="${post.linkUrl} != null">
+                    <a th:href="@{${post.linkUrl}}" th:text="${post.linkUrl}"></a>
+                </div>
             </td>
             <td th:text="${post.dateCreated}"></td>
             <!--                Need to parse date-->

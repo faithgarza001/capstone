@@ -23,6 +23,9 @@
         Body:
         <textarea th:field="*{textBody}" />
         <br />
+        Link URL:
+        <input th:field="*{linkUrl}" />
+        <br />
         Categories:
         <ul>
             <li th:each="category : ${categories}" type="hidden">
