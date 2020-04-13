@@ -24,9 +24,13 @@
         </form>
     </div>
     <div th:if="${userName != blog.user.username}">
-        <div>
-            <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST" style="display:inline">
-                <button class="btn">Follow Blog</button>
+        <div th:if="${#lists.contains(following, blog)}">
+            <button class="btn btn-sm align-self-center ml-1">Following</button>
+        </div>
+        <div th:unless="${#lists.contains(following, blog)}">
+            <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST"
+                  style="display:inline">
+                <button class="btn btn-sm align-self-center ml-1"><i class="fas fa-plus"></i></button>
             </form>
         </div>
     </div>
@@ -42,6 +46,9 @@
     </div>
     <div th:if="!${#strings.isEmpty(post.images)}">
         <img th:attr="src=@{${post.images}}" alt="" class="post-img" src="#">
+    </div>
+    <div th:if="${post.linkUrl} != null">
+        <a th:href="@{${post.linkUrl}}" th:text="${post.linkUrl}"></a>
     </div>
     <p th:text="${post.textBody}"></p>
     <div sec:authorize="isAuthenticated()">

@@ -80,10 +80,13 @@ public class BlogController extends BlogsService {
     // Viewing All Blogs
     @GetMapping("/dashboard/blogs")
     public String getAllBlogs(Model model, Principal principal) {
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.findByid(loggedIn.getId());
         String userName = "";
         if (principal != null) {
             userName = principal.getName();
         }
+        model.addAttribute("following", user.getFollowing());
         model.addAttribute("userName", userName);
         model.addAttribute("blogs", blogDao.findAll());
         return "blogs/index";
@@ -109,13 +112,15 @@ public class BlogController extends BlogsService {
     //Viewing One User Blog
     @GetMapping("/dashboard/blogs/{id}")
     public String getOneBlog(@PathVariable long id, Model model, Principal principal) {
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.findByid(loggedIn.getId());
         String userName = "";
         if (principal != null) {
             userName = principal.getName();
         }
 
         Blog blog = blogDao.getOne(id);
-
+        model.addAttribute("following", user.getFollowing());
         model.addAttribute("userName", userName);
         model.addAttribute("blog", blog);
         return "blogs/show";
