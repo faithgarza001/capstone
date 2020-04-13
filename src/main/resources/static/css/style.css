@@ -56,7 +56,112 @@ hr {
 }
 
 /*Landing Styling*/
+.landing-one {
+    height: 100vh;
+    width: 100vw;
+    margin: auto;
+    word-wrap: break-word;
+}
 
+.landing-text {
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: lighter;
+    color: #FFFFFF;
+}
+
+.type-bg {
+    background-color: #FFFFFF;
+    border: #239cd3 solid 2px;
+    border-radius: 15px;
+    transform: translateY(125px)translateX(150px);
+    width: 75vw;
+}
+
+.site-name {
+    font-weight: bold;
+    font-size: 4em;
+    color: #FFFFFF;
+}
+
+.paragraph {
+    width: 60vw;
+    height: 70vh;
+    position: absolute;
+    transform: translateY(200px)translateX(300px);
+}
+
+.landing-mascot {
+width: 500px;
+    height: 500px;
+    position: absolute;
+    left: -125px;
+    bottom: 0px;
+}
+
+.text-js{
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: lighter;
+    opacity: 0;
+    color: #000000;
+}
+
+
+.cursor{
+    display: block;
+    position: absolute;
+    height: 2rem;
+    top: 0;
+    right: -5px;
+    width: 2px;
+    /* Change colour of Cursor Here */
+    background-color: #ed6d50;
+    z-index: 1;
+    animation: flash 0.5s none infinite alternate;
+}
+@keyframes flash{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+
+.landing-two {
+    background-color: #FFFFFF;
+    height: 75vh;
+    width: 100vw;
+}
+
+.devs {
+    font-weight: bold;
+    margin: 2rem 1rem;
+    text-align: center;
+    padding: 0 1rem;
+    border: none;
+    box-shadow: 3px 3px 6px #AAA;
+}
+
+.dev>.card-title{
+    font-size: 3em;
+}
+
+.dev-pic {
+    width: 250px;
+    height: 250px;
+}
+
+.dev-name {
+    z-index: 100;
+}
+
+.about {
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: bold;
+    color: #ed6d50;
+    font-size: 3rem;
+}
 
 /*Login*/
 .login {
@@ -105,15 +210,6 @@ hr {
     text-align: center;
     padding-top: 6px;
     margin-right: 2px;
-}
-
-.dot {
-    height: 50px;
-    width: 50px;
-    background-color: #1674b1;
-    border-radius: 50%;
-    display: inline-block;
-    z-index: -1;
 }
 
 .logo {

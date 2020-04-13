@@ -18,7 +18,7 @@
 <body>
 <nav th:fragment="navbar" class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="#">
-        <img th:src="@{/img/kitsune_logo_v1.png}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
+        <img th:src="@{/img/kitsune-icon.png}" width="30" height="30" class="d-inline-block align-top" alt="Logo">
         Kitsune
     </a>
     <button class="custom-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -26,6 +26,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<!--        <div class="float-right text-right pr-3">-->
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/dashboard}">Dashboard</a>

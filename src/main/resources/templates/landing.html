@@ -1,33 +1,129 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/header :: head('Kitsune')">    <meta charset="UTF-8">
-    <meta name="google-site-verification" content="tVOtRUKuNfsm1-Bb-L41cnVzK_2BuXqbA3d4f1ra4dk" />
+<head th:replace="partials/header :: head('Kitsune')">
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="tVOtRUKuNfsm1-Bb-L41cnVzK_2BuXqbA3d4f1ra4dk"/>
     <title>Title</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
-<div class="wrapper">
+<div class="type-bg text-center">
+    <div class="type-js headline text-center mt-4">
+        <h3 class="text-js">"Social Learning" + (academic OR personal) development -classroom
+            <strong>site:kitsune.rocks</strong></h3>
+    </div>
+</div>
+<div class="landing-one">
 
-    <header class="container my-5">
+    <div class="paragraph">
+        <h1 class="site-name text-center mx-auto mb-4">Kitsune</h1>
+        <h3 class="landing-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+            qui officia deserunt mollit anim id est laborum.</h3>
+    </div>
+</div>
+<img src="img/kitsune-mascot.png" alt="Mascot" class="landing-mascot">
 
-        <div class="jumbotron">
-            <h1 th:align="center"><iframe src="https://giphy.com/embed/dvBgr7pA6FTJOMOALY" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/moodman-dvBgr7pA6FTJOMOALY"></a></p></h1>
+
+<div class="landing-two">
+    <div class="card-container mt-3">
+        <h1 class="about mt-3 text-center">Meet the Developers</h1>
+        <div class="card-group d-flex justify-content-around">
+            <div class="devs d-flex justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                    <h1 class="dev-name card-title mt-2">Chaney Brown</h1>
+                    <div class="d-flex justify-content-center m-2">
+                        <img src="img/chaney-headshot.png" alt="Chaney headshot" class="dev-pic">
+                    </div>
+                    <div class="d-flex flex-row justify-content-around">
+                        <a href="https://alumni.codeup.com/students/769"><img src="img/codeup-logo.jpg" alt="Codeup"
+                                                                              style="width: 50px; height: 50px"></a>
+                        <a href="https://www.linkedin.com/in/chanbro/"><img src="img/linkedin.png" alt="Codeup"
+                                                                            style="width: 50px; height: 50px"></i></a>
+                        <a href="https://github.com/chanbro"><img src="img/github.png" alt="Codeup"
+                                                                  style="width: 40px; height: 40px"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="devs d-flex justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                    <h1 class="dev-name card-title mt-2">Shelby Hughes</h1>
+                    <div class="d-flex justify-content-center m-2">
+                        <img src="img/shelby-headshot.png" alt="Shelby headshot" class="dev-pic">
+                    </div>
+                    <div class="d-flex flex-row justify-content-around">
+                        <a href="https://alumni.codeup.com/students/781"><img src="img/codeup-logo.jpg" alt="Codeup"
+                                                                              style="width: 50px; height: 50px"></a>
+                        <a href="https://www.linkedin.com/in/shughes/"><img src="img/linkedin.png" alt="Codeup"
+                                                                            style="width: 50px; height: 50px"></i></a>
+                        <a href="https://github.com/ShelbyHughes"><img src="img/github.png" alt="Codeup"
+                                                                       style="width: 40px; height: 40px"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="devs d-flex justify-content-center">
+                <div class="d-flex flex-column justify-content-center">
+                    <h1 class="dev-name card-title mt-2">Faith Garza</h1>
+                    <div class="d-flex justify-content-center m-2">
+                        <img src="img/faith-headshot.png" alt="Faith headshot" class="dev-pic">
+                    </div>
+                    <div class="d-flex flex-row justify-content-around">
+                        <a href="https://alumni.codeup.com/students/786"><img src="img/codeup-logo.jpg" alt="Codeup"
+                                                                              style="width: 50px; height: 50px"></a>
+                        <a href="https://www.linkedin.com/in/faith-garza1/"><img src="img/linkedin.png" alt="Codeup"
+                                                                                 style="width: 50px; height: 50px"></i>
+                        </a>
+                        <a href="https://github.com/faithgarza001"><img src="img/github.png" alt="Codeup"
+                                                                        style="width: 40px; height: 40px"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </header>
-</div>
-<div class="card">
-    <div class="card-header">
-        Kitsune
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">A place to explore, learn, create</h5>
     </div>
 </div>
+
 
 <div th:replace="partials/footer :: footer"></div>
+<script>
+    function autoType(elementClass, typingSpeed) {
+        var thhis = $(elementClass);
+        thhis.css({
+            "position": "relative",
+            "display": "inline-block"
+        });
+        thhis.prepend('<div class="cursor" style="right: initial; left:0;"></div>');
+        thhis = thhis.find(".text-js");
+        var text = thhis.text().trim().split('');
+        var amntOfChars = text.length;
+        var newString = "";
+        thhis.text("|");
+        setTimeout(function () {
+            thhis.css("opacity", 1);
+            thhis.prev().removeAttr("style");
+            thhis.text("");
+            for (var i = 0; i < amntOfChars; i++) {
+                (function (i, char) {
+                    setTimeout(function () {
+                        newString += char;
+                        thhis.text(newString);
+                    }, i * typingSpeed);
+                })(i + 1, text[i]);
+            }
+        }, 1500);
+    }
 
+    $(document).ready(function () {
+        // Now to start autoTyping just call the autoType function with the
+        // class of outer div
+        // The second paramter is the speed between each letter is typed.
+        autoType(".type-js", 100);
+    });
+</script>
 </body>
 </html>
