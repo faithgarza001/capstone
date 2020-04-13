@@ -20,35 +20,35 @@
                 <div class="form-container">
                     <form th:action="@{/dashboard/posts/create}" th:method="post" th:object="${post}" enctype="multipart/form-data">
                         <div class="d-flex justify-content-left align-items-baseline">
-                            <label for="" class="pr-2">Title</label>
+                            <label  class="pr-2">Title</label>
                             <input th:field="*{textTitle}" placeholder="Post Title" class="pl-2"/>
                         </div>
                         <br/>
                         <div class="d-flex justify-content-left align-items-baseline">
-                            <label for="" class="pr-2">Body</label>
+                            <label class="pr-2">Body</label>
                             <textarea th:field="*{textBody}" class="pl-2" placeholder="Text to display on your post"></textarea>
                         </div>
                         <br/>
 <!--                        Testing iframe-->
                         <div class="d-flex justify-content-left align-items-baseline">
-                            <label for="" class="pr-2">Video id</label>
+                            <label class="pr-2">Video id</label>
                             <input th:value="${videoEmbedCode}" placeholder="Video URL" class="pl-2" readonly="true" disabled="true"/>
                         </div>
                         <br/>
                         <div class="d-flex justify-content-left align-items-baseline">
-                            <label for="" class="pr-2">Link URL</label>
+                            <label class="pr-2">Link URL</label>
                             <textarea th:field="*{linkUrl}" class="pl-2" placeholder="URL to article"></textarea>
                         </div>
                         <br/>
                         <div class="d-flex justify-content-left align-items-baseline">
-                            <label for="" class="pr-2">Blog</label>
+                            <label class="pr-2">Blog</label>
                             <select th:field="*{id}" required>
                                 <option th:each="blog : ${blogs}" th:value="${blog.id}" th:utext="${blog.blogTitle}"></option>
                             </select>
                         </div>
                         <br/>
                         <div class="d-flex flex-row">
-                            <label for="" class="pr-2">Categories</label>
+                            <label class="pr-2">Categories</label>
                             <ul class="form-categories">
                                 <li th:each="category : ${categories}" type="hidden">
                                     <div class="ui checkbox">
@@ -62,17 +62,96 @@
                         <input class="btn submit-btn" type="submit"/>
                     </form>
                 </div>
+            </li>
+        </ul>
+        <h1>Post picture upload</h1>
+
+        <label for="fileupload">Select a post photo to upload</label>
+            <input type="hidden" id="fileupload">
+            <button id="picker" type="button">Pick file</button>
+        <input type="hidden" class="control" id="linkUrl" name="linkUrl" th:value="*{linkUrl}"/>
+
+        <div id="thumbnail-container"></div>
+        <input type="submit" />
+    </form>
+</div>
             </div>
             <!--    Form End-->
 
             <!--Responsive Search sticky navigation partial-->
             <div th:replace="partials/right-nav :: right-nav"></div>
-
             <!--        End container and row-->
         </div>
     </div>
+</body>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<!--<script src="./js/filestack.js"></script>-->
+<script>
+    const yourAPIKey = "yourapikeyhere";
 
-<!--    Footer-->
-    <div th:replace="partials/footer :: footer"></div>
-    </body>
+    // Set up the picker
+    const client = filestack.init(yourAPIKey);
+    const options = {
+        onUploadDone: updateForm,
+        maxSize: 10 * 1024 * 1024,
+        accept: 'image/*',
+        uploadInBackground: false,
+    };
+    const picker = client.picker(options);
+
+    // Get references to the DOM elements
+
+    // const form = document.getElementById('pick-form');
+    const fileInput = document.getElementById('fileupload');//here calling the element to the html dom and used to manipulate an element on document.
+    const btn = document.getElementById('picker');
+    // const nameBox = document.getElementById('nameBox');
+    let linkUrl = document.getElementById('linkUrl');
+
+    // Add our event listeners
+
+    btn.addEventListener('click', function (e) {//adding an event listener on click method
+        e.preventDefault();
+        picker.open();//The Filestack picker can take files from both local and cloud sources and generate URL’s for them. Using this we can eliminate the need for any upload handling in our backend and can instead attach the returned Filestack URL’s to our form
+        // picker.onClose(handleChange);
+    });
+
+    // form.addEventListener('submit', function (e) {
+    //     e.preventDefault();
+    //     alert('Submitting: ' + fileInput.value);
+    // });
+
+    // Helper to overwrite the field input value
+
+    function updateForm (result) {
+        const fileData = result.filesUploaded[0];
+        fileInput.value = fileData.url;
+
+        // Some ugly DOM code to show some data.
+        const name = document.createTextNode('Selected: ' + fileData.filename);
+        const url = document.createElement('a');
+        url.href = fileData.url;
+        url.appendChild(document.createTextNode(fileData.url));
+        // nameBox.appendChild(name);
+        // urlBox.appendChild(document.createTextNode('Uploaded to: '));
+        picUrl = url.href.toString();
+        linkUrl.attributes.item(4).value = picUrl;
+
+        // If file is resizable image, resize and embed it as a thumbnail preview
+        if (['jpeg', 'png'].indexOf(fileData.mimetype.split('/')[1]) !== -1) {
+            const container = document.getElementById('thumbnail-container');
+            const thumbnail = document.getElementById('thumbnail') || new Image();
+            thumbnail.id = 'thumbnail';
+            thumbnail.src = client.transform(fileData.handle, {
+                resize: {
+                    width: 200
+                }
+            });
+
+            if (!container.contains(thumbnail)) {
+                container.appendChild(thumbnail);
+            }
+        }
+    };
+
+</script>
 </html>

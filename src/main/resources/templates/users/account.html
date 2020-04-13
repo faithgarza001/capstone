@@ -1,3 +1,38 @@
+<!--<<<<<<< HEAD-->
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:th="https://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Create Profile</title>-->
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="partials/navbar :: navbar"></div>-->
+<!--<div class = "container">-->
+<!--    <h1>Create a Profile Page</h1>-->
+
+<!--    <form th:action = "@{/users/account}" th:method="post" th:object="${user}">-->
+<!--    <h1>Upload a profile picture</h1>-->
+
+<!--        <label for="fileupload">Select a profile photo to upload</label>-->
+
+<!--        <input type="hidden" id="fileupload">-->
+
+<!--        <button id="picker" type="button">Pick file</button>-->
+
+<!--&lt;!&ndash;        <input type="hidden" id="profilePicture"  name="profilePicture" th:value="*{users}"/>&ndash;&gt;-->
+
+<!--        <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"-->
+<!--             height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">-->
+
+<!--        <div id="thumbnail-container"></div>-->
+<!--    <input type="submit"/>-->
+<!--</form>-->
+<!--</div>-->
+
+<!--<div th:replace="partials/footer :: footer"></div>-->
+<!--</body>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/header :: head('My Account')"/>
@@ -47,7 +82,82 @@
             <button>Edit Account</button>
         </a>
     </div>
+        <form th:action = "@{/users/account}" th:method="post" th:object="${user}">
+        <h1>Upload a profile picture</h1>
+
+            <label for="fileupload">Select a profile photo to upload</label>
+
+            <input type="hidden" id="fileupload">
+
+            <button id="picker" type="button">Pick file</button>
+
+            <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"
+                 height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">
+
 </div>
 <div th:replace="partials/footer :: footer"></div>
 </body>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<!--<script src="./js/filestack.js"></script>-->
+<script>
+    const yourAPIKey = "yourapikeyhere";
+
+    // Set up the picker
+    const client = filestack.init(yourAPIKey);
+    const options = {
+        onUploadDone: updateForm,
+        maxSize: 10 * 1024 * 1024,
+        accept: 'image/*',
+        uploadInBackground: false,
+    };
+    const picker = client.picker(options);
+
+    // Get references to the DOM elements
+
+    // const form = document.getElementById('pick-form');
+    const fileInput = document.getElementById('fileupload');//here calling the element to the html dom and used to manipulate an element on document.
+    const btn = document.getElementById('picker');
+    // const nameBox = document.getElementById('nameBox');
+    let profilePicture = document.getElementById('profilePicture');
+
+    // Add our event listeners
+
+    btn.addEventListener('click', function (e) {//adding an event listener on click method
+        e.preventDefault();
+        picker.open();//The Filestack picker can take files from both local and cloud sources and generate URL’s for them. Using this we can eliminate the need for any upload handling in our backend and can instead attach the returned Filestack URL’s to our form
+        // picker.onClose(handleChange);
+    });
+
+    // Helper to overwrite the field input value
+
+    function updateForm (result) {
+        const fileData = result.filesUploaded[0];
+        fileInput.value = fileData.url;
+
+        // Some ugly DOM code to show some data.
+        const name = document.createTextNode('Selected: ' + fileData.filename);
+        const url = document.createElement('a');
+        url.href = fileData.url;
+        url.appendChild(document.createTextNode(fileData.url));
+        picUrl = url.href.toString();
+        profilePicture.attributes.item(3).value = picUrl;
+
+        // If file is resizable image, resize and embed it as a thumbnail preview
+        if (['jpeg', 'png'].indexOf(fileData.mimetype.split('/')[1]) !== -1) {
+            const container = document.getElementById('thumbnail-container');
+            const thumbnail = document.getElementById('thumbnail') || new Image();
+            thumbnail.id = 'thumbnail';
+            thumbnail.src = client.transform(fileData.handle, {
+                resize: {
+                    width: 200
+                }
+            });
+
+            if (!container.contains(thumbnail)) {
+                container.appendChild(thumbnail);
+            }
+        }
+    };
+
+</script>
 </html>
