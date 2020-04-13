@@ -10,7 +10,7 @@
 <h1 th:text="${post.textTitle}"></h1>
 <p> By: <span th:text="${post.blog.blogTitle}"></span></p>
 <p th:text="${post.textBody}"></p>
-<div th:if="${post.videoEmbedCode} != null">
+<div th:if="${post.videoEmbedCode} != null || ${post.videoEmbedCode} != ''">
     <iframe width="560" height="315"  th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 <div th:if="${post.linkUrl} != null">

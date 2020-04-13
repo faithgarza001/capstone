@@ -15,8 +15,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-//@PropertySource(ignoreResourceNotFound = true, value = "classpath:application.properties")
-@PropertySource("file:/srv/kitsune.rocks/application.properties")
+@PropertySource(ignoreResourceNotFound = true, value = "classpath:application.properties")
+//@PropertySource("file:/srv/kitsune.rocks/application.properties")
 @Scope("session")
 public class GoogleController {
 

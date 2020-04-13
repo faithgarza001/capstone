@@ -71,8 +71,13 @@ public class PostController {
             selectedCategoryIds[i] = Long.parseLong(categories[i]);
         }
         List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
-        if(!linkUrl.contains("https://")){
-            linkUrl = "https://" + linkUrl;
+        if(!linkUrl.isEmpty()) {
+            if (!linkUrl.contains("https://")) {
+                linkUrl = "https://" + linkUrl;
+            }
+        }
+        if((String)request.getSession().getAttribute("videoEmbedCode") == null || (String)request.getSession().getAttribute("videoEmbedCode") == ""){
+
         }
         Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, (String)request.getSession().getAttribute("videoEmbedCode"), linkUrl);
         postDao.save(post);
@@ -155,8 +160,10 @@ public class PostController {
         post.setTextTitle(textTitle);
         post.setTextBody(textBody);
         post.setCategories(categoriesList);
-        if(!linkUrl.contains("https://")){
-            linkUrl = "https://" + linkUrl;
+        if(!linkUrl.isEmpty()) {
+            if (!linkUrl.contains("https://")) {
+                linkUrl = "https://" + linkUrl;
+            }
         }
         post.setLinkUrl(linkUrl);
         postDao.save(post);
@@ -195,8 +202,10 @@ public class PostController {
     public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories, @RequestParam String videoEmbedCode, @RequestParam String linkUrl) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
-        if(!linkUrl.contains("https://")){
-            linkUrl = "https://" + linkUrl;
+        if(!linkUrl.isEmpty()) {
+            if (!linkUrl.contains("https://")) {
+                linkUrl = "https://" + linkUrl;
+            }
         }
         Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories, videoEmbedCode, linkUrl);
         postDao.save(post2);

@@ -190,6 +190,21 @@ public class BlogController extends BlogsService {
         }
     }
 
+    @PostMapping("/dashboard/blogs/{id}/unfollow")
+    public String unfollow(@PathVariable long id){
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(loggedInUser != null){
+            User updateUser = userDao.findByid(loggedInUser.getId());
+            Blog followedBlog = blogDao.getOne(id);
+            List<Blog> tmpList = updateUser.getFollowing();
+            tmpList.remove(followedBlog);
+            updateUser.setFollowing(tmpList);
+            userDao.save(updateUser);
+            return "redirect:/dashboard/blogs/{id}";
+        }
+        return "redirect:/login";
+    }
+
     @PostMapping("/dashboard/search/site")
     public String searchHandle(@RequestParam(value="search", defaultValue = "") String search, Model model) {
         List<Blog> blogs = blogDao.findAllByhandleOrcategories(search);

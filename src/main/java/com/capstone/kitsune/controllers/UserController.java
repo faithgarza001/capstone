@@ -1,5 +1,6 @@
 package com.capstone.kitsune.controllers;
 
+import com.capstone.kitsune.models.Blog;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -75,7 +76,8 @@ public class UserController {
     public String accountDelete(){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long id = loggedInUser.getId();
-        users.deleteById(id);
+        User user = users.getOne(id);
+        users.delete(user);
         return "redirect:/sign-up";
     }
 }

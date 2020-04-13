@@ -43,7 +43,7 @@ public class Blog {
     )
     private List<Category> categories;
 
-    @ManyToMany(mappedBy ="following", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy ="following")
     private List<User> followers;
 
     //Empty Constructor
