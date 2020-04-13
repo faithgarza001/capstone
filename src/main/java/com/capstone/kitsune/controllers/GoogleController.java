@@ -15,11 +15,13 @@ import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
+//@PropertySource(ignoreResourceNotFound = true, value = "classpath:application.properties")
+@PropertySource("file:/srv/kitsune.rocks/application.properties")
 @Scope("session")
 public class GoogleController {
 
     @Value("${youtube.api.key}")
-    private String youtubeApiKey;
+    private String youtubeAPIKey;
 
     @GetMapping("/dashboard/search/texts")
     public String googleCSE() {
@@ -44,7 +46,7 @@ public class GoogleController {
 
                 return "redirect:/dashboard/posts/create";
             }
-            model.addAttribute("key", youtubeApiKey);
+            model.addAttribute("key", youtubeAPIKey);
             return "search/youtube";
         } else {
             return "redirect:/login";
