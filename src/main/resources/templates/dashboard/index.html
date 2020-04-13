@@ -33,7 +33,7 @@
             </td>
             <td th:text="${post.dateCreated}"></td>
             <!--                Need to parse date-->
-            <td th:text="${post.user.getUsername()}"></td>
+            <td th:text="${post.user.getUsername()}"> <img th:src="@{{image}(image=${post.user.getProfilePicture()})}" th:class="img-responsive" style="width:60px"/></td>
             <!--            <td>-->
             <!--                <div th:if="${userName == blog.user.username}">-->
             <!--                    <a th:href="@{|/dashboard/posts/${post.id}/edit|}">-->
@@ -44,7 +44,7 @@
             <!--                    </a>-->
             <!--                </div>-->
             <!--            </td>-->
-            <td><img th:src="@{{image}(image=${post.linkUrl})}" th:class="img-responsive"/></td>
+            <td><div><img th:src="@{{image}(image=${post.linkUrl})}" th:class="img-responsive" style="width:60px"/></div></td>
             <td>
                 <span th:each="category : ${post.categories}" type="hidden">
                         <label th:text="${category.name}"></label>

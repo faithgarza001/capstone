@@ -5,12 +5,14 @@ import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.UserRepo;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -70,20 +72,47 @@ public class UserController {
         users.save(user);
         return "redirect:/dashboard";
     }
-    
-    @RequestMapping("/account")
-    public String profile(){
-        return "users/account";
+
+    @GetMapping("/account")
+    public String showAccountForm(Model model) {
+        // Getting logged in user
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User loggedIn = users.findByUsername(name);
+
+        if (loggedIn != null) {
+            // Setting username based on principal
+            model.addAttribute("user", loggedIn);
+            return "users/account";
+        }
+        else {
+            return "redirect:/login";
+        }
     }
 
-//    //Saving the post to the database
+    //Saving the user profile photo to the database
     @PostMapping("/account")
-    public String postProfilePhoto(@RequestParam String profilePhoto, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @RequestParam String linkUrl) {
+    public String postProfilePhoto(@RequestParam(value = "profilePicture") String profilePicture) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = new User(textTitle, textBody, loggedInUser, blog, categoriesList);
-        user.setProfilePicture(p);
-        postDao.save(post);
+        User user = users.getOne(loggedInUser.getId());
+        //Set Profile Photo
+        user.setProfilePicture(profilePicture);
+        //Save user
+        users.save(user);
         return "redirect:/dashboard";
+
     }
+
+
+
+//    @PostMapping(value = "/account")
+//    public String postProfilePhoto(@RequestParam(value="profilePicture", required = false) String profilePicture) {
+//        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        User user = users.findByUsername(loggedInUser.toString());
+//        user.setProfilePicture(profilePicture);
+//        users.save(user);
+//        return "redirect:/dashboard";
+//
+//    }
 }
 

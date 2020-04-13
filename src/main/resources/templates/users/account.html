@@ -1,21 +1,31 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>account</title>
+    <title>Create Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <div class = "container">
-
     <h1>Create a Profile Page</h1>
-<form th:action = "@{users/account}" method="post" th:method="account" th:object="${}" enctype="multipart/form-data">
+
+    <form th:action = "@{/users/account}" th:method="post" th:object="${user}">
     <h1>Upload a profile picture</h1>
-    <label for="fileupload">Select a post photo to upload</label>
-    <input type="hidden" id="fileupload">
-    <button id="picker" type="button">Pick file</button>
-    <input type="hidden" class="control" id="profile_picture" name="profile_picture"/>
-    <div id="thumbnail-container"></div>
-    <input type="submit" />
+
+        <label for="fileupload">Select a profile photo to upload</label>
+
+        <input type="hidden" id="fileupload">
+
+        <button id="picker" type="button">Pick file</button>
+
+<!--        <input type="hidden" id="profilePicture"  name="profilePicture" th:value="*{users}"/>-->
+
+        <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"
+             height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">
+
+        <div id="thumbnail-container"></div>
+    <input type="submit"/>
 </form>
 </div>
 
@@ -24,7 +34,7 @@
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 <!--<script src="./js/filestack.js"></script>-->
 <script>
-    const yourAPIKey = "AWzLpw58MRQPc3U5j22Coz";
+    const yourAPIKey = "yourapikeyhere";
 
     // Set up the picker
     const client = filestack.init(yourAPIKey);
@@ -42,7 +52,7 @@
     const fileInput = document.getElementById('fileupload');//here calling the element to the html dom and used to manipulate an element on document.
     const btn = document.getElementById('picker');
     // const nameBox = document.getElementById('nameBox');
-    let profilePicture = document.getElementById('profile_picture');
+    let profilePicture = document.getElementById('profilePicture');
 
     // Add our event listeners
 
@@ -64,7 +74,7 @@
         url.href = fileData.url;
         url.appendChild(document.createTextNode(fileData.url));
         picUrl = url.href.toString();
-        profilePicture.attributes.item(4).value = picUrl;
+        profilePicture.attributes.item(3).value = picUrl;
 
         // If file is resizable image, resize and embed it as a thumbnail preview
         if (['jpeg', 'png'].indexOf(fileData.mimetype.split('/')[1]) !== -1) {
