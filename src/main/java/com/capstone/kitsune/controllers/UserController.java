@@ -1,5 +1,8 @@
 package com.capstone.kitsune.controllers;
 
+import com.capstone.kitsune.models.Blog;
+import com.capstone.kitsune.models.Category;
+import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.UserRepo;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,10 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class UserController {
     private UserRepo users;
     private PasswordEncoder passwordEncoder;
+
+
 
     public UserController(UserRepo users, PasswordEncoder passwordEncoder) {
         this.users = users;
@@ -43,6 +50,7 @@ public class UserController {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             User user = users.findByUsername(username);
+
             model.addAttribute("user", user);
             return "users/edit";
         } else {
@@ -51,11 +59,11 @@ public class UserController {
     }
 
     @PostMapping("/account/(username)/edit")
-    public String accountEdit(@PathVariable String username, @RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName) {
+    public String accountEdit(@PathVariable String username, @RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String profile_picture) {
         User user = users.findByUsername(username);
         String hash = this.passwordEncoder.encode(password);
         boolean debug = this.passwordEncoder.matches(user.getPassword(), hash);
-
+        user.setProfilePicture(profile_picture);
         user.setPassword(hash);
         user.setEmail(email);
         user.setLastName(lastName);
@@ -66,6 +74,16 @@ public class UserController {
     @RequestMapping("/account")
     public String profile(){
         return "users/account";
+    }
+
+//    //Saving the post to the database
+    @PostMapping("/account")
+    public String postProfilePhoto(@RequestParam String profilePhoto, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @RequestParam String linkUrl) {
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = new User(textTitle, textBody, loggedInUser, blog, categoriesList);
+        user.setProfilePicture(p);
+        postDao.save(post);
+        return "redirect:/dashboard";
     }
 }
 

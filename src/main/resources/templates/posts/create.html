@@ -61,16 +61,16 @@
     // Get references to the DOM elements
 
     // const form = document.getElementById('pick-form');
-    const fileInput = document.getElementById('fileupload');
+    const fileInput = document.getElementById('fileupload');//here calling the element to the html dom and used to manipulate an element on document.
     const btn = document.getElementById('picker');
     // const nameBox = document.getElementById('nameBox');
     let linkUrl = document.getElementById('linkUrl');
 
     // Add our event listeners
 
-    btn.addEventListener('click', function (e) {
+    btn.addEventListener('click', function (e) {//adding an event listener on click method
         e.preventDefault();
-        picker.open();
+        picker.open();//The Filestack picker can take files from both local and cloud sources and generate URL’s for them. Using this we can eliminate the need for any upload handling in our backend and can instead attach the returned Filestack URL’s to our form
         // picker.onClose(handleChange);
     });
 

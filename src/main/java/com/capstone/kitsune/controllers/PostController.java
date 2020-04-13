@@ -60,8 +60,14 @@ public class PostController {
             // Setting username based on principal
             userName = principal.getName();
         }
+
+
+
         //Setting authorized username to be used in myblogs view
         model.addAttribute("userName", userName);
+
+
+
         // SUPPOSED to get all blogs that match the logged in user's id (blogs user_id == users id)
         model.addAttribute("posts", postDao.findByUserId(loggedIn.getId()));
         return "posts/myposts";
