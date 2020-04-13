@@ -28,14 +28,14 @@ public class Blog {
 
     // Please review: Original SQL file did not have a list of posts in a blog. Remove if necessary
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "blog_id")
     private List<Post> posts;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "blogs_categories",
             joinColumns = {@JoinColumn(name = "blog_id")},

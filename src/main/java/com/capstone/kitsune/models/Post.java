@@ -44,7 +44,7 @@ public class Post {
     @JoinColumn(name = "blog_id")
     private Blog blog;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "posts_categories",
             joinColumns = {@JoinColumn(name = "post_id")},
@@ -153,6 +153,16 @@ public class Post {
 
 
     public Post() {
+    }
+
+    public Post(String textTitle, String textBody, User user, Blog blog, List<Category> categories, String videoEmbedCode, String linkUrl) {
+        this.textTitle = textTitle;
+        this.textBody = textBody;
+        this.videoEmbedCode = videoEmbedCode;
+        this.blog = blog;
+        this.user = user;
+        this.categories = categories;
+        this.linkUrl = linkUrl;
     }
 
     public long getId() {

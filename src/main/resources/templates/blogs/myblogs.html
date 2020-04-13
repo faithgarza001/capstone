@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/header :: head('My Blogs')">
     <meta charset="UTF-8">
     <title>My Blogs</title>
 </head>
@@ -33,6 +33,20 @@
                 <span th:each="category : ${blog.categories}" type="hidden">
                         <label th:text="${category.name}"></label>
                 </span>
+            </td>
+            <td>
+                <a th:href="@{|/dashboard/blogs/${blog.id}/edit|}">
+                    <button>Edit Blog</button>
+                </a>
+            </td>
+            <td>
+                <form th:action="@{|/dashboard/blogs/${blog.id}/delete|}" th:method="POST" style="display:inline">
+                    <button>Delete Blog</button>
+                </form>
+            </td>
+            <td>
+                <a th:href="@{/dashboard/blogs/{id}(id=${blog.id})}"
+                   class="btn btn-sm align-self-center"><i class="far fa-eye"></i></a>
             </td>
         </tr>
         </tbody>

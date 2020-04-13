@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div th:fragment="right-nav" class="col-lg-3 d-none d-lg-block sticky-top">
+    <div class="sticky-top mt-2">
+        <h3 class="dash-header text-right">Search Kitsune</h3>
+        <div class="pr-1 text-right dash-nav">
+            <hr>
+            <h6><em><a class="dash-link" th:href="@{/dashboard/search/texts}">Google Custom Search</a></em></h6>
+            <p class="dash-text">A customized Google search for Kitsune users using sites with free eBooks, textbooks, and encyclopedias.</p>
+            <h6><em><a class="dash-link" th:href="@{/dashboard/search/videos}">YouTube Search</a></em></h6>
+            <p class="dash-text">Search Youtube for video content to add to your blogs.</p>
+            <h6><em><a class="dash-link" th:href="@{/dashboard/search/site}">Site Search</a></em></h6>
+            <p class="dash-text">Search Kitsune for blogs by category or handle.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

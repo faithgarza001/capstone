@@ -1,34 +1,100 @@
-<!DOCTYPE HTML>
-<html xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Create Profile</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
+<!--<<<<<<< HEAD-->
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:th="https://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Create Profile</title>-->
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="partials/navbar :: navbar"></div>-->
+<!--<div class = "container">-->
+<!--    <h1>Create a Profile Page</h1>-->
+
+<!--    <form th:action = "@{/users/account}" th:method="post" th:object="${user}">-->
+<!--    <h1>Upload a profile picture</h1>-->
+
+<!--        <label for="fileupload">Select a profile photo to upload</label>-->
+
+<!--        <input type="hidden" id="fileupload">-->
+
+<!--        <button id="picker" type="button">Pick file</button>-->
+
+<!--&lt;!&ndash;        <input type="hidden" id="profilePicture"  name="profilePicture" th:value="*{users}"/>&ndash;&gt;-->
+
+<!--        <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"-->
+<!--             height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">-->
+
+<!--        <div id="thumbnail-container"></div>-->
+<!--    <input type="submit"/>-->
+<!--</form>-->
+<!--</div>-->
+
+<!--<div th:replace="partials/footer :: footer"></div>-->
+<!--</body>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header :: head('My Account')"/>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
-<div class = "container">
-    <h1>Create a Profile Page</h1>
+<div class="container">
+    <h1>Profile</h1>
+    First and Last name:
+    <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
+    Username:
+    <h2 th:text="${user.username}"></h2>
+    Email:
+    <h2 th:text="${user.email}"></h2>
+    <br/>
+    My Blogs and Categories:
+    <br/>
+    <span th:each="blog : ${user.blogs}" >
+        Blog: <label th:text="${blog.blogTitle}"></label>
+        <br/>
+        <span th:each="category: *{blog.categories}">
+              Categories: <label th:text="${category.name}"></label><br/>
+        </span>
+    </span>
+    <br/>
+    Followers:
+    <br/>
+    <span th:each="follower : ${user.blogs}" >
+        <span th:each="follow: *{follower.followers}">
+               Username: <label th:text="${follow.username}"></label><br/>
+        </span>
+    </span>
+    <br/>
+    Following:
+    <br/>
+    <span th:each="following : ${user.following}">
+        Blog: <label th:text="${following.blogTitle}"></label>
+        <br/>
+        <span th:each="follows: *{following.categories}">
+              Categories: <label th:text="${follows.name}"></label><br/>
+        </span>
+    </span>
+    <div>
+        <form th:action="@{|/account/delete|}" th:method="POST" style="display:inline">
+            <button>Delete Account</button>
+        </form>
+        <a th:href="@{|/account/edit|}">
+            <button>Edit Account</button>
+        </a>
+    </div>
+        <form th:action = "@{/users/account}" th:method="post" th:object="${user}">
+        <h1>Upload a profile picture</h1>
 
-    <form th:action = "@{/users/account}" th:method="post" th:object="${user}">
-    <h1>Upload a profile picture</h1>
+            <label for="fileupload">Select a profile photo to upload</label>
 
-        <label for="fileupload">Select a profile photo to upload</label>
+            <input type="hidden" id="fileupload">
 
-        <input type="hidden" id="fileupload">
+            <button id="picker" type="button">Pick file</button>
 
-        <button id="picker" type="button">Pick file</button>
+            <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"
+                 height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">
 
-<!--        <input type="hidden" id="profilePicture"  name="profilePicture" th:value="*{users}"/>-->
-
-        <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"
-             height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">
-
-        <div id="thumbnail-container"></div>
-    <input type="submit"/>
-</form>
 </div>
-
 <div th:replace="partials/footer :: footer"></div>
 </body>
 <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
@@ -94,5 +160,4 @@
     };
 
 </script>
-
 </html>

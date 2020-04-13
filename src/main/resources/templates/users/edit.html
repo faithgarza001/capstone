@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
+<head th:replace="partials/header :: head('Edit Account')">
     <meta charset="UTF-8">
     <title>Edit</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -9,7 +9,7 @@
 <div th:replace="partials/navbar :: navbar"></div>
 <div class="container">
     <h1>Edit User</h1>
-    <form th:action="@{|/account/${username}/edit|}" th:method="post" th:object="${user}">
+    <form th:action="@{|/account/edit|}" th:method="post" th:object="${user}">
         Password:
         <input th:field="*{password}" type="password"/>
         <br/>
@@ -27,6 +27,7 @@
         <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"
              height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">
         <br/>
+        <br />
         <input type="submit"/>
     </form>
 </div>

@@ -4,7 +4,7 @@ $(function() {
     $("form").on("submit", function(e) {
         e.preventDefault();
         // prepare the request
-        let request = gapi.client.youtube.search.list({
+        var request = gapi.client.youtube.search.list({
             part: "snippet",
             type: "video",
             q: encodeURIComponent($("#search").val()).replace(/%20/g, "+"),
@@ -16,7 +16,6 @@ $(function() {
             var results = response.result;
             $("#results").html("");
             $.each(results.items, function(index, item) {
-                // ERROR: GET http://localhost:8083/dashboard/tpl/item.html 404
                 $.get("/tpl/item.html", function(data) {
                     $("#results").append(tplawesome(data, [{"title":item.snippet.title, "videoid":item.id.videoId}]));
                 });
@@ -33,8 +32,24 @@ function resetVideoHeight() {
 }
 
 function init() {
-    gapi.client.setApiKey(key);
+    gapi.client.setApiKey(youtubeAPIKey);
     gapi.client.load("youtube", "v3", function() {
         // yt api is ready
     });
+
+
+    function copyVideoId() {
+        /* Get the text field */
+        var copyText = document.getElementById("myInput");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
 }
