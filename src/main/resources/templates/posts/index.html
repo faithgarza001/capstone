@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="partials/header :: head('Dashboard')">
     <meta charset="UTF-8">
     <title>Dashboard</title>
@@ -60,6 +61,21 @@
                 <span th:each="category : ${post.categories}" type="hidden">
                         <label th:text="${category.name}"></label>
                 </span>
+            </td>
+            <td>
+                <div sec:authorize="isAuthenticated()">
+                    <div th:if="${userName == post.blog.user.username}">
+                        <a th:href="@{|/dashboard/posts/${post.id}/edit|}">
+                            <button>Edit Post</button>
+                        </a>
+                        <form th:action="@{|/dashboard/posts/${post.id}/delete|}" th:method="POST" style="display:inline">
+                            <button>Delete Post</button>
+                        </form>
+                    </div>
+                    <div>
+                        <a th:href="@{|/dashboard/posts/${post.id}/reblog|}"><button>Reblog</button></a>
+                    </div>
+                </div>
             </td>
         </tr>
         </tbody>
