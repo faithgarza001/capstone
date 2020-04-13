@@ -6,25 +6,65 @@
 </head>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
-<h1>Create an account</h1>
-<form th:action="@{/sign-up}" method="POST" th:object="${user}">
-    <label for="username">Username</label>
-    <input id="username" th:field="*{username}" />
+<!--<h1>Create an account</h1>-->
+<!--<form th:action="@{/sign-up}" method="POST" th:object="${user}">-->
+<!--    <label for="username">Username</label>-->
+<!--    <input id="username" th:field="*{username}" />-->
 
-    <label for="firstname">First Name</label>
-    <input id="firstname" th:field="*{firstName}" />
+<!--    <label for="firstname">First Name</label>-->
+<!--    <input id="firstname" th:field="*{firstName}" />-->
 
-    <label for="lastname">Last Name</label>
-    <input id="lastname" th:field="*{lastName}" />
+<!--    <label for="lastname">Last Name</label>-->
+<!--    <input id="lastname" th:field="*{lastName}" />-->
 
-    <label for="email">Email</label>
-    <input id="email" th:field="*{email}" />
+<!--    <label for="email">Email</label>-->
+<!--    <input id="email" th:field="*{email}" />-->
 
-    <label for="password">Password</label>
-    <input id="password" type="password" th:field="*{password}" />
+<!--    <label for="password">Password</label>-->
+<!--    <input id="password" type="password" th:field="*{password}" />-->
 
-    <input value="Submit" type="submit" class="btn"/>
-</form>
+<!--    <input value="Submit" type="submit" class="btn"/>-->
+<!--</form>-->
+
+<div class="row d-flex justify-content-center align-items-center">
+    <!--    <div class="col-md-3">-->
+    <div class="sign-up mt-5 card p-5 d-flex justify-content-center">
+        <h1 class="login-header mb-2 text-center">Make a New Account</h1>
+        <div th:if="${param.error}" class="login-msg mb-2 text-center">
+            That username or email is already taken.
+        </div>
+        <form th:action="@{/sign-up}" method="POST" th:object="${user}">
+            <div class="d-flex flex-column align-items-center mt-2">
+                <div class="d-flex align-items-center flex-row justify-content-around">
+                    <label for="username"><i class="fas fa-user login-icon"></i></label>
+                    <input placeholder="Username" class="mb-1 login-input" id="username" th:field="*{username}" />
+                </div>
+                <br/>
+                <div class="d-flex align-items-center flex-row justify-content-around">
+                    <label for="firstname"><i class="far fa-id-card login-icon"></i></label>
+                    <input placeholder="First Name" class="mb-1 login-input" id="firstname" th:field="*{firstName}" />
+                </div>
+                <br/>
+                <div class="d-flex align-items-center flex-row justify-content-around">
+                    <label for="lastname"><i class="far fa-id-card login-icon"></i></label>
+                    <input placeholder="Last Name" class="mb-1 login-input" id="lastname" th:field="*{lastName}" />
+                </div>
+                <br/>
+                <div class="d-flex align-items-center flex-row justify-content-around">
+                    <label for="email"><i class="fas fa-envelope login-icon"></i></label>
+                    <input placeholder="Email" class="mb-1 login-input" id="email" th:field="*{email}" />
+                </div>
+                <br/>
+                <div class="d-flex align-items-center flex-row justify-content-around">
+                    <label for="password"><i class="fas fa-key login-icon"></i></label>
+                    <input placeholder="Password" class="mb-2 login-input" id="password" type="password" th:field="*{password}" />
+                </div>
+            </div>
+            <br/>
+            <input value="Submit" type="submit" class="btn login-btn"/>
+        </form>
+    </div>
+</div>
 <div th:replace="partials/footer :: footer"></div>
 </body>
 </html>

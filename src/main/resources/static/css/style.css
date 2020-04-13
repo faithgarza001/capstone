@@ -163,10 +163,15 @@ width: 500px;
     font-size: 3rem;
 }
 
-/*Login*/
+/*Login and Sign Up*/
 .login {
     transform: translateY(50%);
     color: #ed6d50;
+}
+
+.sign-up {
+    color: #ed6d50;
+    font-weight: bold;
 }
 
 .login-header {
