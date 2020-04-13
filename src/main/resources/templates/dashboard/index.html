@@ -31,51 +31,62 @@
                     </div>
                 </div>
                 <!--Displays if user is following blogs with posts-->
-                    <div th:unless="${#lists.isEmpty(blog)}">
-                        <div class="post-container d-flex flex-column-reverse">
-                            <div class="card post mb-3" th:each="post : ${blog.posts}">
-                                <div class="card-body">
-                                    <h5 th:text="${post.textTitle}" class="card-title">Card title</h5>
-                                    <p th:text="${post.textBody}" class="card-text">With supporting text below as a
-                                        natural
-                                        lead-in
-                                        to
-                                        additional content.</p>
-                                </div>
+                <div th:unless="${#lists.isEmpty(blog)}">
+                    <div class="post-container d-flex flex-column-reverse">
+                        <div class="card post mb-3" th:each="post : ${blog.posts}">
+                            <div class="card-body">
+                                <h5 th:text="${post.textTitle}" class="card-title">Card title</h5>
+                                <p th:text="${post.textBody}" class="card-text">With supporting text below as a
+                                    natural
+                                    lead-in
+                                    to
+                                    additional content.</p>
+                            </div>
 
-<!--                                Testing iframes-->
-                                <div th:if="${post.videoEmbedCode} != null">
-                                    <iframe class="video-post"  th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                                <div th:if="${post.linkUrl} != null">
-                                    <a th:href="@{${post.linkUrl}}" th:text="${post.linkUrl}"></a>
-                                </div>
-                                <div class="card-footer d-flex justify-content-between">
-                                    <div class="d-flex flex-column">
+                            <!--                                Testing iframes-->
+                            <div th:if="${post.videoEmbedCode} != null">
+                                <iframe class="video-post"
+                                        th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div th:if="${post.linkUrl} != null">
+                                <a th:href="@{${post.linkUrl}}" th:text="${post.linkUrl}"></a>
+                            </div>
+                            <div>
+                                <p class="card-info ml-2"> Posted to <span th:text="${post.blog.getBlogTitle()}"
+                                                                           class="date-created"></span> by <span
+                                        th:text="${post.user.getUsername()}" class="created-by"></span></p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <div class="d-flex flex-column">
                             <span class="categories" th:each="category : ${post.categories}" type="hidden">
                                 <label th:text="${category.name}"></label>
                              </span>
-                                        <p class="card-info"> Created on <span th:text="${post.dateCreated}"
-                                                                               class="date-created"></span> by <span
-                                                th:text="${post.user.getUsername()}" class="created-by"></span></p>
-                                    </div>
+                                    <p class="card-info"> Created on <span th:text="${post.dateCreated}"
+                                                                           class="date-created"></span></p>
+                                </div>
+                                <div class="d-flex flex-row">
                                     <a th:href="@{/dashboard/blogs/{id}(id=${post.blog.id})}"
-                                       th:text="${post.blog.getBlogTitle()}"
-                                       class="btn follow-btn align-self-center" data-blogURL="">View Blog</a>
+                                       class="btn follow-btn align-self-center mr-1"><i
+                                            class="far fa-eye"></i></a>
                                     <a th:href="@{|/dashboard/blogs/${blog.handle}|}"
-                                       th:text="${post.blog.getBlogTitle()}"
-                                       class="btn follow-btn align-self-center" data-blogURL="">Follow Blog</a>
-                                    <div>
-                                        <a th:href="@{|/dashboard/posts/${post.id}/reblog|}">
-                                            <button>Reblog</button>
-                                        </a>
-                                    </div>
+                                       class="btn follow-btn align-self-center"><i
+                                            class="fas fa-plus"></i></a>
+                                    <a th:href="@{|/dashboard/posts/${post.id}/reblog|}"
+                                       class="btn follow-btn align-self-center ml-1"><i class="fas fa-retweet"></i></a>
+                                    <!--                                    <a th:href="@{|/dashboard/posts/${post.id}/reblog|}">-->
+                                    <!--                                        <button class="btn follow-btn align-self-center"><i class="fas fa-retweet"></i>-->
+                                    <!--                                        </button>-->
+                                    <!--                                    </a>-->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
         <!--Responsive Search sticky navigation partial-->
         <div th:replace="partials/right-nav :: right-nav"></div>
