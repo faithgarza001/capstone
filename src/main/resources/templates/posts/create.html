@@ -31,8 +31,13 @@
                         <br/>
 <!--                        Testing iframe-->
                         <div class="d-flex justify-content-left align-items-baseline">
-                            <label for="" class="pr-2">Video URL</label>
-                            <input th:value="${videoEmbedCode}" placeholder="Video URL" class="pl-2"/>
+                            <label for="" class="pr-2">Video id</label>
+                            <input th:value="${videoEmbedCode}" placeholder="Video URL" class="pl-2" readonly="true" disabled="true"/>
+                        </div>
+                        <br/>
+                        <div class="d-flex justify-content-left align-items-baseline">
+                            <label for="" class="pr-2">Link URL</label>
+                            <textarea th:field="*{linkUrl}" class="pl-2" placeholder="URL to article"></textarea>
                         </div>
                         <br/>
                         <div class="d-flex justify-content-left align-items-baseline">

@@ -53,10 +53,15 @@
                                     <a th:href="@{/dashboard/blogs/{id}(id=${blog.id})}"
                                        class="btn btn-sm align-self-center"><i class="far fa-eye"></i></a>
                                     <div th:if="${userName != blog.user.username}">
-                                        <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST"
-                                              style="display:inline">
-                                            <button class="btn btn-sm align-self-center ml-1"><i class="fas fa-plus"></i></button>
-                                        </form>
+                                        <div th:if="${#lists.contains(following, blog)}">
+                                            <button class="btn btn-sm align-self-center ml-1">Following</button>
+                                        </div>
+                                        <div th:unless="${#lists.contains(following, blog)}">
+                                            <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST"
+                                                  style="display:inline">
+                                                <button class="btn btn-sm align-self-center ml-1"><i class="fas fa-plus"></i></button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -2,6 +2,7 @@ package com.capstone.kitsune.controllers;
 
 import com.capstone.kitsune.models.Blog;
 import com.capstone.kitsune.models.Category;
+import com.capstone.kitsune.models.Post;
 import com.capstone.kitsune.models.User;
 import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.CategoryRepo;
@@ -79,10 +80,13 @@ public class BlogController extends BlogsService {
     // Viewing All Blogs
     @GetMapping("/dashboard/blogs")
     public String getAllBlogs(Model model, Principal principal) {
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.findByid(loggedIn.getId());
         String userName = "";
         if (principal != null) {
             userName = principal.getName();
         }
+        model.addAttribute("following", user.getFollowing());
         model.addAttribute("userName", userName);
         model.addAttribute("blogs", blogDao.findAll());
         return "blogs/index";
@@ -106,23 +110,28 @@ public class BlogController extends BlogsService {
     }
 
     //Viewing One User Blog
-    @GetMapping("/dashboard/blogs/{handle}")
-    public String getOneBlog(@PathVariable String handle, Model model, Principal principal) {
+    @GetMapping("/dashboard/blogs/{id}")
+    public String getOneBlog(@PathVariable long id, Model model, Principal principal) {
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.findByid(loggedIn.getId());
         String userName = "";
         if (principal != null) {
             userName = principal.getName();
         }
+
+        Blog blog = blogDao.getOne(id);
+        model.addAttribute("following", user.getFollowing());
         model.addAttribute("userName", userName);
-        model.addAttribute("blog", blogDao.findByhandle(handle));
+        model.addAttribute("blog", blog);
         return "blogs/show";
     }
 
     //Editing a blog form
-    @GetMapping("/dashboard/blogs/{handle}/edit")
-    public String editBlogForm(@PathVariable String handle, Model model) {
+    @GetMapping("/dashboard/blogs/{id}/edit")
+    public String editBlogForm(@PathVariable long id, Model model) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
-            Blog blog = blogDao.findByhandle(handle);
+            Blog blog = blogDao.getOne(id);
             List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);
             model.addAttribute("blog", blog);
@@ -133,13 +142,14 @@ public class BlogController extends BlogsService {
     }
 
     //Saving the edit to the database
-    @PostMapping("/dashboard/blogs/{handle}/edit")
-    public String saveBlogEdit(@PathVariable String handle, @RequestParam String blogTitle, @RequestParam List<Category> categories) {
-        Blog blog = blogDao.findByhandle(handle);
+    @PostMapping("/dashboard/blogs/{id}/edit")
+    public String saveBlogEdit(@PathVariable long id, @RequestParam String blogTitle, @RequestParam List<Category> categories, @RequestParam String handle) {
+        Blog blog = blogDao.getOne(id);
         blog.setBlogTitle(blogTitle);
+        blog.setHandle(handle);
         blog.setCategories(categories);
         blogDao.save(blog);
-        return "redirect:/dashboard/blogs/{handle}";
+        return "redirect:/dashboard/blogs/{id}";
     }
 
 
@@ -147,13 +157,16 @@ public class BlogController extends BlogsService {
     public String deleteBlog(@PathVariable long id){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser.getId() == blogDao.getOne(id).getUser().getId()) {
+            Blog blog = blogDao.getOne(id);
+            blog.setCategories(null);
+            blogDao.save(blog);
             blogDao.deleteById(id);
         }
         return "redirect:/dashboard/blogs";
     }
 
-    @PostMapping("/dashboard/blogs/{handle}/follow")
-    public String following(@PathVariable String handle){
+    @PostMapping("/dashboard/blogs/{id}/follow")
+    public String following(@PathVariable long id){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser != null) {
             User updateUser = userDao.findByid(loggedInUser.getId());
@@ -161,7 +174,7 @@ public class BlogController extends BlogsService {
             if(followed == null){
                 followed = new ArrayList<Blog>();
             }
-            Blog b = blogDao.findByhandle(handle);
+            Blog b = blogDao.getOne(id);
             if(!followed.contains(b)) {
                 followed.add(b);
                 updateUser.setFollowing(followed);
@@ -171,7 +184,7 @@ public class BlogController extends BlogsService {
                 updateUser = userDao.findByid(loggedInUser.getId());
                 followed = updateUser.getFollowing();
             }
-            return "redirect:/dashboard/blogs/{handle}";
+            return "redirect:/dashboard/blogs/{id}";
         }else{
             return "redirect:/login";
         }

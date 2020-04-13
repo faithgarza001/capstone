@@ -15,7 +15,7 @@
         </tr>
         <tr th:each="blog : ${blogs}">
             <td>
-                <a th:href="@{|/dashboard/blogs/${blog.handle}|}"><p th:text="${blog.blogTitle}"></p></a>
+                <a th:href="@{|/dashboard/blogs/${blog.id}|}"><p th:text="${blog.blogTitle}"></p></a>
             </td>
         </tr>
     </table>
