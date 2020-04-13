@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 @Scope("session")
 public class GoogleController {
 
+    @Value("${youtube.api.key}")
+    private String youtubeApiKey;
+
     @GetMapping("/dashboard/search/texts")
     public String googleCSE() {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -41,6 +44,7 @@ public class GoogleController {
 
                 return "redirect:/dashboard/posts/create";
             }
+            model.addAttribute("key", youtubeApiKey);
             return "search/youtube";
         } else {
             return "redirect:/login";

@@ -10,6 +10,8 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <!--    <link rel="stylesheet" href="css/style.css">-->
+    <script th:inline="javascript"> const key = "${key}";
+    </script>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -26,7 +28,7 @@
 </div>
 <div th:replace="partials/footer :: footer"></div>
 <!-- scripts -->
-<script type="text/javascript" th:src="@{/keys.js}"></script>
+<!--<script type="text/javascript" th:src="@{/keys.js}"></script>-->
 <script type="text/javascript" th:src="@{/js/app.js}"></script>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 </body>
