@@ -247,6 +247,10 @@ width: 600px;
     color: #FFFFFF;
 }
 
+.dash-follow{
+    transform: translateY(12px);
+}
+
 .card-title {
     color: #ed6d50;
     font-weight: bolder;

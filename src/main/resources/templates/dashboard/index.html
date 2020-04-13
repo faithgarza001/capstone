@@ -71,9 +71,12 @@
                                     <a th:href="@{/dashboard/blogs/{id}(id=${post.blog.id})}"
                                        class="btn follow-btn align-self-center mr-1"><i
                                             class="far fa-eye"></i></a>
-                                    <a th:href="@{|/dashboard/blogs/${blog.handle}|}"
-                                       class="btn follow-btn align-self-center"><i
-                                            class="fas fa-plus"></i></a>
+                                    <form th:action="@{|/dashboard/blogs/${blog.id}/follow|}" th:method="POST"
+                                          style="display:inline">
+                                    <button
+                                       class="btn follow-btn dash-follow"><i
+                                            class="fas fa-plus"></i></button>
+                                    </form>
                                     <a th:href="@{|/dashboard/posts/${post.id}/reblog|}"
                                        class="btn follow-btn align-self-center ml-1"><i class="fas fa-retweet"></i></a>
                                     <!--                                    <a th:href="@{|/dashboard/posts/${post.id}/reblog|}">-->
