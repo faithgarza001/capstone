@@ -35,10 +35,6 @@
         </div>
     </div>
 </div>
-<div class="youtube" style="margin: 1em">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/9sWEecNUW-o" frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
 <div class="posts" th:each="post : ${blog.posts}">
     <h2 th:text="${post.textTitle}"></h2>
     <div th:if="${post.videoEmbedCode} != null">
