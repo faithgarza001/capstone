@@ -19,7 +19,7 @@
             <hr style="border: #1674b1 solid 2px;">
             <!--Displays if user is not following any blogs with posts-->
             <div th:each="blog : ${users.following}">
-                <div th:if="!${#lists.isEmpty(blog)}">
+                <div th:if="${#lists.isEmpty(blog)}">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">No posts to show (yet!)</h5>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <!--Displays if user is following blogs with posts-->
-                    <div th:if="!${#lists.isEmpty(blog)}">
+                    <div th:unless="${#lists.isEmpty(blog)}">
                         <div class="post-container d-flex flex-column-reverse">
                             <div class="card post mb-3" th:each="post : ${blog.posts}">
                                 <div class="card-body">
@@ -45,8 +45,10 @@
 
 <!--                                Testing iframes-->
                                 <div th:if="${post.videoEmbedCode} != null">
-                                <iframe class="video w100" width="640" height="360" th:src="${post.videoEmbedCode}" frameborder="0"
-                                        allowfullscreen></iframe>
+                                    <iframe width="560" height="315"  th:src="@{https://www.youtube.com/embed/{videoEmbedCode}(videoEmbedCode = ${post.videoEmbedCode})}"  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <div th:if="${post.linkUrl} != null">
+                                    <a th:href="@{${post.linkUrl}}" th:text="${post.linkUrl}"></a>
                                 </div>
                                 <div class="card-footer d-flex justify-content-between">
                                     <div class="d-flex flex-column">

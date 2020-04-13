@@ -3,6 +3,7 @@ package com.capstone.kitsune.repositories;
 import com.capstone.kitsune.models.Category;
 import com.capstone.kitsune.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

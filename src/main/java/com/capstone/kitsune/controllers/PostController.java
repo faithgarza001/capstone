@@ -8,18 +8,22 @@ import com.capstone.kitsune.repositories.BlogRepo;
 import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.repositories.PostRepo;
 import com.capstone.kitsune.repositories.UserRepo;
+import org.hibernate.Session;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@Scope("session")
 public class PostController {
     private PostRepo postDao;
     private BlogRepo blogDao;
@@ -35,8 +39,16 @@ public class PostController {
 
     //Create form for a post
     @GetMapping("/dashboard/posts/create")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(HttpServletRequest request, Model model, @ModelAttribute(name="videoEmbedCode") String videoEmbedCode) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        System.out.println("Vid ID: " + (String)request.getSession().getAttribute("videoEmbedCode"));
+
+
+        model.addAttribute("videoEmbedCode", (String)request.getSession().getAttribute("videoEmbedCode"));
+        HttpSession foo = request.getSession();
+
+
         if (loggedInUser != null) {
             List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);
@@ -50,7 +62,7 @@ public class PostController {
 
     //Saving the post to the database
     @PostMapping("/dashboard/posts/create")
-    public String postNewPost(@RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @RequestParam String videoEmbedCode) {
+    public String postNewPost(HttpServletRequest request, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam long id, @RequestParam String[] categories, @ModelAttribute(name="videoEmbedCode") String videoEmbedCode, @RequestParam String linkUrl) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
         //convert string[] ids to long[] ids
@@ -59,9 +71,12 @@ public class PostController {
             selectedCategoryIds[i] = Long.parseLong(categories[i]);
         }
         List<Category> categoriesList = categoryDao.findByidIn(selectedCategoryIds);
-        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, videoEmbedCode);
+        if(!linkUrl.contains("https://")){
+            linkUrl = "https://" + linkUrl;
+        }
+        Post post = new Post(textTitle, textBody, loggedInUser, blog, categoriesList, (String)request.getSession().getAttribute("videoEmbedCode"), linkUrl);
         postDao.save(post);
-        return "redirect:/dashboard";
+        return "redirect:/dashboard/posts";
     }
 
     // Viewing All Posts in Dashboard
@@ -130,7 +145,7 @@ public class PostController {
 
     //Saving the edit to the database
     @PostMapping("/dashboard/posts/{id}/edit")
-    public String savePostEdit(@PathVariable long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam String[] categories) {
+    public String savePostEdit(@PathVariable long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam String[] categories, @RequestParam String linkUrl) {
         Post post = postDao.getOne(id);
         long[] selectedCategoryIds = new long[categories.length];
         for (int i = 0; i < categories.length; i++) {
@@ -140,6 +155,10 @@ public class PostController {
         post.setTextTitle(textTitle);
         post.setTextBody(textBody);
         post.setCategories(categoriesList);
+        if(!linkUrl.contains("https://")){
+            linkUrl = "https://" + linkUrl;
+        }
+        post.setLinkUrl(linkUrl);
         postDao.save(post);
         return "redirect:/dashboard";
     }
@@ -149,6 +168,9 @@ public class PostController {
     public String deletePost(@PathVariable long id) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedInUser.getId() == postDao.getOne(id).getUser().getId()) {
+            Post post = postDao.getOne(id);
+            post.setCategories(null);
+            postDao.save(post);
             postDao.deleteById(id);
         }
         return "redirect:/dashboard";
@@ -170,10 +192,13 @@ public class PostController {
     }
 
     @PostMapping("/dashboard/posts/{id}/reblog")
-    public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories) {
+    public String savePostReblog(@RequestParam long id, @RequestParam String textTitle, @RequestParam String textBody, @RequestParam List<Category> categories, @RequestParam String videoEmbedCode, @RequestParam String linkUrl) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Blog blog = blogDao.getOne(id);
-        Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories);
+        if(!linkUrl.contains("https://")){
+            linkUrl = "https://" + linkUrl;
+        }
+        Post post2 = new Post(textTitle, textBody, loggedInUser, blog, categories, videoEmbedCode, linkUrl);
         postDao.save(post2);
         return "redirect:/dashboard";
     }
