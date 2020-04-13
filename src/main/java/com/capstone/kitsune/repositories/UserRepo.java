@@ -9,5 +9,4 @@ public interface UserRepo extends JpaRepository<User, Long> {
    
   User findByUsername(String username);
   User findByid(Long id);
-//  User getProfilePicture(String profilePicture);
 }

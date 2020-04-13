@@ -21,12 +21,6 @@
         <br/>
         Last Name:
         <input th:field="*{lastName}"/>
-        <br/>
-        Profile Picture:
-        <input th:field="*{profilePicture}" type="file" name="files" multiple>
-        <img alt="Your Profile Picture" class="rounded-circle img-responsive mt-2"
-             height="128" th:src="@{{profilePic}(profilePic=${user.getProfilePicture()})}" width="128">
-        <br/>
         <br />
         <input type="submit"/>
     </form>

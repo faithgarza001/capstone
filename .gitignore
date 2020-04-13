@@ -13,13 +13,6 @@ target/
 .springBeans
 .sts4-cache
 
-###Keys###
-src/main/resources/static/js/filestack.js
-src/main/resources/application.properties
-
-
-
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -38,4 +31,6 @@ build/
 .vscode/
 
 src/main/resources/application.properties
+src/main/resources/static/js/keys.js
+
 src/main/resources/static/js/keys.js

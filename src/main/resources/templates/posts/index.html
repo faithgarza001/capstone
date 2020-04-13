@@ -57,9 +57,8 @@
             <!--                    </a>-->
             <!--                </div>-->
             <!--            </td>-->
-            <td><div><img th:src="@{{image}(image=${post.linkUrl})}" th:class="img-responsive" style="width:60px"/></div></td>
             <td>
-                <span th:each="category : ${post.categories}">
+                <span th:each="category : ${post.categories}" type="hidden">
                         <label th:text="${category.name}"></label>
                 </span>
             </td>
