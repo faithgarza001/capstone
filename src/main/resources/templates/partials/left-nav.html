@@ -10,10 +10,10 @@
                 <!--            Container for profile picture thumbnail and logged in username-->
                 <div class="d-flex">
                     <!--                Profile Picture-->
-                    <img class="profile-thumbnail pr-2 align-items-baseline" src="http://placeholder.pics/svg/40"
-                         alt="Profile Picture">
+                    <img alt="My Profile Picture" class="rounded-circle img-responsive mt-2" th:src="${profilePic}" width="128px" height="128px"/>
+
                     <!--               Displays logged in username-->
-                    <h3 class="dash-header" th:text="${user}">username</h3>
+                    <h3 class="dash-header" th:text="${username}">username</h3>
                 </div>
                 <!--            Navigation for user's account/blog/post -->
                 <div class="dash-nav pl-1">
