@@ -58,13 +58,14 @@ public class UserController {
     }
 
     @PostMapping("/account/edit")
-    public String accountEdit(@RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName) {
+    public String accountEdit(@RequestParam String password, @RequestParam String email, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String profilePicture) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = users.findByid(loggedInUser.getId());
         if(password != null && password != "") {
             String hash = this.passwordEncoder.encode(password);
             user.setPassword(hash);
         }
+        user.setProfilePicture(profilePicture);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);

@@ -9,6 +9,7 @@ import com.capstone.kitsune.repositories.CategoryRepo;
 import com.capstone.kitsune.repositories.PostRepo;
 import com.capstone.kitsune.repositories.UserRepo;
 import com.capstone.kitsune.services.BlogsService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +39,9 @@ public class BlogController extends BlogsService {
     //Create form for a blogs
     @GetMapping("/dashboard/blogs/create")
     public String showCreateBlogForm(Model model) {
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        User loggedInUser = userDao.findByUsername(name);
         if (loggedInUser != null) {
             List<Category> categories = categoryDao.findAll();
             model.addAttribute("categories", categories);

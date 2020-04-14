@@ -5,6 +5,7 @@
 <div th:replace="partials/navbar :: navbar"></div>
 <div class="container">
     <h1>Profile</h1>
+    <div><img alt="My Profile Picture" class="rounded-circle img-responsive mt-2" th:src="@{{image}(image=${user.getProfilePicture()})}" width="128px" height="128px"/></div>
     First and Last name:
     <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
     Username:
