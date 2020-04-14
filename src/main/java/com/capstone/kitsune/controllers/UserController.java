@@ -33,6 +33,8 @@ public class UserController {
         boolean debug = passwordEncoder.matches(user.getPassword(), hash);
 
         user.setPassword(hash);
+        //Set placeholder profile picture for user
+        user.setProfilePicture("/img/github.png");
         users.save(user);
         return "redirect:/login";
     }
