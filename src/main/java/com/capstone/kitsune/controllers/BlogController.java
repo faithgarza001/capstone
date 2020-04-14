@@ -92,6 +92,8 @@ public class BlogController extends BlogsService {
         model.addAttribute("following", user.getFollowing());
         model.addAttribute("userName", userName);
         model.addAttribute("blogs", blogDao.findAll());
+        model.addAttribute("profilePic", userDao.getOne(user.getId()).getProfilePicture());
+
         return "blogs/index";
     }
 

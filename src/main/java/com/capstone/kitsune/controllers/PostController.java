@@ -89,6 +89,8 @@ public class PostController {
     public String getDashboard(Model model) {
         //This will be posts from followed blogs when functionality is complete
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDao.findByid(loggedInUser.getId());
+        model.addAttribute("following", user.getFollowing());
         model.addAttribute("username", loggedInUser.getUsername());
         model.addAttribute("users", userDao.getOne(loggedInUser.getId()));
         model.addAttribute("profilePic", userDao.getOne(loggedInUser.getId()).getProfilePicture());
